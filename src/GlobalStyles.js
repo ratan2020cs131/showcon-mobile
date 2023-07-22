@@ -1,8 +1,12 @@
 import {StyleSheet} from 'react-native';
 
 const GlobalStyles = StyleSheet.create({
-    btnText:{
+    boldText:{
         fontFamily:"Montserrat-Bold",
+    },
+
+    normalText:{
+        fontFamily:"Montserrat-Regular",
     },
 
     logo: {
@@ -13,6 +17,10 @@ const GlobalStyles = StyleSheet.create({
 
     backgroundColor:{
         backgroundColor:'#1E1F22',
+    },
+
+    pText: {
+        color:'#E9E5D7',
     },
 
     button:{

@@ -1,12 +1,5 @@
 import { useState } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity, } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import GlobalStyles from "../../GlobalStyles";
 import Logo from "../../../assets/Logo.png";
@@ -24,7 +17,7 @@ const Login = ({ navigation }) => {
           style={[ GlobalStyles.input, styles.formInput ]}
         />
         <TouchableOpacity style={[GlobalStyles.button]} onPress={() =>{navigation.navigate("Otp")}}>
-          <Text style={[GlobalStyles.btnText]}>CONTINUE</Text>
+          <Text style={[GlobalStyles.boldText]}>CONTINUE</Text>
         </TouchableOpacity>
       </View>
     </View>
