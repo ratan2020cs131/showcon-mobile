@@ -1,8 +1,9 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import Login from '../screens/signup/Login'
-import Otp from '../screens/signup/Otp'
-import Register from '../screens/signup/Register'
+import Login from '../screens/signup/Login';
+import Otp from '../screens/signup/Otp';
+import Register from '../screens/signup/Register';
+import BottomRoute from './BottomRoute';
 
 const Stack = createStackNavigator();
 
@@ -23,6 +24,11 @@ const StackRoute = () => {
         {
             path:"Register",
             component: Register,
+            option : { headerShown:false }
+        },
+        {
+            path:"Home",
+            component: BottomRoute,
             option : { headerShown:false }
         },
     ];

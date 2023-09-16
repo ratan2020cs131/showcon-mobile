@@ -99,7 +99,7 @@ const Register = ({ navigation }) => {
                 />
                 <TextIcon
                   correct={
-                    /[!@#$%^&*(),.?":{}|<>]/.test(user.password) ? true : false
+                    /[+×÷=/_<>!@#$₹%&*(),?]/.test(user.password) ? true : false
                   }
                   text="1 special character (!@#$%^&*)"
                 />
