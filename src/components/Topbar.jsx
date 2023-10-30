@@ -1,12 +1,13 @@
-import { View, SafeAreaView, StyleSheet } from "react-native";
+import { View, SafeAreaView, StyleSheet,Text } from "react-native";
+import GlobalStyles from "../GlobalStyles";
 
-const TopBar = () => {
+const TopBar = ({title}) => {
   return (
     <SafeAreaView>
       <View
         style={styles.container}
       >
-        
+        {title&&<Text style={[GlobalStyles.boldText, styles.title]}>{title}</Text>}
       </View>
     </SafeAreaView>
   );
@@ -16,8 +17,14 @@ export default TopBar;
 
 const styles = StyleSheet.create({
     container:{
-        height:50,
         backgroundColor:'#1E1F22',
         width:'100%',
+        marginTop:27,
+        paddingHorizontal:20,
+        paddingVertical:15
+    },
+    title:{
+      color:'#F55139',
+      fontSize:20
     }
 })

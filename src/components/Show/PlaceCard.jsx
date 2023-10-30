@@ -7,6 +7,7 @@ const Place = ({ data,navigation }) => {
     const { cinema, date } = data;
     const [box, setBox] = useState();
     const [modal, setModal]=useState(false);
+    const [schedule, setSchedule]=useState();
 
     onClose=()=>setModal(false)
 
@@ -23,6 +24,7 @@ const Place = ({ data,navigation }) => {
                                     setBox(undefined)    
                                 }else{
                                 setBox(index)
+                                setSchedule(item);
                             }
                             }}
                             >
@@ -37,7 +39,7 @@ const Place = ({ data,navigation }) => {
             <TouchableOpacity style={[GlobalStyles.buttonOutlined, styles.button]}
             activeOpacity={0.2}
             onPress={()=>{
-                box>=0?navigation.navigate("SeatScreen"):setModal(true);
+                box>=0?navigation.navigate("SeatScreen", {cinema, schedule}):setModal(true);
             }}
             >
                 <Text style={[GlobalStyles.boldText, styles.btntext]}>BOOK</Text>

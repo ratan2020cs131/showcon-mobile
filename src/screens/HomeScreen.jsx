@@ -3,14 +3,12 @@ import ScreenWrapper from './ScreenWrapper';
 
 const HomeScreen = ({ navigation }) => {
     return (
-        <ScreenWrapper>
             <View style={styles.container}>
                 <Text>Welcome Home</Text>
                 <TouchableOpacity onPress={()=>navigation.navigate("ShowScreen")}>
                 <Text>POSTER</Text>
                 </TouchableOpacity>
             </View>
-        </ScreenWrapper>
     )
 }
 
