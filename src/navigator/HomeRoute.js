@@ -1,35 +1,17 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import Login from '../screens/signup/Login';
-import Otp from '../screens/signup/Otp';
-import Register from '../screens/signup/Register';
-import BottomRoute from './BottomRoute';
 import Show from '../screens/show/Show';
+import HomeScreen from '../screens/HomeScreen';
+import SeatScreen from '../screens/show/Seat';
 
 const Stack = createStackNavigator();
 
 const StackRoute = () => {
 
-    //routes array
     const routes = [
         {
-            path:"Login",
-            component: Login,
-            option : { headerShown:false }
-        },
-        {
-            path:"Otp",
-            component: Otp,
-            option : { headerShown:false }
-        },
-        {
-            path:"Register",
-            component: Register,
-            option : { headerShown:false }
-        },
-        {
             path:"Home",
-            component: BottomRoute,
+            component: HomeScreen,
             option : { headerShown:false }
         },
         {
@@ -37,11 +19,16 @@ const StackRoute = () => {
             component: Show,
             option : { headerShown:false }
         },
+        {
+            path:"SeatScreen",
+            component: SeatScreen,
+            option : { headerShown:false }
+        },
     ];
 
 
     return (
-        <Stack.Navigator initialRouteName="Login">
+        <Stack.Navigator initialRouteName="Home">
             {
                 routes.map((item)=>(
                     <Stack.Screen 

@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, View } from "react-native";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import HomeScreen from '../screens/HomeScreen';
+import HomeRoute from './HomeRoute';
 import ProfileScreen from '../screens/ProfileScreen';
 import BookedShowScreen from '../screens/BookedShowScreen';
 import WishlistScreen from '../screens/WishlistScreen';
@@ -18,7 +18,7 @@ const TabRoute = ({route}) => {
         {
             path: "HomeScreen",
             name: "Home",
-            component: HomeScreen,
+            component: HomeRoute,
             activeIcon:'home',
             inactiveIcon:'home-outline',
             params: null,

@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Touchable, TouchableOpacity } from 'react-native';
 import ScreenWrapper from './ScreenWrapper';
 
 const HomeScreen = ({ navigation }) => {
@@ -6,6 +6,9 @@ const HomeScreen = ({ navigation }) => {
         <ScreenWrapper>
             <View style={styles.container}>
                 <Text>Welcome Home</Text>
+                <TouchableOpacity onPress={()=>navigation.navigate("ShowScreen")}>
+                <Text>POSTER</Text>
+                </TouchableOpacity>
             </View>
         </ScreenWrapper>
     )
