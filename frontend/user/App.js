@@ -5,7 +5,7 @@ import { useFonts } from 'expo-font';
 import StackRoute from './src/navigator/StackRoute';
 import * as SplashScreen from "expo-splash-screen";
 import { Provider } from 'react-redux';
-import store from './src/Redux/store';
+import store from './src/Redux/Store';
 
 export default function App() {
   const [fontsLoaded] = useFonts({

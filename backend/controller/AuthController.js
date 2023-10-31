@@ -41,10 +41,9 @@ const Verify = async (req,res)=>{
         const user = await User.findOne({phone:mobileNo})
         if(user){
             const authorised = await bcrypt.compare(password, user.password);
-            console.log("status",authorised);
             if(authorised){
                 const token = await user.generateToken();
-                res.status(200).send(token);
+                res.status(200).send({token});
             }else{
                 res.status(200).send({
                     error:"Wrong Password"
