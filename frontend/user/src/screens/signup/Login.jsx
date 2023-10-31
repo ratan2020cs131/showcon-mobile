@@ -15,6 +15,7 @@ const Login = ({ navigation }) => {
 
   const handleSubmit = ()=>{
     dispatch(signin({mobileNo}));
+    navigation.navigate("Otp");
   }
 
   return (
