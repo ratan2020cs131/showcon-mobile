@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
-import { Alert, Dimensions, FlatList, ImageBackground, Modal, Pressable, View, Text, StyleSheet, ScrollView } from 'react-native';
+import { Alert, Dimensions, FlatList, ImageBackground, Modal, Pressable, View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { FontAwesome5, Feather } from '@expo/vector-icons';
 import DateTimePicker from "@react-native-community/datetimepicker"
 import ScreenWrapper from './ScreenWrapper';
 import GlobalStyles from '../GlobalStyles';
+import Popular from '../components/Home/Poupular';
+import Result from '../components/Home/Result';
+
 
 const HomeScreen = ({ navigation }) => {
 
@@ -15,58 +18,6 @@ const HomeScreen = ({ navigation }) => {
     const [showDatePicker, setShowDatePicker] = useState(false);
     const [showTimePicker, setShowTimePicker] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
-
-    const DATA = [
-        {
-            id: '6',
-            title: 'First Item',
-            image: "https://i.pravatar.cc/112",
-            title: "ABCD"
-        },
-        {
-            id: '5',
-            title: 'Second Item',
-            image: "https://i.pravatar.cc/109",
-            title: "ABCD"
-        },
-        {
-            id: '4',
-            title: 'Third Item',
-            image: "https://i.pravatar.cc/110",
-            title: "ABCD"
-        },
-        {
-            id: '3',
-            title: 'First Item',
-            image: "https://i.pravatar.cc/113",
-            title: "ABCD"
-        },
-        {
-            id: '2',
-            title: 'Second Item',
-            image: "https://i.pravatar.cc/115",
-            title: "ABCD"
-        },
-        {
-            id: '1',
-            title: 'Third Item',
-            image: "https://i.pravatar.cc/118",
-            title: "ABCD"
-
-        },
-    ];
-
-    const Item = ({ image, title }) => (
-        <Pressable style={styles.item}>
-            <View style={styles.imageContainer}>
-                <ImageBackground style={styles.image} source={{ uri: image }} resizeMode='cover'>
-                    <View style={styles.titleContainer}>
-                        <Text style={styles.titleText}>{title}</Text>
-                    </View>
-                </ImageBackground>
-            </View>
-        </Pressable>
-    );
 
     const onChangeDate = (event, selectedDate) => {
         if (selectedDate) {
@@ -85,7 +36,7 @@ const HomeScreen = ({ navigation }) => {
     };
 
     return (
-        <ScreenWrapper>
+        <ScreenWrapper title="Home">
             {modalVisible ? (
                 <View style={styles.centeredView}>
                     <Modal
@@ -169,7 +120,7 @@ const HomeScreen = ({ navigation }) => {
             ) :
                 (
 
-                    <ScrollView style={styles.container} showsVerticalScrollIndicator nestedScrollEnabled={true} >
+                    <ScrollView style={styles.container} showsVerticalScrollIndicator={false} nestedScrollEnabled={true} >
                         {/* time */}
                         <View style={{ alignItems: 'center' }}>
                             <Pressable style={[GlobalStyles.picker, { width: windowWidth - 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 5 }]} onPress={() => setModalVisible(!modalVisible)}>
@@ -184,27 +135,8 @@ const HomeScreen = ({ navigation }) => {
                             </Pressable>
                         </View>
 
-
-
-                        {/* FlastList */}
-                        <Text style={[GlobalStyles.boldText, { fontSize: 32, textAlign: "left", marginTop: 5 }]}>FlatList</Text>
-                        <FlatList
-                            data={DATA}
-                            horizontal
-                            renderItem={({ item }) => <Item image={item.image} title={item.title} />}
-                            keyExtractor={item => item.id}
-                        />
-
-                        {/* Popular */}
-                        <Text style={[GlobalStyles.boldText, { fontSize: 32, textAlign: "left", marginVertical: 10 }]}>Popular</Text>
-                        <View style={{ alignItems: 'center' }}>
-                            <FlatList
-                                data={DATA}
-                                numColumns={2}
-                                renderItem={({ item }) => <Item image={item.image} title={item.title} />}
-                                keyExtractor={item => item.id}
-                            />
-                        </View>
+                        <Result navigation={navigation}/>
+                        <Popular navigation={navigation}/>
                     </ScrollView>
                 )}
         </ScreenWrapper>
@@ -216,7 +148,7 @@ export default HomeScreen;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        margin: 10,
+        padding:10,
     },
     item: {
         width: 150,
