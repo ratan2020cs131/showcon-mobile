@@ -37,6 +37,21 @@ export const verify = createAsyncThunk(
     }
 )
 
+export const register = createAsyncThunk(
+    "auth/register",
+    async(credentials, thunkAPI)=>{
+        try{
+            const res = await authApi.register(credentials);
+            if(!res){
+                return thunkAPI.rejectWithValue(error);    
+            }
+        }
+        catch(err){
+            return thunkAPI.rejectWithValue(err.message);
+        }
+    }
+)
+
 const state = {
     isRegistered:undefined,
     isVerified:undefined,
@@ -64,6 +79,9 @@ const authSlice = createSlice({
             .addCase(verify.rejected, (state, action) => {
                 state.isVerified = false,
                 state.error = action.payload
+            })
+            .addCase(register.fulfilled, (state, action)=>{
+                state.isVerified=true
             })
     }
 });

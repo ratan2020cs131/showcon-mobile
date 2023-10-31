@@ -22,9 +22,21 @@ const verify = async (credentials) => {
     }
 }
 
+const register = async (credentials) => {
+    try {
+        console.log("hi", credentials);
+        const response = await axios.post(`${BASE_URL}auth/register`, credentials);
+        return response.data;
+    }
+    catch (err) {
+        console.log("Register Error: ", err)
+    }
+}
+
 const authApi = {
     signin,
-    verify
+    verify,
+    register
 }
 
 export default authApi;

@@ -17,7 +17,7 @@ const Login = ({ navigation }) => {
     else if(registered===true){
       navigation.navigate("Otp",{mobileNo})
     }else if(registered===false){
-      navigation.navigate("Register")
+      navigation.navigate("Register",{mobileNo})
     }
   },[authState.isRegistered])
 

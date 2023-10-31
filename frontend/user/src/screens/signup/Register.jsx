@@ -1,20 +1,47 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity, KeyboardAvoidingView, ScrollView } from "react-native";
-import { Picker } from "@react-native-picker/picker";
 import GlobalStyles from "../../GlobalStyles";
 import Logo from "../../../assets/Logo.png";
 import { Ionicons } from "@expo/vector-icons";
 import TextIcon from "./TextIcon";
+import { useDispatch, useSelector } from "react-redux";
+import { register, auth } from "../../Redux/Features/Auth/authSlice";
+import { CommonActions } from '@react-navigation/native';
 
-const Register = ({ navigation }) => {
+const Register = ({ navigation, route }) => {
+  const dispatch = useDispatch();
+  const authState = useSelector(auth);
+  const { mobileNo } = route.params;
+
   const [showPassword, setShowPassword] = useState(true);
   const [user, setUser] = useState({
     fname: "",
     lname: "",
+    phone: "",
     email: "",
     password: "",
     cpassword: "",
   });
+
+
+  useEffect(() => {
+    if(user.phone===''){
+      setUser({
+        ...user,
+        phone: mobileNo
+      });
+    }
+
+    if(authState.isVerified){
+      navigation.dispatch(CommonActions.reset({
+        index: 0,
+        routes: [
+          { name: 'Home' },
+        ],
+      }));
+    }
+    console.log("changed", authState)
+  }, [authState])
 
   const handleInputChange = (field, value) => {
     setUser({ ...user, [field]: value });
@@ -22,6 +49,17 @@ const Register = ({ navigation }) => {
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
+
+  const handleSubmit = () => {
+    if (user.fname.length > 0 && user.lname.length > 0 && user.email.length > 0 && user.password.length > 0) {
+      if (user.password === user.cpassword) {
+        dispatch(register(user))
+      }
+    }
+    else {
+      console.log("Fill the form");
+    }
+  }
 
   return (
     <KeyboardAvoidingView style={styles.content} behavior="height" enabled>
@@ -51,7 +89,7 @@ const Register = ({ navigation }) => {
               placeholderTextColor="#E9E5D7"
               keyboardType="email-address"
               autoCapitalize="none"
-              maxLength={20}
+              maxLength={30}
               onChangeText={(value) => handleInputChange("email", value)}
               style={[GlobalStyles.input, styles.formInput]}
             />
@@ -119,14 +157,14 @@ const Register = ({ navigation }) => {
             <View style={[styles.validate, { marginBottom: 25 },]}>
               <View>
                 <TextIcon
-                  correct={(user.password === user.cpassword) && user.password.length>=8 ? true : false}
+                  correct={(user.password === user.cpassword) && user.password.length >= 8 ? true : false}
                   text="Password Match"
                 />
               </View>
             </View>
             <TouchableOpacity
               style={[GlobalStyles.button]}
-              onPress={() => {navigation.navigate("Home");}}
+              onPress={handleSubmit}
             >
               <Text style={[GlobalStyles.boldText]}>SAVE</Text>
             </TouchableOpacity>

@@ -20,7 +20,6 @@ const Otp = ({ navigation, route }) => {
   const otpInputs = useRef([]);
 
   useEffect(() => {
-    console.log(authState)
     if(authState.token){
       navigation.dispatch(CommonActions.reset({
         index: 0,
