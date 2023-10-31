@@ -49,6 +49,10 @@ const Verify = async (req,res)=>{
                     error:"Wrong Password"
                 });
             }
+        }else{
+            res.status(404).send({
+                error:"User not Found"
+            });
         }
     }
     catch(err){
