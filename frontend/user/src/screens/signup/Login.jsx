@@ -2,20 +2,37 @@ import { useEffect, useState } from "react";
 import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity, } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import Logo from "../../../assets/Logo.png";
-import { useDispatch } from 'react-redux';
-import { signin } from "../../Redux/Features/Auth/authSlice";
+import { useDispatch, useSelector } from 'react-redux';
+import { signin, auth } from "../../Redux/Features/Auth/authSlice";
 
 const Login = ({ navigation }) => {
   const dispatch=useDispatch();
-  const[mobileNo,setMobileNo] = useState();
+  const authState = useSelector(auth)
+  const[mobileNo,setMobileNo] = useState('');
+  const[phoneError, setPhoneError]=useState(false);
+
+  useEffect(()=>{
+    let registered = authState.isRegistered;
+    if(registered===undefined){}
+    else if(registered===true){
+      navigation.navigate("Otp")
+    }else if(registered===false){
+      navigation.navigate("Register")
+    }
+  },[authState.isRegistered])
 
   const handleChange=(text)=>{
+    if(phoneError){setPhoneError(false)}
     setMobileNo(text);
   }
 
   const handleSubmit = ()=>{
-    dispatch(signin({mobileNo}));
-    navigation.navigate("Otp");
+    if(mobileNo.length<10){
+      setPhoneError(true)
+    }
+    else{
+      dispatch(signin({mobileNo}));
+    }
   }
 
   return (
@@ -30,6 +47,12 @@ const Login = ({ navigation }) => {
           style={[ GlobalStyles.input, styles.formInput ]}
           onChangeText={handleChange}
         />
+        {
+          phoneError&&
+          <Text style={[GlobalStyles.boldText, GlobalStyles.pText, styles.error]}>
+                  Enter Phone Number
+          </Text>
+        }
         <TouchableOpacity style={[GlobalStyles.button]} onPress={handleSubmit}>
           <Text style={[GlobalStyles.boldText]}>CONTINUE</Text>
         </TouchableOpacity>
@@ -56,6 +79,10 @@ const styles = StyleSheet.create({
   
   formInput: {
     width:"85%",
+  },
+
+  error:{
+    color:"#F55139"
   }
 });
 

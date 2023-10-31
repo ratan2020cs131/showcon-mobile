@@ -5,10 +5,7 @@ const signin = async (credentials) => {
     try {
         const {mobileNo} = credentials;
         const response = await axios.get(`${BASE_URL}auth/signin/${mobileNo}`, credentials);
-        if (response.data) {
-            console.log("response: ",response.data)
-        }
-        return response.data;
+        return response.data.flag;
     }
     catch (err) {
         console.log("Login Error: ",err)

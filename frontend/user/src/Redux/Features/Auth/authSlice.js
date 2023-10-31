@@ -6,9 +6,11 @@ export const signin = createAsyncThunk(
     async(credentials, thunkAPI)=>{
         try{
             const res = await authApi.signin(credentials);
-            if(!res){
+            if(res!==true&&res!==false){
                 return thunkAPI.rejectWithValue(error);    
             }
+            console.log("res:", res)
+            return res;
         }
         catch(err){
             return thunkAPI.rejectWithValue(error);
@@ -17,7 +19,7 @@ export const signin = createAsyncThunk(
 )
 
 const state = {
-    user: null
+    isRegistered:undefined,
 }
 
 const authSlice = createSlice({
@@ -26,8 +28,8 @@ const authSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(signin.pending, (state) => {
-                state.isLoading = true
+            .addCase(signin.fulfilled, (state, action) => {
+                state.isRegistered = action.payload
             })
     }
 });
