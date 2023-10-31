@@ -1,2 +1,2 @@
-const BASE_URL = 'https://showcon.onrender.com';
+const BASE_URL = 'https://showcon.onrender.com/';
 export default BASE_URL;

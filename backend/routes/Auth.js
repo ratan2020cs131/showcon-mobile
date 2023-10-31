@@ -5,7 +5,7 @@ const {
     Register
 } = require('../controller/AuthController');
 
-route.get('/signin',Signin);
+route.get('/signin/:mobileNo',Signin);
 route.post('/register',Register);
 
 module.exports = route;

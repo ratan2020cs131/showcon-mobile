@@ -1,10 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import authApi from './authAPI';
 
 export const signin = createAsyncThunk(
-    "auth/login",
+    "auth/signin",
     async(credentials, thunkAPI)=>{
         try{
-            const res = await authApi.login(credentials);
+            const res = await authApi.signin(credentials);
             if(!res){
                 return thunkAPI.rejectWithValue(error);    
             }
@@ -25,11 +26,11 @@ const authSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(login.pending, (state) => {
+            .addCase(signin.pending, (state) => {
                 state.isLoading = true
             })
     }
 });
 
-export const { increment, decrement } = counterSlice.actions;
-export default counterSlice.reducer;
+export const auth = (state)=>state.auth;
+export default authSlice.reducer;

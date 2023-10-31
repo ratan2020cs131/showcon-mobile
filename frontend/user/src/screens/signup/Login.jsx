@@ -1,10 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity, } from "react-native";
-import { Picker } from "@react-native-picker/picker";
 import GlobalStyles from "../../GlobalStyles";
 import Logo from "../../../assets/Logo.png";
+import { useDispatch } from 'react-redux';
+import { signin } from "../../Redux/Features/Auth/authSlice";
 
 const Login = ({ navigation }) => {
+  const dispatch=useDispatch();
+  const[mobileNo,setMobileNo] = useState();
+
+  const handleChange=(text)=>{
+    setMobileNo(text);
+  }
+
+  const handleSubmit = ()=>{
+    dispatch(signin({mobileNo}));
+  }
+
   return (
     <View style={[GlobalStyles.backgroundColor, styles.container]}>
       <Image source={Logo} style={[GlobalStyles.logo]}></Image>
@@ -15,8 +27,9 @@ const Login = ({ navigation }) => {
           maxLength={10}
           keyboardType="numeric"
           style={[ GlobalStyles.input, styles.formInput ]}
+          onChangeText={handleChange}
         />
-        <TouchableOpacity style={[GlobalStyles.button]} onPress={() =>{navigation.navigate("Otp")}}>
+        <TouchableOpacity style={[GlobalStyles.button]} onPress={handleSubmit}>
           <Text style={[GlobalStyles.boldText]}>CONTINUE</Text>
         </TouchableOpacity>
       </View>
