@@ -15,7 +15,7 @@ const Login = ({ navigation }) => {
     let registered = authState.isRegistered;
     if(registered===undefined){}
     else if(registered===true){
-      navigation.navigate("Otp")
+      navigation.navigate("Otp",{mobileNo})
     }else if(registered===false){
       navigation.navigate("Register")
     }
