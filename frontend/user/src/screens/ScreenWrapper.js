@@ -1,9 +1,9 @@
 import Topbar from '../components/Topbar';
 
-const ScreenWrapper = ({data, children }) => {
+const ScreenWrapper = ({title, children }) => {
     return (
         <>
-            <Topbar title={data.cinema}/>
+            {title&&<Topbar title={title}/>}
             {children}
         </>
     )
