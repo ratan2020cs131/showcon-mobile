@@ -3,8 +3,8 @@ import axios from 'axios';
 
 const signin = async (credentials) => {
     try {
-        console.log(credentials);
-        const response = await axios.get(`${BASE_URL}auth/signin`, credentials);
+        const {mobileNo} = credentials;
+        const response = await axios.get(`${BASE_URL}auth/signin/${mobileNo}`, credentials);
         if (response.data) {
             console.log("response: ",response.data)
         }
