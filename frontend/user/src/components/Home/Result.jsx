@@ -11,7 +11,7 @@ const Result = ({navigation}) => {
                 data={resultArray}
                 horizontal
                 showsHorizontalScrollIndicator={false}
-                renderItem={({ item }) => <Card image={item.image} title={item.title} navigation={navigation}/>}
+                renderItem={({ item, index }) => <Card key={item.id} image={item.image} title={item.title} navigation={navigation}/>}
                 keyExtractor={item => item.id}
             />
         </View>
@@ -28,26 +28,32 @@ const styles = StyleSheet.create({
 
 const resultArray = [
     {
+        id:1,
         image: PosterImg,
         title: 'John Wick: Chapter 1'
     },
     {
+        id:2,
         image: PosterImg,
         title: 'John Wick: Chapter 1'
     },
     {
+        id:3,
         image: PosterImg,
         title: 'John Wick: Chapter 1'
     },
     {
+        id:4,
         image: PosterImg,
         title: 'John Wick: Chapter 1'
     },
     {
+        id:5,
         image: PosterImg,
         title: 'John Wick: Chapter 1'
     },
     {
+        id:6,
         image: PosterImg,
         title: 'John Wick: Chapter 1'
     },
