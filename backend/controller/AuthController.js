@@ -2,7 +2,7 @@ const User = require('../database/models/User');
 
 const Signin = async (req,res)=>{
     try{
-        const {mobileNo} =req.body;
+        const {mobileNo} = req.params;
         const phone = await User.findOne({phone:mobileNo})
         
         if(phone){

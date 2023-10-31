@@ -5,18 +5,18 @@ import Places from "../../components/Show/Places";
 import Description from "../../components/Show/Description";
 import Rating from "../../components/Show/Rating";
 
-const Show = ({navigation}) => {
+const Show = ({ navigation }) => {
     return (
-        <ScrollView 
-        showsVerticalScrollIndicator={false}
+        <ScrollView
+            showsVerticalScrollIndicator={false}
         >
-        <View style={styles.container}>
-            <Poster />
-            <Places navigation={navigation}/>
-            <Cast/>
-            <Description/>
-            <Rating/>
-        </View>
+            <View style={styles.container}>
+                <Poster />
+                <Places navigation={navigation} />
+                <Cast />
+                <Description />
+                <Rating />
+            </View>
         </ScrollView>
     )
 }

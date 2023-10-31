@@ -19,7 +19,6 @@ const styles = StyleSheet.create({
     container:{
         backgroundColor:'#1E1F22',
         width:'100%',
-        marginTop:27,
         paddingHorizontal:20,
         paddingVertical:15
     },

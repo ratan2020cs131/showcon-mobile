@@ -2,6 +2,7 @@ import React from 'react';
 import { Text, View } from "react-native";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+
 import HomeRoute from './HomeRoute';
 import ProfileScreen from '../screens/ProfileScreen';
 import BookedShowScreen from '../screens/BookedShowScreen';

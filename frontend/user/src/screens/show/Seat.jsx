@@ -10,7 +10,7 @@ const SeatScreen = ({ navigation, route }) => {
     console.log(choose);
 
     return (
-        <ScreenWrapper data={route.params}>
+        <ScreenWrapper title={route.params.cinema}>
             <ScrollView
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={{ flexGrow: 1 }}

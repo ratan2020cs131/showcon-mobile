@@ -12,7 +12,6 @@ const Otp = ({ navigation }) => {
   const otpInputs = useRef([]);
 
   const toggleShowPassword = () => {
-    console.log(showPassword);
     setShowPassword(!showPassword);
   };
 

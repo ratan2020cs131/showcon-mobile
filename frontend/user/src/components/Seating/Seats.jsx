@@ -12,12 +12,12 @@ const Seats = ({ data, setChoose, choose }) => {
                 <View style={styles.seating}>
                 {
                     seat.map((item, index) => (
-                        <>
+                        <View key={index}>
                             {
-                                item >= 0 ? <SeatIcon key={index} data={item} row={row} choose={choose} setChoose={setChoose}/> :
-                                    <View key={index} style={styles.space}/>
+                                item >= 0 ? <SeatIcon data={item} row={row} choose={choose} setChoose={setChoose}/> :
+                                    <View style={styles.space}/>
                             }
-                        </>
+                        </View>
                     ))
                 }
                 </View>

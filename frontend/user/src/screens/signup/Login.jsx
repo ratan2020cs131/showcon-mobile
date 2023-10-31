@@ -1,10 +1,40 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity, } from "react-native";
-import { Picker } from "@react-native-picker/picker";
 import GlobalStyles from "../../GlobalStyles";
 import Logo from "../../../assets/Logo.png";
+import { useDispatch, useSelector } from 'react-redux';
+import { signin, auth } from "../../Redux/Features/Auth/authSlice";
 
 const Login = ({ navigation }) => {
+  const dispatch=useDispatch();
+  const authState = useSelector(auth)
+  const[mobileNo,setMobileNo] = useState('');
+  const[phoneError, setPhoneError]=useState(false);
+
+  useEffect(()=>{
+    let registered = authState.isRegistered;
+    if(registered===undefined){}
+    else if(registered===true){
+      navigation.navigate("Otp")
+    }else if(registered===false){
+      navigation.navigate("Register")
+    }
+  },[authState.isRegistered])
+
+  const handleChange=(text)=>{
+    if(phoneError){setPhoneError(false)}
+    setMobileNo(text);
+  }
+
+  const handleSubmit = ()=>{
+    if(mobileNo.length<10){
+      setPhoneError(true)
+    }
+    else{
+      dispatch(signin({mobileNo}));
+    }
+  }
+
   return (
     <View style={[GlobalStyles.backgroundColor, styles.container]}>
       <Image source={Logo} style={[GlobalStyles.logo]}></Image>
@@ -15,8 +45,15 @@ const Login = ({ navigation }) => {
           maxLength={10}
           keyboardType="numeric"
           style={[ GlobalStyles.input, styles.formInput ]}
+          onChangeText={handleChange}
         />
-        <TouchableOpacity style={[GlobalStyles.button]} onPress={() =>{navigation.navigate("Otp")}}>
+        {
+          phoneError&&
+          <Text style={[GlobalStyles.boldText, GlobalStyles.pText, styles.error]}>
+                  Enter Phone Number
+          </Text>
+        }
+        <TouchableOpacity style={[GlobalStyles.button]} onPress={handleSubmit}>
           <Text style={[GlobalStyles.boldText]}>CONTINUE</Text>
         </TouchableOpacity>
       </View>
@@ -42,6 +79,10 @@ const styles = StyleSheet.create({
   
   formInput: {
     width:"85%",
+  },
+
+  error:{
+    color:"#F55139"
   }
 });
 
