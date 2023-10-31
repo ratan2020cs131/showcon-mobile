@@ -1,4 +1,5 @@
 const User = require('../database/models/User');
+const bcrypt = require("bcrypt");
 
 const Signin = async (req,res)=>{
     try{
@@ -32,7 +33,32 @@ const Register = async (req,res)=>{
         console.log("Signin Error: ", err);
     }
 }
+
+//VERIFY PASSWORD
+const Verify = async (req,res)=>{
+    try{
+        const {mobileNo, password}=req.body;
+        const user = await User.findOne({phone:mobileNo})
+        if(user){
+            const authorised = await bcrypt.compare(password, user.password);
+            console.log("status",authorised);
+            if(authorised){
+                const token = await user.generateToken();
+                res.status(200).send(token);
+            }else{
+                res.status(200).send({
+                    error:"Wrong Password"
+                });
+            }
+        }
+    }
+    catch(err){
+        console.log("Signin Error: ", err);
+    }
+}
+
 module.exports = {
     Signin,
     Register,
+    Verify
 };
