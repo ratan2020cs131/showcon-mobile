@@ -4,7 +4,9 @@ const GlobalStyles = StyleSheet.create({
     boldText:{
         fontFamily:"Montserrat-Bold",
     },
-
+    semiBoldText:{
+        fontFamily:"Montserrat-SemiBold",
+    },
     normalText:{
         fontFamily:"Montserrat-Regular",
     },
@@ -27,6 +29,15 @@ const GlobalStyles = StyleSheet.create({
         backgroundColor:'#F55139',
         height:45,
         width:"85%",
+        borderRadius:7,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+
+    buttonOutlined:{
+        borderColor:'#F55139',
+        height:45,
+        borderWidth:1,
         borderRadius:7,
         justifyContent: 'center',
         alignItems: 'center',
