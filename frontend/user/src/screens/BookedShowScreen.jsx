@@ -43,7 +43,7 @@ const BookedShowScreen = ({ navigation }) => {
       thumbnail: 'https://i.pravatar.cc/112',
       movieName: 'Movie-A',
       location: 'Theater-A',
-      bookedSeats: ['B1', 'A1', 'C1', 'B1', 'A1', ],
+      bookedSeats: ['B1', 'A1', 'C1', 'B1', 'A1'],
       barcode: 'https://i.pravatar.cc/112'
     },
     {
@@ -51,7 +51,7 @@ const BookedShowScreen = ({ navigation }) => {
       thumbnail: 'https://i.pravatar.cc/112',
       movieName: 'Movie-A',
       location: 'Theater-A',
-      bookedSeats: ['B1', 'A1', 'C1', 'B1', 'A1', 'E1' ],
+      bookedSeats: ['B1', 'A1', 'C1', 'B1', 'A1', 'E1'],
       barcode: 'https://i.pravatar.cc/112'
     }
   ];
@@ -69,11 +69,11 @@ const BookedShowScreen = ({ navigation }) => {
         <View style={styles.row2}>
           <View style={styles.bookedSeatsColumn}>
             <Text style={[GlobalStyles.normalText, styles.bookedSeatsText]}>Booked Seats</Text>
-            <View style={styles.bookedSeatsGrid}>
+            <View style={styles.bookedSeatsContainer}>
               {item.bookedSeats.map((seat, index) => (
-                <View key={index} style={styles.bookedSeatCircle}>
-                  <Text style={[styles.bookedSeat, GlobalStyles.normalText]}>{seat}</Text>
-                </View>
+                <Text key={index} style={[styles.bookedSeat, GlobalStyles.normalText]}>
+                  {seat}
+                </Text>
               ))}
             </View>
           </View>
@@ -82,7 +82,6 @@ const BookedShowScreen = ({ navigation }) => {
       </View>
     </View>
   );
-
 
   return (
     <ScreenWrapper title={"History"}>
@@ -94,8 +93,8 @@ const BookedShowScreen = ({ navigation }) => {
         />
       </SafeAreaView>
     </ScreenWrapper>
-  )
-}
+  );
+};
 
 export default BookedShowScreen;
 
@@ -109,14 +108,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 1,
     borderColor: '#ccc',
-    paddingHorizontal:10,
-    margin:10,
-    borderRadius:10,
-    
+    margin: 10,
+    padding: 10,
+    borderRadius: 10,
   },
   column1: {
     width: '40%',
-    padding: 10,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -130,7 +127,7 @@ const styles = StyleSheet.create({
   },
   row1: {
     flexDirection: 'column',
-    justifyContent:'center',
+    justifyContent: 'center',
     padding: 5,
   },
   movieName: {
@@ -153,30 +150,23 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'bold',
   },
-  bookedSeatsGrid: {
+  bookedSeatsContainer: {
     flexDirection: 'row',
+    justifyContent: 'center',
     flexWrap: 'wrap',
-    justifyContent: 'center',
-  },
-  bookedSeatCircle: {
-    width: 25,
-    height: 25,
-    backgroundColor: '#1E1F22',
-    borderRadius: 15,
-    margin: 5,
-    alignItems:'center',
-    justifyContent: 'center',
   },
   bookedSeat: {
     backgroundColor: '#1E1F22',
     color: 'white',
-    borderRadius: 10,
+    borderRadius: 7,
+    margin: 1,
+    padding: 4,
+    fontSize:10
   },
   barcode: {
     width: '40%',
     height: '100%',
     resizeMode: 'contain',
-    marginRight:5,
-    paddingBottom:10
+    marginLeft: 10,
   },
 });
