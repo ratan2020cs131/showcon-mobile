@@ -7,7 +7,6 @@ import { useState } from "react";
 const SeatScreen = ({ navigation, route }) => {
     const { schedule } = route.params;
     const [choose, setChoose] = useState([]);
-    console.log(choose);
 
     return (
         <ScreenWrapper title={route.params.cinema}>
