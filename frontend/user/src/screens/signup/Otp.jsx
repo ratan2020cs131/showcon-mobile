@@ -1,15 +1,34 @@
-import { useState, useRef } from "react";
-import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity, KeyboardAvoidingView, ScrollView } from "react-native";
+import { useState, useRef, useEffect } from "react";
+import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity, KeyboardAvoidingView, ScrollView, ActivityIndicator } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import Logo from "../../../assets/Logo.png";
 import { Ionicons } from "@expo/vector-icons";
+import { useDispatch, useSelector } from "react-redux";
+import { verify, auth, resetError } from "../../Redux/Features/Auth/authSlice";
+import { CommonActions } from '@react-navigation/native';
 
-const Otp = ({ navigation }) => {
+const Otp = ({ navigation, route }) => {
+  const { mobileNo } = route.params;
+  const dispatch = useDispatch();
+  const authState = useSelector(auth);
+
   const [otp, setOtp] = useState(["", "", "", ""]);
   const [count, setCount] = useState(0);
+  const [password, setPass] = useState('');
   const [showPassword, setShowPassword] = useState(true);
   const [loginWithPassword, setLoginWithPassword] = useState(true);
   const otpInputs = useRef([]);
+
+  useEffect(() => {
+    if (authState.token) {
+      navigation.dispatch(CommonActions.reset({
+        index: 0,
+        routes: [
+          { name: 'Home' },
+        ],
+      }));
+    }
+  }, [authState])
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -41,8 +60,19 @@ const Otp = ({ navigation }) => {
     }
   };
 
+  const handlePass = (text) => {
+    dispatch(resetError());
+    setPass(text);
+  }
+
+  const handleSubmit = () => {
+    if (!loginWithPassword && password.length > 0) {
+      dispatch(verify({ mobileNo, password }))
+    }
+  }
+
   return (
-    <KeyboardAvoidingView style={styles.content} behavior="height" enabled>
+    <KeyboardAvoidingView style={styles.content}>
       <ScrollView
         contentContainerStyle={styles.scrollContainer}
         keyboardShouldPersistTaps="handled"
@@ -72,6 +102,7 @@ const Otp = ({ navigation }) => {
                   maxLength={20}
                   secureTextEntry={showPassword}
                   style={[GlobalStyles.input, styles.formInput]}
+                  onChangeText={handlePass}
                 />
                 <TouchableOpacity
                   style={styles.iconContainer}
@@ -85,13 +116,26 @@ const Otp = ({ navigation }) => {
                 </TouchableOpacity>
               </View>
             )}
-            <TouchableOpacity
-              style={[GlobalStyles.button]}
-              onPress={() => {navigation.navigate("Register");}}
-            >
-              <Text style={[GlobalStyles.boldText]}>LOGIN</Text>
-            </TouchableOpacity>
 
+            {
+              authState.error &&
+              <Text style={[GlobalStyles.boldText, GlobalStyles.pText, styles.error]}>
+                {authState.error}
+              </Text>
+            }
+            {
+              authState.isLoading ?
+                <View style={{ width: '100%', flexDirection: "row", justifyContent: 'center' }}>
+                  <ActivityIndicator size="large" color="#F55139" />
+                </View>
+                :
+                <TouchableOpacity
+                  style={[GlobalStyles.button]}
+                  onPress={handleSubmit}
+                >
+                  <Text style={[GlobalStyles.boldText]}>LOGIN</Text>
+                </TouchableOpacity>
+            }
             {loginWithPassword ? (
               <TouchableOpacity onPress={toggleLoginWithPassword}>
                 <Text style={[GlobalStyles.boldText, GlobalStyles.pText]}>
@@ -166,6 +210,10 @@ const styles = StyleSheet.create({
     top: 0,
     right: 0,
   },
+
+  error: {
+    color: "#F55139"
+  }
 });
 
 export default Otp;

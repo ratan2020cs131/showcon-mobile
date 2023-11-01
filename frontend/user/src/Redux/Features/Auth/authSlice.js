@@ -1,35 +1,105 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import authApi from './authAPI';
 
 export const signin = createAsyncThunk(
-    "auth/login",
-    async(credentials, thunkAPI)=>{
-        try{
-            const res = await authApi.login(credentials);
-            if(!res){
-                return thunkAPI.rejectWithValue(error);    
+    "auth/signin",
+    async (credentials, thunkAPI) => {
+        try {
+            const res = await authApi.signin(credentials);
+            if (res !== true && res !== false) {
+                return thunkAPI.rejectWithValue(error);
+            }
+            return res;
+        }
+        catch (err) {
+            return thunkAPI.rejectWithValue(err);
+        }
+    }
+)
+
+export const verify = createAsyncThunk(
+    "auth/verify",
+    async (credentials, thunkAPI) => {
+        try {
+            const res = await authApi.verify(credentials);
+            if (!res) {
+                return thunkAPI.rejectWithValue(error);
+            }
+            if (res.token) {
+                return res.token
+            } else if (res.error) {
+                throw new Error(res.error);
             }
         }
-        catch(err){
-            return thunkAPI.rejectWithValue(error);
+        catch (err) {
+            return thunkAPI.rejectWithValue(err.message);
+        }
+    }
+)
+
+export const register = createAsyncThunk(
+    "auth/register",
+    async (credentials, thunkAPI) => {
+        try {
+            const res = await authApi.register(credentials);
+            if (!res) {
+                return thunkAPI.rejectWithValue(error);
+            }
+        }
+        catch (err) {
+            return thunkAPI.rejectWithValue(err.message);
         }
     }
 )
 
 const state = {
-    user: null
+    isLoading: false,
+    isRegistered: undefined,
+    isVerified: undefined,
+    token: null,
+    error: undefined,
 }
 
 const authSlice = createSlice({
     name: 'auth',
     initialState: state,
-    reducers: {},
+    reducers: {
+        resetError: (state, action) => {
+            state.error = undefined
+        }
+    },
     extraReducers: (builder) => {
         builder
-            .addCase(login.pending, (state) => {
+            .addCase(signin.pending, (state, action) => {
                 state.isLoading = true
+            })
+            .addCase(signin.fulfilled, (state, action) => {
+                state.isRegistered = action.payload,
+                    state.isLoading = false
+            })
+            .addCase(verify.pending, (state, action) => {
+                state.isLoading = true
+            })
+            .addCase(verify.fulfilled, (state, action) => {
+                state.isLoading = false,
+                    state.isVerified = true,
+                    state.token = action.payload
+            })
+            .addCase(verify.rejected, (state, action) => {
+                state.isLoading = false,
+                    state.isVerified = false,
+                    state.error = action.payload
+            })
+            .addCase(register.pending, (state, action) => {
+                state.isLoading=true
+            })
+            .addCase(register.fulfilled, (state, action) => {
+                state.isLoading=false,
+                state.isVerified = true
             })
     }
 });
 
-export const { increment, decrement } = counterSlice.actions;
-export default counterSlice.reducer;
+export const { resetError, } = authSlice.actions;
+export const auth = (state) => state.auth;
+export default authSlice.reducer;
