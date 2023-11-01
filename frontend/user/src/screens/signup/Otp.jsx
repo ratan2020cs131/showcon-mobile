@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity, KeyboardAvoidingView, ScrollView } from "react-native";
+import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity, KeyboardAvoidingView, ScrollView, ActivityIndicator } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import Logo from "../../../assets/Logo.png";
 import { Ionicons } from "@expo/vector-icons";
@@ -20,7 +20,7 @@ const Otp = ({ navigation, route }) => {
   const otpInputs = useRef([]);
 
   useEffect(() => {
-    if(authState.token){
+    if (authState.token) {
       navigation.dispatch(CommonActions.reset({
         index: 0,
         routes: [
@@ -72,7 +72,7 @@ const Otp = ({ navigation, route }) => {
   }
 
   return (
-    <KeyboardAvoidingView style={styles.content} behavior="height" enabled>
+    <KeyboardAvoidingView style={styles.content}>
       <ScrollView
         contentContainerStyle={styles.scrollContainer}
         keyboardShouldPersistTaps="handled"
@@ -123,14 +123,19 @@ const Otp = ({ navigation, route }) => {
                 {authState.error}
               </Text>
             }
-
-            <TouchableOpacity
-              style={[GlobalStyles.button]}
-              onPress={handleSubmit}
-            >
-              <Text style={[GlobalStyles.boldText]}>LOGIN</Text>
-            </TouchableOpacity>
-
+            {
+              authState.isLoading ?
+                <View style={{ width: '100%', flexDirection: "row", justifyContent: 'center' }}>
+                  <ActivityIndicator size="large" color="#F55139" />
+                </View>
+                :
+                <TouchableOpacity
+                  style={[GlobalStyles.button]}
+                  onPress={handleSubmit}
+                >
+                  <Text style={[GlobalStyles.boldText]}>LOGIN</Text>
+                </TouchableOpacity>
+            }
             {loginWithPassword ? (
               <TouchableOpacity onPress={toggleLoginWithPassword}>
                 <Text style={[GlobalStyles.boldText, GlobalStyles.pText]}>
@@ -206,8 +211,8 @@ const styles = StyleSheet.create({
     right: 0,
   },
 
-  error:{
-    color:"#F55139"
+  error: {
+    color: "#F55139"
   }
 });
 
