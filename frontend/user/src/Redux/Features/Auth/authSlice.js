@@ -90,7 +90,11 @@ const authSlice = createSlice({
                     state.isVerified = false,
                     state.error = action.payload
             })
+            .addCase(register.pending, (state, action) => {
+                state.isLoading=true
+            })
             .addCase(register.fulfilled, (state, action) => {
+                state.isLoading=false,
                 state.isVerified = true
             })
     }

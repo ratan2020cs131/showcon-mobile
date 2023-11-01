@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity, KeyboardAvoidingView, ScrollView } from "react-native";
+import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity, KeyboardAvoidingView, ScrollView, ActivityIndicator } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import Logo from "../../../assets/Logo.png";
 import { Ionicons } from "@expo/vector-icons";
@@ -25,14 +25,14 @@ const Register = ({ navigation, route }) => {
 
 
   useEffect(() => {
-    if(user.phone===''){
+    if (user.phone === '') {
       setUser({
         ...user,
         phone: mobileNo
       });
     }
 
-    if(authState.isVerified){
+    if (authState.isVerified) {
       navigation.dispatch(CommonActions.reset({
         index: 0,
         routes: [
@@ -62,7 +62,7 @@ const Register = ({ navigation, route }) => {
   }
 
   return (
-    <KeyboardAvoidingView style={styles.content} behavior="height" enabled>
+    <KeyboardAvoidingView style={styles.content}>
       <ScrollView
         contentContainerStyle={styles.scrollContainer}
         keyboardShouldPersistTaps="handled"
@@ -162,12 +162,19 @@ const Register = ({ navigation, route }) => {
                 />
               </View>
             </View>
-            <TouchableOpacity
-              style={[GlobalStyles.button]}
-              onPress={handleSubmit}
-            >
-              <Text style={[GlobalStyles.boldText]}>SAVE</Text>
-            </TouchableOpacity>
+            {
+              authState.isLoading ?
+                <View style={{ width: '100%', flexDirection: "row", justifyContent: 'center' }}>
+                  <ActivityIndicator size="large" color="#F55139" />
+                </View>
+                :
+                <TouchableOpacity
+                  style={[GlobalStyles.button]}
+                  onPress={handleSubmit}
+                >
+                  <Text style={[GlobalStyles.boldText]}>SAVE</Text>
+                </TouchableOpacity>
+            }
           </View>
         </View>
       </ScrollView>
