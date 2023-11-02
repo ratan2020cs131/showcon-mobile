@@ -9,7 +9,7 @@ const StackRoute = () => {
 
     const routes = [
         {
-            path:"Profile",
+            path:"ProfileScreen",
             component: ProfileScreen,
             option : { headerShown:false }
         },
@@ -22,7 +22,7 @@ const StackRoute = () => {
 
 
     return (
-        <Stack.Navigator initialRouteName="Profile">
+        <Stack.Navigator initialRouteName="ProfileScreen">
             {
                 routes.map((item)=>(
                     <Stack.Screen 

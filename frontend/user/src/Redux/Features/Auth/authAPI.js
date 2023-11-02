@@ -1,5 +1,6 @@
 import BASE_URL from '../../../api/BaseUrl';
 import axios from 'axios';
+import axiosToken from '../../../api/axiosToken';
 
 const signin = async (credentials) => {
     try {
@@ -24,7 +25,6 @@ const verify = async (credentials) => {
 
 const register = async (credentials) => {
     try {
-        console.log("hi", credentials);
         const response = await axios.post(`${BASE_URL}auth/register`, credentials);
         return response.data;
     }
@@ -33,10 +33,21 @@ const register = async (credentials) => {
     }
 }
 
+const getProfile = async () => {
+    try {
+        const response = await axiosToken.get(`${BASE_URL}auth/profile`);
+        return response.data;
+    }
+    catch (err) {
+        console.log("GetProfile Error: ", err)
+    }
+}
+
 const authApi = {
     signin,
     verify,
-    register
+    register,
+    getProfile
 }
 
 export default authApi;

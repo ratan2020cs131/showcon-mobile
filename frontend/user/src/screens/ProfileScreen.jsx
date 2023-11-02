@@ -1,10 +1,31 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { FontAwesome, MaterialIcons, Feather, Ionicons } from '@expo/vector-icons';
 import ScreenWrapper from './ScreenWrapper';
 import GlobalStyles from '../GlobalStyles';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { CommonActions } from '@react-navigation/native';
+import { resetStates } from '../Redux/Features/Auth/authSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { auth } from '../Redux/Features/Auth/authSlice';
 
 const ProfileScreen = ({ navigation }) => {
+    const dispatch = useDispatch();
+    const authState = useSelector(auth);
+
+    const logoutHandler=async ()=>{
+        await AsyncStorage.removeItem('token');
+        const value = await AsyncStorage.getItem('token');
+        if(!value){
+            dispatch(resetStates());
+            navigation.dispatch(CommonActions.reset({
+                index: 0,
+                routes: [
+                  { name: 'Login' },
+                ],
+              }));
+        }
+    }
 
     return (
         <ScreenWrapper title={"Profile"}>
@@ -16,37 +37,37 @@ const ProfileScreen = ({ navigation }) => {
                     <View style={styles.section}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', flex: 1, paddingRight: 10 }}>
                             <FontAwesome name='user-o' size={15} color={"black"} />
-                            <Text style={[GlobalStyles.normalText, styles.input2]}>Name</Text>
+                            <Text style={[GlobalStyles.semiBoldText, styles.input2]}>Name</Text>
                         </View>
-                        <Text>{UserData[0].fname + " " + UserData[0].lname}</Text>
+                        <Text>{authState.user.fname + " " + authState.user.lname}</Text>
                     </View>
 
                     {/* Email */}
                     <View style={styles.section}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', flex: 1, paddingRight: 10 }}>
                             <MaterialIcons name='alternate-email' size={15} color={"black"} />
-                            <Text style={[GlobalStyles.normalText, styles.input2]}>Email</Text>
+                            <Text style={[GlobalStyles.semiBoldText, styles.input2]}>Email</Text>
                         </View>
-                        <Text>{UserData[0].email}</Text>
+                        <Text>{authState.user.email}</Text>
                     </View>
 
                     {/* Phone Number */}
                     <View style={styles.section}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', flex: 1, paddingRight: 10 }}>
                             <Feather name='phone' size={15} color={"black"} />
-                            <Text style={[GlobalStyles.normalText, styles.input2]}>Phone Number</Text>
+                            <Text style={[GlobalStyles.semiBoldText, styles.input2]}>Phone</Text>
                         </View>
-                        <Text>{UserData[0].phone}</Text>
+                        <Text>{authState.user.phone}</Text>
                     </View>
 
                     {/* Password */}
-                    <View style={[styles.section, { marginBottom: 25 }]}>
+                    {/* <View style={[styles.section, { marginBottom: 25 }]}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', flex: 1, paddingRight: 10 }}>
                             <Feather name='lock' size={15} color={"black"} />
                             <Text style={[GlobalStyles.normalText, styles.input2]}>Password</Text>
                         </View>
                         <Text>{UserData[0].password}</Text>
-                    </View>
+                    </View> */}
 
                     <TouchableOpacity style={[GlobalStyles.button, { flexDirection: 'row', alignItems: 'center', gap: 15, backgroundColor:'#1E1F22' }]} onPress={() => navigation.navigate("ProfileUpdate", { userData: UserData[0] })}>
                         <Text style={[GlobalStyles.semiBoldText, { color:'#E9E5D7' }]}>UPDATE PROFILE</Text>
@@ -55,7 +76,7 @@ const ProfileScreen = ({ navigation }) => {
                 </View>
 
                 {/* LOGOUT BUTTON */}
-                <TouchableOpacity style={[GlobalStyles.button, { flexDirection: 'row', alignItems: 'center', gap: 5 }]}>
+                <TouchableOpacity style={[GlobalStyles.button, { flexDirection: 'row', alignItems: 'center', gap: 5 }]} onPress={logoutHandler}>
                     <Text style={[GlobalStyles.boldText, { paddingLeft:10}]}>LOGOUT</Text>
                     <Ionicons name="log-out-outline" style={{ fontSize: 23 }}></Ionicons>
                 </TouchableOpacity>

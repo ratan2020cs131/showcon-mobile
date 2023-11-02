@@ -7,7 +7,7 @@ import BottomRoute from './BottomRoute';
 
 const Stack = createStackNavigator();
 
-const StackRoute = () => {
+const StackRoute = ({isLogged}) => {
 
     //routes array
     const routes = [
@@ -35,7 +35,7 @@ const StackRoute = () => {
 
 
     return (
-        <Stack.Navigator initialRouteName="Login">
+        <Stack.Navigator initialRouteName={isLogged?"Home":"Login"}>
             {
                 routes.map((item)=>(
                     <Stack.Screen 

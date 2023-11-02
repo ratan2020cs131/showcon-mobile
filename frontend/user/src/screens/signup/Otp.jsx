@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity, KeyboardAvoidingView, ScrollView, ActivityIndicator } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import GlobalStyles from "../../GlobalStyles";
 import Logo from "../../../assets/Logo.png";
 import { Ionicons } from "@expo/vector-icons";
@@ -19,8 +20,11 @@ const Otp = ({ navigation, route }) => {
   const [loginWithPassword, setLoginWithPassword] = useState(true);
   const otpInputs = useRef([]);
 
-  useEffect(() => {
+  const verified = async () => {
     if (authState.token) {
+
+      await AsyncStorage.setItem('token', authState.token);
+
       navigation.dispatch(CommonActions.reset({
         index: 0,
         routes: [
@@ -28,6 +32,10 @@ const Otp = ({ navigation, route }) => {
         ],
       }));
     }
+  };
+
+  useEffect(() => {
+    verified();
   }, [authState])
 
   const toggleShowPassword = () => {
