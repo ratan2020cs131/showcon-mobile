@@ -5,6 +5,7 @@ import Otp from '../screens/signup/Otp';
 import Register from '../screens/signup/Register';
 import BottomRoute from './BottomRoute';
 import Show from '../screens/show/Show';
+import ProfileUpdate from '../components/Profile/ProfileUpdate';
 
 const Stack = createStackNavigator();
 
@@ -37,6 +38,11 @@ const StackRoute = () => {
             component: Show,
             option : { headerShown:false }
         },
+        {
+            path:"ProfileUpdate",
+            component: ProfileUpdate,
+            option : { headerShown: false }
+        }
     ];
 
 
