@@ -5,13 +5,14 @@ import Places from "../../components/Show/Places";
 import Description from "../../components/Show/Description";
 import Rating from "../../components/Show/Rating";
 
-const Show = ({ navigation }) => {
+const Show = ({ navigation, route }) => {
+    const { image, title } = route.params
     return (
         <ScrollView
             showsVerticalScrollIndicator={false}
         >
             <View style={styles.container}>
-                <Poster />
+                <Poster image={image}/>
                 <Places navigation={navigation} />
                 <Cast />
                 <Description />

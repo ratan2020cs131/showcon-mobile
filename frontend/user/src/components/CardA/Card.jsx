@@ -3,7 +3,7 @@ import GlobalStyles from "../../GlobalStyles";
 
 const Card = ({ image, title, navigation, wd, ht }) => {
     return (
-        <TouchableOpacity style={[styles.item, { width: wd ? wd : 150, height: ht ? ht : 180 }]} onPress={() => navigation.navigate("ShowScreen")}>
+        <TouchableOpacity style={[styles.item, { width: wd ? wd : 150, height: ht ? ht : 200 }]} onPress={() => navigation.navigate("ShowScreen", { image, title })}>
             <View style={styles.imageContainer}>
                 <ImageBackground style={styles.image} source={image} resizeMode='cover'>
                     {!wd &&
@@ -21,8 +21,6 @@ export default Card;
 
 const styles = StyleSheet.create({
     item: {
-        width: 150,
-        height: 180,
         margin: 10,
     },
     imageContainer: {

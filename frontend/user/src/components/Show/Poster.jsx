@@ -1,10 +1,9 @@
 import { StyleSheet, View, Text, Image } from "react-native";
-import PosterImg from '../../../assets/images/poster.png';
 
-const Poster = () => {
+const Poster = ({image}) => {
     return (
         <View style={styles.imgcontainer}>
-            <Image source={PosterImg} style={styles.image}></Image>
+            <Image source={image} style={styles.image}></Image>
         </View>
     )
 }

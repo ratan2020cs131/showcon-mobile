@@ -2,7 +2,10 @@ import React from 'react';
 import { FlatList, Image, View, Text, StatusBar, StyleSheet, SafeAreaView } from 'react-native';
 import ScreenWrapper from './ScreenWrapper';
 import Card from '../components/CardB/Card';
-import posterImg from '../../assets/images/poster.png';
+import PosterImg1 from '../../assets/images/poster.png';
+import PosterImg2 from '../../assets/images/poster2.png';
+import PosterImg3 from '../../assets/images/poster3.png';
+import PosterImg4 from '../../assets/images/poster4.png';
 import QRImg from '../../assets/images/qrcode.png';
 
 const BookedShowScreen = ({ navigation }) => {
@@ -34,7 +37,7 @@ const styles = StyleSheet.create({
 const cardArray = [
   {
     id: 1,
-    thumbnail: posterImg,
+    thumbnail: PosterImg1,
     moviename: 'John Wick: Chapter 1',
     location: 'Inox Patel Nagar, Delhi',
     bookedSeats: ['A1', 'A2', 'B1', 'B2'],
@@ -43,7 +46,7 @@ const cardArray = [
   },
   {
     id: 2,
-    thumbnail: posterImg,
+    thumbnail: PosterImg2,
     moviename: 'John Wick: Chapter 1',
     location: 'Inox Patel Nagar, Delhi',
     bookedSeats: ['A1', 'A2', 'B1', 'B2'],
@@ -52,7 +55,7 @@ const cardArray = [
   },
   {
     id: 3,
-    thumbnail: posterImg,
+    thumbnail: PosterImg3,
     moviename: 'John Wick: Chapter 1',
     location: 'Inox Patel Nagar, Delhi',
     bookedSeats: ['A1', 'A2', 'B1', 'B2'],
@@ -61,7 +64,7 @@ const cardArray = [
   },
   {
     id: 4,
-    thumbnail: posterImg,
+    thumbnail: PosterImg4,
     moviename: 'John Wick: Chapter 1',
     location: 'Inox Patel Nagar, Delhi',
     bookedSeats: ['A1', 'A2', 'B1', 'B2'],
