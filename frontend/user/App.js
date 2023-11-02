@@ -27,7 +27,9 @@ export default function App() {
   if (!fontsLoaded) {
     return null;
   } else {
-    SplashScreen.hideAsync();
+    setTimeout(() => {
+      SplashScreen.hideAsync();
+    }, 2000);
   }
 
 
