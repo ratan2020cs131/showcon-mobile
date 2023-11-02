@@ -2,7 +2,7 @@ import { View, Modal, Text, Button, StyleSheet, TouchableOpacity } from 'react-n
 import GlobalStyles from '../GlobalStyles';
 import { Ionicons } from '@expo/vector-icons';
 
-const ModalView = ({ visible, onClose, title }) => {
+const ModalView = ({ visible, onClose, title, button }) => {
     return (
         <Modal
             animationType="fade"
@@ -15,7 +15,7 @@ const ModalView = ({ visible, onClose, title }) => {
                         <Ionicons name="close-outline" size={25} ></Ionicons>
                     </TouchableOpacity>
                     <Text style={[GlobalStyles.semiBoldText, styles.title]}>{title}</Text>
-                    {
+                    {button&&
                         <View style={styles.btnContainer}>
                             <TouchableOpacity style={[GlobalStyles.buttonOutlined, styles.btn]}>
                                 <Text style={[GlobalStyles.semiBoldText, {color:'#F55139'}]}>YES</Text>
