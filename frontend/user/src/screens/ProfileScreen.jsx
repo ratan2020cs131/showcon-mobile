@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Pressable, TouchableOpacity } from 'react-native';
-import { FontAwesome, MaterialIcons, Entypo, Feather, Ionicons } from '@expo/vector-icons';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { FontAwesome, MaterialIcons, Feather, Ionicons } from '@expo/vector-icons';
 import ScreenWrapper from './ScreenWrapper';
 import GlobalStyles from '../GlobalStyles';
 

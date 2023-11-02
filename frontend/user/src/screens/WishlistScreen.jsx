@@ -34,7 +34,7 @@ const WishlistScreen = ({ navigation }) => {
                     </View>
                 </View>
             </ScrollView>
-            <ModalView visible={modal} onClose={onClose} title="Are you sure to remove this show from your wishlist"/>
+            <ModalView button={true} visible={modal} onClose={onClose} title="Are you sure to remove this show from your wishlist"/>
         </ScreenWrapper>
     )
 }

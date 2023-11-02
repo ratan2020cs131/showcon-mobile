@@ -127,8 +127,8 @@ const HomeScreen = ({ navigation }) => {
                                 <View style={{flex:1}}>
                                     <Text style={[GlobalStyles.boldText,(placeholder == 'Pickup Show Time') ? { color: '#8b8981' } : { color: '#F55139' }]}>{placeholder}</Text>
                                 </View>
-                                <View style={{  position:'relative', justifyContent:'center', borderLeftWidth:2, borderColor:'#bbb', height:'100%', paddingHorizontal:5}}>
-                                    <Ionicons name="calendar" style={{fontSize:26, color:'#1E1F22'}}></Ionicons>
+                                <View style={{  position:'relative', justifyContent:'center', borderLeftWidth:2, borderColor:'#1E1F22', height:'100%', paddingHorizontal:5}}>
+                                    <Ionicons name="calendar" style={{fontSize:26, color:'#F55139'}}></Ionicons>
                                 </View>
                                
                             </TouchableOpacity>

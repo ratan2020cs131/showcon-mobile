@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
-import { FontAwesome, MaterialIcons, Entypo, Feather, Ionicons } from '@expo/vector-icons';
+import { FontAwesome, MaterialIcons, Feather, Ionicons } from '@expo/vector-icons';
 import ScreenWrapper from '../../screens/ScreenWrapper';
 import GlobalStyles from '../../GlobalStyles';
 import { TextInput } from 'react-native-gesture-handler';
@@ -40,9 +40,9 @@ const ProfileUpdate = ({ navigation, route }) => {
                     <TextInput placeholder={password} style={[GlobalStyles.input, styles.input2, GlobalStyles.normalText]} value={password} keyboardType='visible-password' />
                 </View>
 
-                <Pressable style={[GlobalStyles.button, { flexDirection: 'row', alignItems: 'center', marginBottom: 10 }]} onPress={() => navigation.navigate("Profile")}>
-                    <Entypo name='save' size={20} color={"black"} />
-                    <Text style={[GlobalStyles.normalText, { fontSize: 20 }]}>{" "}Save</Text>
+                <Pressable style={[GlobalStyles.button, { flexDirection: 'row', alignItems: 'center', gap:5 }]} onPress={() => navigation.navigate("Profile")}>
+                    <Ionicons name='save' size={18} color={"black"} />
+                    <Text style={[GlobalStyles.boldText, { paddingRight:5 }]}>SAVE</Text>
                 </Pressable>
                
             </View>
