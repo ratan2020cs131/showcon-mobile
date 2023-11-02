@@ -97,7 +97,7 @@ const Otp = ({ navigation, route }) => {
             ) : (
               <View style={{ flexDirection: "row" }}>
                 <TextInput
-                  placeholder="Set Password"
+                  placeholder="Enter Password"
                   placeholderTextColor="#E9E5D7"
                   maxLength={20}
                   secureTextEntry={showPassword}
