@@ -59,7 +59,7 @@ const GlobalStyles = StyleSheet.create({
         height:50,
         width:50,
         borderWidth:2,
-        borderColor:'#bbb',
+        borderColor:'#1E1F22',
         borderRadius:10,
     }
 });

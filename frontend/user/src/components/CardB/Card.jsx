@@ -6,11 +6,13 @@ import ModalView from "./QRModal";
 const Card = ({ item }) => {
     const { thumbnail, moviename, location, bookedSeats, qrcode, date } = item;
 
-    const [modal, setModal]=useState(false);
-    onClose=()=>setModal(false)
+    const [modal, setModal] = useState(false);
+    onClose = () => setModal(false)
 
     return (
-        <TouchableOpacity style={styles.item} onPress={()=>setModal(true)}>
+        <TouchableOpacity style={styles.item} onPress={() => setModal(true)}>
+            <View style={[styles.dotup, styles.dot1]}></View>
+            <View style={[styles.dotdown, styles.dot2]}></View>
             <View style={styles.column1}>
                 <Image style={styles.thumbnail} source={thumbnail} />
             </View>
@@ -35,10 +37,10 @@ const Card = ({ item }) => {
             </View>
             <View style={styles.column3}>
                 <View style={styles.qrcontainer}>
-                <Image style={styles.barcode} source={qrcode} />
+                    <Image style={styles.barcode} source={qrcode} />
                 </View>
             </View>
-            <ModalView visible={modal} onClose={onClose} qr={qrcode}/>
+            <ModalView visible={modal} onClose={onClose} qr={qrcode} />
         </TouchableOpacity>
     );
 }
@@ -51,8 +53,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderWidth: 1,
         borderColor: '#ccc',
-        margin: 10,
-        marginBottom:0,
+        margin: 5,
         padding: 10,
         borderRadius: 5,
         height: 130,
@@ -62,7 +63,8 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.9,
         shadowRadius: 4,
         elevation: 3,
-        justifyContent:'space-between'
+        justifyContent: 'space-between',
+        position: 'relative',
     },
     column1: {
         width: 85,
@@ -81,13 +83,13 @@ const styles = StyleSheet.create({
         width: '52%',
         height: '100%',
         paddingLeft: 5,
-        paddingTop:10,
+        paddingTop: 10,
     },
     row1: {
         flexDirection: 'column',
         justifyContent: 'center',
         padding: 5,
-        paddingTop:0,
+        paddingTop: 0,
     },
     movieName: {
         fontSize: 14,
@@ -117,22 +119,55 @@ const styles = StyleSheet.create({
         padding: 2,
         fontSize: 11
     },
-    column3:{
-        height:'100%',
-        width:'25%',
-        padding:10,
-        justifyContent:'center',
-        borderLeftWidth:1,
-        borderLeftColor:'#ccc'
+    column3: {
+        height: '100%',
+        width: 100,
+        padding: 10,
+        justifyContent: 'center',
+        borderLeftWidth: 1,
+        borderLeftColor: '#ccc'
     },
-    qrcontainer:{
-        height:70,
-        width:70
+    qrcontainer: {
+        height: 70,
+        width: 70
     },
     barcode: {
         width: '100%',
         height: '100%',
         resizeMode: 'contain',
-        resizeMode:'cover'
+        resizeMode: 'cover'
     },
+    dotdown: {
+        height: 20,
+        width: 20,
+        borderTopLeftRadius:50,
+        borderTopRightRadius:50,
+        backgroundColor: "#EEEEEE",
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    dotup: {
+        height: 20,
+        width: 20,
+        borderBottomLeftRadius:50,
+        borderBottomRightRadius:50,
+        backgroundColor: "#EEEEEE",
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    dot1: {
+        position: 'absolute',
+        bottom: 117,
+        right: 84
+    },
+    dot2: {
+        position: 'absolute',
+        top: 117,
+        right: 84
+    },
+    insetShadow: {
+        height: 18,
+        width: 18,
+        borderRadius: 50,
+    }
 })

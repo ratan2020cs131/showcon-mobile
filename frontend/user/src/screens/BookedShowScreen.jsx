@@ -15,6 +15,7 @@ const BookedShowScreen = ({ navigation }) => {
           renderItem={({ item, index }) => <Card key={item.id} item={item}/>}
           keyExtractor={(item)=>item.id}
         />
+        {/* <Card item={cardArray[0]}/> */}
       </SafeAreaView>
     </ScreenWrapper>
   );
@@ -25,6 +26,7 @@ export default BookedShowScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingTop:5,
   },
 });
 

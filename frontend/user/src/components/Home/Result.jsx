@@ -6,12 +6,12 @@ import GlobalStyles from "../../GlobalStyles";
 const Result = ({navigation}) => {
     return (
         <View>
-            <Text style={[GlobalStyles.boldText, { fontSize: 24, textAlign: "left", marginTop: 5 }]}>Recent</Text>
+            <Text style={[GlobalStyles.boldText, { fontSize: 24, textAlign: "left", marginTop: 5 }]}>Result</Text>
             <FlatList
                 data={resultArray}
                 horizontal
                 showsHorizontalScrollIndicator={false}
-                renderItem={({ item, index }) => <Card key={item.id} image={item.image} title={item.title} navigation={navigation}/>}
+                renderItem={({ item, index }) => <Card wd={80} ht={100} key={item.id} image={item.image} title={item.title} navigation={navigation}/>}
                 keyExtractor={item => item.id}
             />
         </View>

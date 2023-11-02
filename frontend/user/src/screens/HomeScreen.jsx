@@ -125,10 +125,10 @@ const HomeScreen = ({ navigation }) => {
                         <View style={{ alignItems: 'center' }}>
                             <TouchableOpacity style={[GlobalStyles.picker, { width: windowWidth - 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 5 }]} onPress={() => setModalVisible(!modalVisible)}>
                                 <View style={{flex:1}}>
-                                    <Text style={[GlobalStyles.boldText,(placeholder == 'Pickup Show Time') ? { color: '#8b8981' } : { color: 'black' }]}>{placeholder}</Text>
+                                    <Text style={[GlobalStyles.boldText,(placeholder == 'Pickup Show Time') ? { color: '#8b8981' } : { color: '#F55139' }]}>{placeholder}</Text>
                                 </View>
                                 <View style={{  position:'relative', justifyContent:'center', borderLeftWidth:2, borderColor:'#bbb', height:'100%', paddingHorizontal:5}}>
-                                    <Ionicons name="calendar" style={{fontSize:26, color:'#F55139'}}></Ionicons>
+                                    <Ionicons name="calendar" style={{fontSize:26, color:'#1E1F22'}}></Ionicons>
                                 </View>
                                
                             </TouchableOpacity>
