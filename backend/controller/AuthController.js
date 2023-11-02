@@ -33,37 +33,37 @@ const Register = async (req, res) => {
 };
 
 //VERIFY PASSWORD
-const Verify = async (req,res)=>{
-    try{
-        const {mobileNo, password}=req.body;
-        const user = await User.findOne({phone:mobileNo})
-        if(user){
-            const authorised = await bcrypt.compare(password, user.password);
-            if(authorised){
-                const token = await user.generateToken();
-                res.status(200).send({token});
-            }else{
-                res.status(200).send({
-                    error:"Wrong Password"
-                });
-            }
-        }else{
-            res.status(404).send({
-                error:"User not Found"
-            });
-        }
+const Verify = async (req, res) => {
+  try {
+    const { mobileNo, password } = req.body;
+    const user = await User.findOne({ phone: mobileNo })
+    if (user) {
+      const authorised = await bcrypt.compare(password, user.password);
+      if (authorised) {
+        const token = await user.generateToken();
+        res.status(200).send({ token });
+      } else {
+        res.status(200).send({
+          error: "Wrong Password"
+        });
+      }
+    } else {
+      res.status(404).send({
+        error: "User not Found"
+      });
     }
-  } catch (err) {
-    console.log("Signin Error: ", err);
   }
+  catch (err) {
+  console.log("Signin Error: ", err);
+}
 };
 
 
 //GET PROFILE DATA
 const ProfileData = async (req, res) => {
   try {
-    const {fname, lname, phone, email} = req.user
-    res.status(200).json({fname, lname, email, phone})
+    const { fname, lname, phone, email } = req.user
+    res.status(200).json({ fname, lname, email, phone })
   } catch (err) {
     console.log(err)
   }

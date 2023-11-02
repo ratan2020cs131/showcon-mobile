@@ -1,12 +1,12 @@
 const express = require('express');
 const route = express.Router();
+const {AuthMiddleWare} = require('../middleware/AuthMiddleware.js')
 const {
     Signin,
     Register,
     Verify,
     ProfileData
 } = require('../controller/AuthController');
-const {AuthMiddleWare} = require('../middleware/AuthMiddleware.js')
 
 route.get('/signin/:mobileNo',Signin);
 route.post('/verify',Verify);
