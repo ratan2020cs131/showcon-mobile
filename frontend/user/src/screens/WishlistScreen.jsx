@@ -1,9 +1,14 @@
-import { ImageBackground, Pressable, View, Text, StyleSheet, ScrollView } from 'react-native';
+import { ImageBackground, View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import ScreenWrapper from './ScreenWrapper';
 import GlobalStyles from '../GlobalStyles';
+import posterImg from '../../assets/images/poster.png';
+import ModalView from "../components/Modal";
+import { useState } from 'react';
 
 const WishlistScreen = ({ navigation }) => {
+    const [modal, setModal]=useState(false);
+    onClose=()=>setModal(false)
 
     return (
         <ScreenWrapper title="Whishlist">
@@ -12,23 +17,24 @@ const WishlistScreen = ({ navigation }) => {
                     <View style={styles.likedcontainer}>
                         {
                             likedArray.map((item, index) => (
-                                <Pressable style={styles.item} onPress={() => navigation.navigate("ShowScreen")}>
+                                <TouchableOpacity key={index} style={styles.item} onPress={() => navigation.navigate("ShowScreen")}>
                                     <View style={styles.imageContainer}>
-                                        <ImageBackground style={styles.image} source={{ uri: item.thumbnail }} resizeMode='cover'>
-                                            <View style={{alignItems:'flex-end', padding:7}}>
-                                            <Ionicons name="heart" size={20} color="#F55139" />
-                                            </View>                                    
+                                        <ImageBackground style={styles.image} source={item.thumbnail} resizeMode='cover'>
+                                            <TouchableOpacity style={styles.iconContainer} onPress={() => setModal(true)}>
+                                            <Ionicons name="trash" style={styles.icon}></Ionicons>
+                                            </TouchableOpacity>
                                             <View style={styles.titleContainer}>
                                                 <Text style={[GlobalStyles.semiBoldText, styles.titleText]}>{item.movieName}</Text>
                                             </View>
                                         </ImageBackground>
                                     </View>
-                                </Pressable>
+                                </TouchableOpacity>
                             ))
                         }
                     </View>
                 </View>
             </ScrollView>
+            <ModalView visible={modal} onClose={onClose} title="Are you sure to remove this show from your wishlist"/>
         </ScreenWrapper>
     )
 }
@@ -54,6 +60,7 @@ const styles = StyleSheet.create({
         width: 150,
         height: 180,
         margin: 10,
+        position:'relative'
     },
     imageContainer: {
         flex: 1,
@@ -81,68 +88,42 @@ const styles = StyleSheet.create({
         textAlign: 'left',
         paddingLeft: 10,
     },
+    iconContainer:{
+        alignItems:'flex-end', 
+        padding:7, 
+        position:'absolute',
+        bottom:0,
+        right:3,
+        borderRadius:50,
+        zIndex:5
+    },
+    icon:{
+        color:'white',
+        fontSize:19,
+    }
 });
 
 
 const likedArray = [
     {
         id: 1,
-        thumbnail: 'https://i.pravatar.cc/112',
+        thumbnail: posterImg,
         movieName: 'Movie-A',
     },
     {
         id: 2,
-        thumbnail: 'https://i.pravatar.cc/112',
+        thumbnail: posterImg,
         movieName: 'Movie-A',
     },
     {
         id: 3,
-        thumbnail: 'https://i.pravatar.cc/112',
+        thumbnail: posterImg,
         movieName: 'Movie-A',
     },
     {
         id: 4,
-        thumbnail: 'https://i.pravatar.cc/112',
+        thumbnail: posterImg,
         movieName: 'Movie-A',
     },
-    {
-        id: 5,
-        thumbnail: 'https://i.pravatar.cc/112',
-        movieName: 'Movie-A',
-    },
-    {
-        id: 6,
-        thumbnail: 'https://i.pravatar.cc/112',
-        movieName: 'Movie-A',
-    },
-    {
-        id: 7,
-        thumbnail: 'https://i.pravatar.cc/112',
-        movieName: 'Movie-A',
-    },
-    {
-        id: 8,
-        thumbnail: 'https://i.pravatar.cc/112',
-        movieName: 'Movie-A',
-    },
-    {
-        id: 9,
-        thumbnail: 'https://i.pravatar.cc/112',
-        movieName: 'Movie-A',
-    },
-    {
-        id: 10,
-        thumbnail: 'https://i.pravatar.cc/112',
-        movieName: 'Movie-A',
-    },
-    {
-        id: 11,
-        thumbnail: 'https://i.pravatar.cc/112',
-        movieName: 'Movie-A',
-    },
-    {
-        id: 12,
-        thumbnail: 'https://i.pravatar.cc/112',
-        movieName: 'Movie-A',
-    }
+    
 ];

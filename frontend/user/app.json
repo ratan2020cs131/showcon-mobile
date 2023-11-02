@@ -21,12 +21,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.showcon.app"
     },
     "web": {
       "favicon": "./assets/icon.png"
     },
     "extra": {
+      "eas": {
+        "projectId": "945135ac-1f3e-4e8a-bfb3-04e5097e85bd"
+      }
     }
   }
 }
