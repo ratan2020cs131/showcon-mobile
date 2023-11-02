@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { FontAwesome, MaterialIcons, Feather, Ionicons } from '@expo/vector-icons';
 import ScreenWrapper from './ScreenWrapper';
@@ -39,7 +39,7 @@ const ProfileScreen = ({ navigation }) => {
                             <FontAwesome name='user-o' size={15} color={"black"} />
                             <Text style={[GlobalStyles.semiBoldText, styles.input2]}>Name</Text>
                         </View>
-                        <Text>{authState.user.fname + " " + authState.user.lname}</Text>
+                        <Text style={[GlobalStyles.normalText]}>{authState.user.fname + " " + authState.user.lname}</Text>
                     </View>
 
                     {/* Email */}
@@ -48,7 +48,7 @@ const ProfileScreen = ({ navigation }) => {
                             <MaterialIcons name='alternate-email' size={15} color={"black"} />
                             <Text style={[GlobalStyles.semiBoldText, styles.input2]}>Email</Text>
                         </View>
-                        <Text>{authState.user.email}</Text>
+                        <Text style={[GlobalStyles.normalText]}>{authState.user.email}</Text>
                     </View>
 
                     {/* Phone Number */}
@@ -57,19 +57,10 @@ const ProfileScreen = ({ navigation }) => {
                             <Feather name='phone' size={15} color={"black"} />
                             <Text style={[GlobalStyles.semiBoldText, styles.input2]}>Phone</Text>
                         </View>
-                        <Text>{authState.user.phone}</Text>
+                        <Text style={[GlobalStyles.normalText]}>{authState.user.phone}</Text>
                     </View>
 
-                    {/* Password */}
-                    {/* <View style={[styles.section, { marginBottom: 25 }]}>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', flex: 1, paddingRight: 10 }}>
-                            <Feather name='lock' size={15} color={"black"} />
-                            <Text style={[GlobalStyles.normalText, styles.input2]}>Password</Text>
-                        </View>
-                        <Text>{UserData[0].password}</Text>
-                    </View> */}
-
-                    <TouchableOpacity style={[GlobalStyles.button, { flexDirection: 'row', alignItems: 'center', gap: 15, backgroundColor:'#1E1F22' }]} onPress={() => navigation.navigate("ProfileUpdate", { userData: UserData[0] })}>
+                    <TouchableOpacity style={[GlobalStyles.button, { flexDirection: 'row', alignItems: 'center', gap: 15, backgroundColor:'#1E1F22' }]} onPress={() => navigation.navigate("ProfileUpdate", { userData: authState.user })}>
                         <Text style={[GlobalStyles.semiBoldText, { color:'#E9E5D7' }]}>UPDATE PROFILE</Text>
                         {/* <FontAwesome name='pencil' size={20} color={"#E9E5D7"} /> */}
                     </TouchableOpacity>

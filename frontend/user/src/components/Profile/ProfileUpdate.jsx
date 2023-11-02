@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Pressable } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { FontAwesome, MaterialIcons, Feather, Ionicons } from '@expo/vector-icons';
 import ScreenWrapper from '../../screens/ScreenWrapper';
 import GlobalStyles from '../../GlobalStyles';
@@ -37,13 +37,13 @@ const ProfileUpdate = ({ navigation, route }) => {
                 {/*Password */}
                 <View style={[styles.section, { marginBottom: 25 }]}>
                     <Feather name='lock' size={20} color={"black"} />
-                    <TextInput placeholder={password} style={[GlobalStyles.input, styles.input2, GlobalStyles.normalText]} value={password} keyboardType='visible-password' />
+                    <TextInput placeholder={password?password:'Change Password'} style={[GlobalStyles.input, styles.input2, GlobalStyles.normalText]} value={password} keyboardType='visible-password' />
                 </View>
 
-                <Pressable style={[GlobalStyles.button, { flexDirection: 'row', alignItems: 'center', gap:5 }]} onPress={() => navigation.navigate("Profile")}>
+                <TouchableOpacity style={[GlobalStyles.button, { flexDirection: 'row', alignItems: 'center', gap:5 }]} onPress={() => navigation.navigate("Profile")}>
                     <Ionicons name='save' size={18} color={"black"} />
                     <Text style={[GlobalStyles.boldText, { paddingRight:5 }]}>SAVE</Text>
-                </Pressable>
+                </TouchableOpacity>
                
             </View>
         </ScreenWrapper>

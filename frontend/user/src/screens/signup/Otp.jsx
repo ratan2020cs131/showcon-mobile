@@ -5,7 +5,7 @@ import GlobalStyles from "../../GlobalStyles";
 import Logo from "../../../assets/Logo.png";
 import { Ionicons } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
-import { verify, auth, resetError } from "../../Redux/Features/Auth/authSlice";
+import { verify, auth, resetError, getProfile } from "../../Redux/Features/Auth/authSlice";
 import { CommonActions } from '@react-navigation/native';
 
 const Otp = ({ navigation, route }) => {
@@ -24,6 +24,7 @@ const Otp = ({ navigation, route }) => {
     if (authState.token) {
 
       await AsyncStorage.setItem('token', authState.token);
+      dispatch(getProfile());
 
       navigation.dispatch(CommonActions.reset({
         index: 0,
