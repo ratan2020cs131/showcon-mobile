@@ -55,10 +55,11 @@ const GlobalStyles = StyleSheet.create({
     },
 
     picker: {
-        height:40,
+        paddingLeft:20,
+        height:50,
         width:50,
-        borderWidth:1,
-        borderColor:'#E9E5D7',
+        borderWidth:2,
+        borderColor:'#bbb',
         borderRadius:10,
     }
 });

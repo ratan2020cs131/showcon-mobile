@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Alert, Dimensions, FlatList, ImageBackground, Modal, Pressable, View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { FontAwesome5, Feather } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import DateTimePicker from "@react-native-community/datetimepicker"
 import ScreenWrapper from './ScreenWrapper';
 import GlobalStyles from '../GlobalStyles';
@@ -14,7 +15,7 @@ const HomeScreen = ({ navigation }) => {
 
     const [date, setDate] = useState('Date');
     const [time, setTime] = useState('Time');
-    const [placeholder, setPlaceholder] = useState('Pickup Show')
+    const [placeholder, setPlaceholder] = useState('Pickup Show Time')
     const [showDatePicker, setShowDatePicker] = useState(false);
     const [showTimePicker, setShowTimePicker] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
@@ -44,7 +45,6 @@ const HomeScreen = ({ navigation }) => {
                         transparent={true}
                         visible={modalVisible}
                         onRequestClose={() => {
-                            Alert.alert('Modal has been closed.');
                             setModalVisible(!modalVisible);
                         }}>
                         <View style={styles.centeredView}>
@@ -123,16 +123,15 @@ const HomeScreen = ({ navigation }) => {
                     <ScrollView style={styles.container} showsVerticalScrollIndicator={false} nestedScrollEnabled={true} >
                         {/* time */}
                         <View style={{ alignItems: 'center' }}>
-                            <Pressable style={[GlobalStyles.picker, { width: windowWidth - 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 5 }]} onPress={() => setModalVisible(!modalVisible)}>
+                            <TouchableOpacity style={[GlobalStyles.picker, { width: windowWidth - 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 5 }]} onPress={() => setModalVisible(!modalVisible)}>
                                 <View style={{flex:1}}>
-                                    <Text style={(placeholder == 'Pickup Show') ? { color: '#8b8981' } : { color: 'black' }}>{placeholder}</Text>
+                                    <Text style={[GlobalStyles.boldText,(placeholder == 'Pickup Show Time') ? { color: '#8b8981' } : { color: 'black' }]}>{placeholder}</Text>
                                 </View>
-                                <View style={{  position:'relative', justifyContent:'center' }}>
-                                    <View style={[styles.line, { width: 1 }]} />
-                                    <FontAwesome5 name="calendar-alt" size={25} color="#F55139" />
+                                <View style={{  position:'relative', justifyContent:'center', borderLeftWidth:2, borderColor:'#bbb', height:'100%', paddingHorizontal:5}}>
+                                    <Ionicons name="calendar" style={{fontSize:26, color:'#F55139'}}></Ionicons>
                                 </View>
                                
-                            </Pressable>
+                            </TouchableOpacity>
                         </View>
 
                         <Result navigation={navigation}/>
