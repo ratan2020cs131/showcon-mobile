@@ -63,7 +63,7 @@ const Verify = async (req, res) => {
 const ProfileData = async (req, res) => {
   try {
     const { fname, lname, phone, email } = req.user
-    res.status(200).json(req.user)
+    res.status(200).json({ fname, lname, phone, email })
   } catch (err) {
     console.log(err)
   }

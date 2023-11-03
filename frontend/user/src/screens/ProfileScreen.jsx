@@ -7,31 +7,28 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CommonActions } from '@react-navigation/native';
 import { resetStates } from '../Redux/Features/Auth/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { auth } from '../Redux/Features/Auth/authSlice';
+import { auth, logout } from '../Redux/Features/Auth/authSlice';
 
 const ProfileScreen = ({ navigation }) => {
     const dispatch = useDispatch();
     const authState = useSelector(auth);
 
-    const logoutHandler=async ()=>{
-        await AsyncStorage.removeItem('token');
-        const value = await AsyncStorage.getItem('token');
-        if(!value){
-            dispatch(resetStates());
-            navigation.dispatch(CommonActions.reset({
-                index: 0,
-                routes: [
-                  { name: 'Login' },
-                ],
-              }));
-        }
+    const logoutHandler = async () => {
+        dispatch(resetStates());
+        dispatch(logout());
+        navigation.dispatch(CommonActions.reset({
+            index: 0,
+            routes: [
+                { name: 'Login' },
+            ],
+        }));
     }
 
     return (
         <ScreenWrapper title={"Profile"}>
             <View style={styles.container}>
 
-                <View style={{width:'100%', alignItems:'center'}}>
+                <View style={{ width: '100%', alignItems: 'center' }}>
 
                     {/* Name */}
                     <View style={styles.section}>
@@ -60,15 +57,15 @@ const ProfileScreen = ({ navigation }) => {
                         <Text style={[GlobalStyles.normalText]}>{authState.user.phone}</Text>
                     </View>
 
-                    <TouchableOpacity style={[GlobalStyles.button, { flexDirection: 'row', alignItems: 'center', gap: 15, backgroundColor:'#1E1F22' }]} onPress={() => navigation.navigate("ProfileUpdate", { userData: authState.user })}>
-                        <Text style={[GlobalStyles.semiBoldText, { color:'#E9E5D7' }]}>UPDATE PROFILE</Text>
+                    <TouchableOpacity style={[GlobalStyles.button, { flexDirection: 'row', alignItems: 'center', gap: 15, backgroundColor: '#1E1F22' }]} onPress={() => navigation.navigate("ProfileUpdate", { userData: authState.user })}>
+                        <Text style={[GlobalStyles.semiBoldText, { color: '#E9E5D7' }]}>UPDATE PROFILE</Text>
                         {/* <FontAwesome name='pencil' size={20} color={"#E9E5D7"} /> */}
                     </TouchableOpacity>
                 </View>
 
                 {/* LOGOUT BUTTON */}
                 <TouchableOpacity style={[GlobalStyles.button, { flexDirection: 'row', alignItems: 'center', gap: 5 }]} onPress={logoutHandler}>
-                    <Text style={[GlobalStyles.boldText, { paddingLeft:10}]}>LOGOUT</Text>
+                    <Text style={[GlobalStyles.boldText, { paddingLeft: 10 }]}>LOGOUT</Text>
                     <Ionicons name="log-out-outline" style={{ fontSize: 23 }}></Ionicons>
                 </TouchableOpacity>
             </View>
@@ -82,8 +79,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'space-between',
-        paddingVertical:30,
-        paddingTop:60,
+        paddingVertical: 30,
+        paddingTop: 60,
         alignItems: 'center',
     },
     section: {

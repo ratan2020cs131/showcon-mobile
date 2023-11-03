@@ -43,11 +43,22 @@ const getProfile = async () => {
     }
 }
 
+const logout = async () => {
+    try {
+        const response = await axiosToken.get(`${BASE_URL}auth/logout`);
+        return response.data;
+    }
+    catch (err) {
+        console.log("Logout Error: ", err)
+    }
+}
+
 const authApi = {
     signin,
     verify,
     register,
-    getProfile
+    getProfile,
+    logout
 }
 
 export default authApi;

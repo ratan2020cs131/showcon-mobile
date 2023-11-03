@@ -1,17 +1,30 @@
 import React, { useEffect } from 'react'
 import { View, ActivityIndicator, StyleSheet } from 'react-native';
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useDispatch } from 'react-redux';
-import { getProfile } from '../Redux/Features/Auth/authSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { getProfile, auth } from '../Redux/Features/Auth/authSlice';
 
-const Loader = () => {
+const Loader = ({ setIsLogged }) => {
     const dispatch = useDispatch();
+    const authState = useSelector(auth);
 
-    
+    const removeToken = async()=>{
+        await AsyncStorage.removeItem('token');
+    }
+
+
 
     useEffect(() => {
-        dispatch(getProfile());
-    }, [])
+        if (authState.isAuth) {
+            setIsLogged(true);
+        } else if (authState.isAuth === undefined) {
+            dispatch(getProfile());
+        }else{
+            removeToken();
+            setIsLogged(false);
+        }
+
+    }, [authState])
 
 
     return (
@@ -25,10 +38,10 @@ export default Loader;
 
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      width: "100%",
-      alignItems: 'center',
-      justifyContent: 'center',
-      backgroundColor: '#1E1F22',
+        flex: 1,
+        width: "100%",
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#1E1F22',
     },
-  });
+});

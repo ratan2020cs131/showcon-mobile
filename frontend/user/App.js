@@ -27,21 +27,21 @@ export default function App({ }) {
     };
     initializeApp();
     setTimeout(() => {
-      getToken();
+      // getToken();
     }, 2000);
   }, []);
 
 
-  const getToken = async () => {
-    const value = await AsyncStorage.getItem('token');
-    if (value !== null) {
-      setIsLogged(true);
-    }
-    else {
-      console.log("No token found");
-      setIsLogged(false);
-    }
-  };
+  // const getToken = async () => {
+  //   const value = await AsyncStorage.getItem('token');
+  //   if (value !== null) {
+  //     setIsLogged(true);
+  //   }
+  //   else {
+  //     console.log("No token found");
+  //     setIsLogged(false);
+  //   }
+  // };
 
 
   if (!fontsLoaded) {
@@ -58,7 +58,7 @@ export default function App({ }) {
       <NavigationContainer>
         {
           isLogged === undefined ?
-            <Loader />
+            <Loader setIsLogged={setIsLogged}/>
             :
             <>
               {

@@ -68,6 +68,22 @@ export const getProfile = createAsyncThunk(
     }
 )
 
+export const logout = createAsyncThunk(
+    "auth/logout",
+    async (thunkAPI) => {
+        try {
+            const res = await authApi.logout();
+            if (!res) {
+                return thunkAPI.rejectWithValue(error);
+            }
+            return res;
+        }
+        catch (err) {
+            return thunkAPI.rejectWithValue(err.message);
+        }
+    }
+)
+
 const state = {
     isLoading: false,
     isRegistered: undefined,
@@ -75,6 +91,7 @@ const state = {
     token: null,
     error: undefined,
     user:undefined,
+    isAuth:undefined,
 }
 
 const authSlice = createSlice({
@@ -122,7 +139,11 @@ const authSlice = createSlice({
                     state.isVerified = true
             })
             .addCase(getProfile.fulfilled, (state, action)=>{
-                state.user=action.payload
+                state.user=action.payload,
+                state.isAuth=true
+            })
+            .addCase(getProfile.rejected, (state, action)=>{
+                state.isAuth=false
             })
     }
 });

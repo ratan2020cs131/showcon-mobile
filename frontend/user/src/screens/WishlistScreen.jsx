@@ -20,7 +20,7 @@ const WishlistScreen = ({ navigation }) => {
                     <View style={styles.likedcontainer}>
                         {
                             likedArray.map((item, index) => (
-                                <TouchableOpacity key={index} style={styles.item} onPress={() => navigation.navigate("ShowScreen")}>
+                                <TouchableOpacity key={index} style={styles.item} onPress={() => navigation.navigate("ShowScreen", {image:item.thumbnail})}>
                                     <View style={styles.imageContainer}>
                                         <ImageBackground style={styles.image} source={item.thumbnail} resizeMode='cover'>
                                             <TouchableOpacity style={styles.iconContainer} onPress={() => setModal(true)}>
