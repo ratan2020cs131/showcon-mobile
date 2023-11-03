@@ -70,6 +70,20 @@ const ProfileData = async (req, res) => {
   }
 };
 
+//PUT PROFILE UPDATE
+const ProfileUpdate = async (req, res) => {
+  try{
+    const id = req.user._id ;
+    const user = await User.findByIdAndUpdate({_id: id}, req.body, {returnOriginal: false})
+    if(!user) {
+      return res.status(404).json({err: "User not found"})
+    }
+    res.json(user)
+  } catch(err) {
+    console.log(err)
+  }
+}
+
 
 //LOGOUT
 const Logout = async (req, res) => {
@@ -92,5 +106,6 @@ module.exports = {
   Register,
   Verify,
   ProfileData,
+  ProfileUpdate,
   Logout
 };
