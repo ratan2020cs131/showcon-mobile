@@ -7,7 +7,7 @@ const createTicket = async(req,res)=>{
         const saved = await ticket.save();
         const user = await User.findById({_id:req.user._id})
 
-        user.history=saved._id;
+        user.history.push(saved._id);
         await user.save();
         
         res.send(saved);
