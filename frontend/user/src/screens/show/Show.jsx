@@ -14,8 +14,8 @@ const Show = ({ navigation, route }) => {
             <View style={styles.container}>
                 <Poster title={data.title} image={data.banner}/>
                 <Places cinema={data.cinema} navigation={navigation} />
-                <Cast />
-                <Description />
+                <Cast data={data.cast}/>
+                <Description data={data.description} />
                 <Rating />
             </View>
         </ScrollView>
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: "column",
         alignItems: "center",
-        backgroundColor: "#EEEEEE"
+        backgroundColor: "#EEEEEE",
     },
 });
 
