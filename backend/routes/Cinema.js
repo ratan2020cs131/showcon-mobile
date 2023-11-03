@@ -1,9 +1,9 @@
 const express = require('express');
 const route = express.Router();
 const { AuthMiddleWare } = require('../middleware/AuthMiddleware.js')
-const { } = require('../controller/CinemaController.js');
+const { getCinema } = require('../controller/MovieController.js');
 
 
-route.get('/:id', );
+route.get('/:id', getCinema);
 
 module.exports = route;

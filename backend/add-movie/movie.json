@@ -1,825 +1,111 @@
 [
     {
-      "_id": "6544b40be1d9d30fc32f5bc1",
-      "title": "Spiderman 3",
-      "banner": "https://i.imgur.com/sRwPBTX.png",
-      "cinema": [
-        {
-          "id": "65449d6fac37ed25aefe3138",
-          "schedule": [
+        "title": "John Wick: Chapter 1",
+        "banner": "https://i.imgur.com/rHO6BQo.png",
+        "cinema": [
             {
-              "date": "03 Nov, 2023",
-              "time": "11:30 AM",
-              "_id": "6544b40be1d9d30fc32f5bc3"
+                "id": "65449d6fac37ed25aefe3138",
+                "schedule": [
+                    {
+                        "date": "03 Nov, 2023",
+                        "time": "11:30 AM"
+                    },
+                    {
+                        "date": "03 Nov, 2023",
+                        "time": "12:50 AM"
+                    },
+                    {
+                        "date": "04 Nov, 2023",
+                        "time": "11:30 AM"
+                    },
+                    {
+                        "date": "04 Nov, 2023",
+                        "time": "12:50 AM"
+                    }
+                ]
             },
             {
-              "date": "03 Nov, 2023",
-              "time": "12:50 AM",
-              "_id": "6544b40be1d9d30fc32f5bc4"
+                "id": "65449d6fac37ed25aefe312d",
+                "schedule": [
+                    {
+                        "date": "03 Nov, 2023",
+                        "time": "11:30 AM"
+                    },
+                    {
+                        "date": "03 Nov, 2023",
+                        "time": "12:50 AM"
+                    },
+                    {
+                        "date": "04 Nov, 2023",
+                        "time": "11:30 AM"
+                    },
+                    {
+                        "date": "04 Nov, 2023",
+                        "time": "12:50 AM"
+                    }
+                ]
             },
             {
-              "date": "04 Nov, 2023",
-              "time": "11:30 AM",
-              "_id": "6544b40be1d9d30fc32f5bc5"
+                "id": "65449d6fac37ed25aefe3122",
+                "schedule": [
+                    {
+                        "date": "03 Nov, 2023",
+                        "time": "11:30 AM"
+                    },
+                    {
+                        "date": "03 Nov, 2023",
+                        "time": "12:50 AM"
+                    },
+                    {
+                        "date": "04 Nov, 2023",
+                        "time": "11:30 AM"
+                    },
+                    {
+                        "date": "04 Nov, 2023",
+                        "time": "12:50 AM"
+                    }
+                ]
             },
             {
-              "date": "04 Nov, 2023",
-              "time": "12:50 AM",
-              "_id": "6544b40be1d9d30fc32f5bc6"
+                "id": "65449e4b59fa70f16f3cbbbe",
+                "schedule": [
+                    {
+                        "date": "03 Nov, 2023",
+                        "time": "11:30 AM"
+                    },
+                    {
+                        "date": "03 Nov, 2023",
+                        "time": "12:50 AM"
+                    },
+                    {
+                        "date": "04 Nov, 2023",
+                        "time": "11:30 AM"
+                    },
+                    {
+                        "date": "04 Nov, 2023",
+                        "time": "12:50 AM"
+                    }
+                ]
             }
-          ],
-          "_id": "6544b40be1d9d30fc32f5bc2",
-          "name": "US Cinemas: Galaxy Blue Sapphire"
-        },
-        {
-          "id": "65449d6fac37ed25aefe312d",
-          "schedule": [
+        ],
+        "cast": [
             {
-              "date": "03 Nov, 2023",
-              "time": "11:30 AM",
-              "_id": "6544b40be1d9d30fc32f5bc8"
+                "img": "https://i.imgur.com/ScLTn1p.png",
+                "name": "Keeanu Reeves"
             },
             {
-              "date": "03 Nov, 2023",
-              "time": "12:50 AM",
-              "_id": "6544b40be1d9d30fc32f5bc9"
+                "img": "https://i.imgur.com/1qCrekV.png",
+                "name": "Ian McShane"
             },
             {
-              "date": "04 Nov, 2023",
-              "time": "11:30 AM",
-              "_id": "6544b40be1d9d30fc32f5bca"
+                "img": "https://i.imgur.com/ow2R5eN.png",
+                "name": "Alfie Allen"
             },
             {
-              "date": "04 Nov, 2023",
-              "time": "12:50 AM",
-              "_id": "6544b40be1d9d30fc32f5bcb"
+                "img": "https://i.imgur.com/NSx683h.png",
+                "name": "Michael Nyqvist"
             }
-          ],
-          "_id": "6544b40be1d9d30fc32f5bc7",
-          "name": "Rajhans Cinemas: Galaxy Plaza"
-        },
-        {
-          "id": "65449d6fac37ed25aefe3122",
-          "schedule": [
-            {
-              "date": "03 Nov, 2023",
-              "time": "11:30 AM",
-              "_id": "6544b40be1d9d30fc32f5bcd"
-            },
-            {
-              "date": "03 Nov, 2023",
-              "time": "12:50 AM",
-              "_id": "6544b40be1d9d30fc32f5bce"
-            },
-            {
-              "date": "04 Nov, 2023",
-              "time": "11:30 AM",
-              "_id": "6544b40be1d9d30fc32f5bcf"
-            },
-            {
-              "date": "04 Nov, 2023",
-              "time": "12:50 AM",
-              "_id": "6544b40be1d9d30fc32f5bd0"
-            }
-          ],
-          "_id": "6544b40be1d9d30fc32f5bcc",
-          "name": "PVR: Gaur City, Greater Noida"
-        },
-        {
-          "id": "65449e4b59fa70f16f3cbbbe",
-          "schedule": [
-            {
-              "date": "03 Nov, 2023",
-              "time": "11:30 AM",
-              "_id": "6544b40be1d9d30fc32f5bd2"
-            },
-            {
-              "date": "03 Nov, 2023",
-              "time": "12:50 AM",
-              "_id": "6544b40be1d9d30fc32f5bd3"
-            },
-            {
-              "date": "04 Nov, 2023",
-              "time": "11:30 AM",
-              "_id": "6544b40be1d9d30fc32f5bd4"
-            },
-            {
-              "date": "04 Nov, 2023",
-              "time": "12:50 AM",
-              "_id": "6544b40be1d9d30fc32f5bd5"
-            }
-          ],
-          "_id": "6544b40be1d9d30fc32f5bd1",
-          "name": "PVR: Anupam Saket, Delhi"
-        }
-      ],
-      "cast": [
-        {
-          "img": "https://i.imgur.com/cGxxgTW.png",
-          "name": "Tobey Maguire",
-          "_id": "6544b40be1d9d30fc32f5bd6"
-        },
-        {
-          "img": "https://i.imgur.com/t9syO1w.png",
-          "name": "Kristen Dunst",
-          "_id": "6544b40be1d9d30fc32f5bd7"
-        },
-        {
-          "img": "https://i.imgur.com/yOfd9rZ.png",
-          "name": "Willem Dafoe",
-          "_id": "6544b40be1d9d30fc32f5bd8"
-        },
-        {
-          "img": "https://i.imgur.com/GAsI8Tq.png",
-          "name": "James Franco",
-          "_id": "6544b40be1d9d30fc32f5bd9"
-        }
-      ],
-      "description": "Peter Parker has finally managed to piece together the once-broken parts of his life, maintaining a balance between his relationship with Mary-Jane and his responsibility as Spider-Man. But more challenges arise for our young hero. Peter's old friend Harry Obsourne has set out for revenge against Peter; taking up the mantle of his late father's persona as The New Goblin, and Peter must also capture Uncle Ben's real killer, Flint Marko, who has been transformed into his toughest foe yet, the Sandman. All hope seems lost when suddenly Peter's suit turns jet-black and greatly amplifies his powers.",
-      "__v": 0
-    },
-    {
-      "_id": "6544b40be1d9d30fc32f5bda",
-      "title": "Mission Majnu",
-      "banner": "https://i.imgur.com/g11lRz8.png",
-      "cinema": [
-        {
-          "id": "65449d6fac37ed25aefe3138",
-          "schedule": [
-            {
-              "date": "03 Nov, 2023",
-              "time": "11:30 AM",
-              "_id": "6544b40be1d9d30fc32f5bdc"
-            },
-            {
-              "date": "03 Nov, 2023",
-              "time": "12:50 AM",
-              "_id": "6544b40be1d9d30fc32f5bdd"
-            },
-            {
-              "date": "04 Nov, 2023",
-              "time": "11:30 AM",
-              "_id": "6544b40be1d9d30fc32f5bde"
-            },
-            {
-              "date": "04 Nov, 2023",
-              "time": "12:50 AM",
-              "_id": "6544b40be1d9d30fc32f5bdf"
-            }
-          ],
-          "_id": "6544b40be1d9d30fc32f5bdb",
-          "name": "US Cinemas: Galaxy Blue Sapphire"
-        },
-        {
-          "id": "65449d6fac37ed25aefe312d",
-          "schedule": [
-            {
-              "date": "03 Nov, 2023",
-              "time": "11:30 AM",
-              "_id": "6544b40be1d9d30fc32f5be1"
-            },
-            {
-              "date": "03 Nov, 2023",
-              "time": "12:50 AM",
-              "_id": "6544b40be1d9d30fc32f5be2"
-            },
-            {
-              "date": "04 Nov, 2023",
-              "time": "11:30 AM",
-              "_id": "6544b40be1d9d30fc32f5be3"
-            },
-            {
-              "date": "04 Nov, 2023",
-              "time": "12:50 AM",
-              "_id": "6544b40be1d9d30fc32f5be4"
-            }
-          ],
-          "_id": "6544b40be1d9d30fc32f5be0",
-          "name": "Rajhans Cinemas: Galaxy Plaza"
-        },
-        {
-          "id": "65449d6fac37ed25aefe3122",
-          "schedule": [
-            {
-              "date": "03 Nov, 2023",
-              "time": "11:30 AM",
-              "_id": "6544b40be1d9d30fc32f5be6"
-            },
-            {
-              "date": "03 Nov, 2023",
-              "time": "12:50 AM",
-              "_id": "6544b40be1d9d30fc32f5be7"
-            },
-            {
-              "date": "04 Nov, 2023",
-              "time": "11:30 AM",
-              "_id": "6544b40be1d9d30fc32f5be8"
-            },
-            {
-              "date": "04 Nov, 2023",
-              "time": "12:50 AM",
-              "_id": "6544b40be1d9d30fc32f5be9"
-            }
-          ],
-          "_id": "6544b40be1d9d30fc32f5be5",
-          "name": "PVR: Gaur City, Greater Noida"
-        },
-        {
-          "id": "65449e4b59fa70f16f3cbbbe",
-          "schedule": [
-            {
-              "date": "03 Nov, 2023",
-              "time": "11:30 AM",
-              "_id": "6544b40be1d9d30fc32f5beb"
-            },
-            {
-              "date": "03 Nov, 2023",
-              "time": "12:50 AM",
-              "_id": "6544b40be1d9d30fc32f5bec"
-            },
-            {
-              "date": "04 Nov, 2023",
-              "time": "11:30 AM",
-              "_id": "6544b40be1d9d30fc32f5bed"
-            },
-            {
-              "date": "04 Nov, 2023",
-              "time": "12:50 AM",
-              "_id": "6544b40be1d9d30fc32f5bee"
-            }
-          ],
-          "_id": "6544b40be1d9d30fc32f5bea",
-          "name": "PVR: Anupam Saket, Delhi"
-        }
-      ],
-      "cast": [
-        {
-          "img": "https://i.imgur.com/bUMe2lK.png",
-          "name": "Siddharth Malhotra",
-          "_id": "6544b40be1d9d30fc32f5bef"
-        },
-        {
-          "img": "https://i.imgur.com/Dp21bvM.png",
-          "name": "Rashmika Mandanna",
-          "_id": "6544b40be1d9d30fc32f5bf0"
-        },
-        {
-          "img": "https://i.imgur.com/MEqRJzC.png",
-          "name": "Sharib Hasmi",
-          "_id": "6544b40be1d9d30fc32f5bf1"
-        },
-        {
-          "img": "https://i.imgur.com/dJSXu2T.png",
-          "name": "Kumud Mishra",
-          "_id": "6544b40be1d9d30fc32f5bf2"
-        },
-        {
-          "img": "https://i.imgur.com/jVnnJpb.png",
-          "name": "Shishir Sharma",
-          "_id": "6544b40be1d9d30fc32f5bf3"
-        },
-        {
-          "img": "https://i.imgur.com/t50jkbF.png",
-          "name": "Rajit Kapoor",
-          "_id": "6544b40be1d9d30fc32f5bf4"
-        }
-      ],
-      "description": "R.N Kao of Indian Intelligence Agency gets an update that Pakistan is about to conduct nuclear test which cold prove a treat to India in future.Kao puts the matter in front of former Prime Minister Indira Gandhi who asks to investigate the matter Kao chooses a Raw agent Amandeep Singh whose already spying in the country.Aman is spying in the country by name of Tariq and works as a tailor at tailoring shop which stitches army uniforms.He falls in love with a blind girl Nasreen and soon gets married to her intelligence in India are clueless about where will the nuclear test take place in Pakistan.",
-      "__v": 0
-    },
-    {
-      "_id": "6544b40be1d9d30fc32f5bf5",
-      "title": "IB 71",
-      "banner": "https://i.imgur.com/acnZE8A.png",
-      "cinema": [
-        {
-          "id": "65449d6fac37ed25aefe3138",
-          "schedule": [
-            {
-              "date": "03 Nov, 2023",
-              "time": "11:30 AM",
-              "_id": "6544b40be1d9d30fc32f5bf7"
-            },
-            {
-              "date": "03 Nov, 2023",
-              "time": "12:50 AM",
-              "_id": "6544b40be1d9d30fc32f5bf8"
-            },
-            {
-              "date": "04 Nov, 2023",
-              "time": "11:30 AM",
-              "_id": "6544b40be1d9d30fc32f5bf9"
-            },
-            {
-              "date": "04 Nov, 2023",
-              "time": "12:50 AM",
-              "_id": "6544b40be1d9d30fc32f5bfa"
-            }
-          ],
-          "_id": "6544b40be1d9d30fc32f5bf6",
-          "name": "US Cinemas: Galaxy Blue Sapphire"
-        },
-        {
-          "id": "65449d6fac37ed25aefe312d",
-          "schedule": [
-            {
-              "date": "03 Nov, 2023",
-              "time": "11:30 AM",
-              "_id": "6544b40be1d9d30fc32f5bfc"
-            },
-            {
-              "date": "03 Nov, 2023",
-              "time": "12:50 AM",
-              "_id": "6544b40be1d9d30fc32f5bfd"
-            },
-            {
-              "date": "04 Nov, 2023",
-              "time": "11:30 AM",
-              "_id": "6544b40be1d9d30fc32f5bfe"
-            },
-            {
-              "date": "04 Nov, 2023",
-              "time": "12:50 AM",
-              "_id": "6544b40be1d9d30fc32f5bff"
-            }
-          ],
-          "_id": "6544b40be1d9d30fc32f5bfb",
-          "name": "Rajhans Cinemas: Galaxy Plaza"
-        },
-        {
-          "id": "65449d6fac37ed25aefe3122",
-          "schedule": [
-            {
-              "date": "03 Nov, 2023",
-              "time": "11:30 AM",
-              "_id": "6544b40be1d9d30fc32f5c01"
-            },
-            {
-              "date": "03 Nov, 2023",
-              "time": "12:50 AM",
-              "_id": "6544b40be1d9d30fc32f5c02"
-            },
-            {
-              "date": "04 Nov, 2023",
-              "time": "11:30 AM",
-              "_id": "6544b40be1d9d30fc32f5c03"
-            },
-            {
-              "date": "04 Nov, 2023",
-              "time": "12:50 AM",
-              "_id": "6544b40be1d9d30fc32f5c04"
-            }
-          ],
-          "_id": "6544b40be1d9d30fc32f5c00",
-          "name": "PVR: Gaur City, Greater Noida"
-        },
-        {
-          "id": "65449e4b59fa70f16f3cbbbe",
-          "schedule": [
-            {
-              "date": "03 Nov, 2023",
-              "time": "11:30 AM",
-              "_id": "6544b40be1d9d30fc32f5c06"
-            },
-            {
-              "date": "03 Nov, 2023",
-              "time": "12:50 AM",
-              "_id": "6544b40be1d9d30fc32f5c07"
-            },
-            {
-              "date": "04 Nov, 2023",
-              "time": "11:30 AM",
-              "_id": "6544b40be1d9d30fc32f5c08"
-            },
-            {
-              "date": "04 Nov, 2023",
-              "time": "12:50 AM",
-              "_id": "6544b40be1d9d30fc32f5c09"
-            }
-          ],
-          "_id": "6544b40be1d9d30fc32f5c05",
-          "name": "PVR: Anupam Saket, Delhi"
-        }
-      ],
-      "cast": [
-        {
-          "img": "https://i.imgur.com/rYEQktT.png",
-          "name": "Vidyut Jammwal",
-          "_id": "6544b40be1d9d30fc32f5c0a"
-        },
-        {
-          "img": "https://i.imgur.com/4q6zJ5U.png",
-          "name": "Anupam Kher",
-          "_id": "6544b40be1d9d30fc32f5c0b"
-        }
-      ],
-      "description": "After facing defeat in the under water battle in the Ghazi Attack Pakistan along with China plans another attack on India with China.According to the Indian intelligence bureau they find that in the next ten days there will be an aerial attack for which India isn't prepared yet.Dev one of the smart agents recently managed to elope from Pakistan army camp with some secret documents suggests IB Chief N.S. Awasthi that they should block their airbase for Paksitan but that isn't possible until a war is announced.",
-      "__v": 0
-    },
-    {
-      "_id": "6544b40be1d9d30fc32f5c0c",
-      "title": "The Incredible Hulk",
-      "banner": "https://i.imgur.com/fNiiS6c.png",
-      "cinema": [
-        {
-          "id": "65449d6fac37ed25aefe3138",
-          "schedule": [
-            {
-              "date": "03 Nov, 2023",
-              "time": "11:30 AM",
-              "_id": "6544b40be1d9d30fc32f5c0e"
-            },
-            {
-              "date": "03 Nov, 2023",
-              "time": "12:50 AM",
-              "_id": "6544b40be1d9d30fc32f5c0f"
-            },
-            {
-              "date": "04 Nov, 2023",
-              "time": "11:30 AM",
-              "_id": "6544b40be1d9d30fc32f5c10"
-            },
-            {
-              "date": "04 Nov, 2023",
-              "time": "12:50 AM",
-              "_id": "6544b40be1d9d30fc32f5c11"
-            }
-          ],
-          "_id": "6544b40be1d9d30fc32f5c0d",
-          "name": "US Cinemas: Galaxy Blue Sapphire"
-        },
-        {
-          "id": "65449d6fac37ed25aefe312d",
-          "schedule": [
-            {
-              "date": "03 Nov, 2023",
-              "time": "11:30 AM",
-              "_id": "6544b40be1d9d30fc32f5c13"
-            },
-            {
-              "date": "03 Nov, 2023",
-              "time": "12:50 AM",
-              "_id": "6544b40be1d9d30fc32f5c14"
-            },
-            {
-              "date": "04 Nov, 2023",
-              "time": "11:30 AM",
-              "_id": "6544b40be1d9d30fc32f5c15"
-            },
-            {
-              "date": "04 Nov, 2023",
-              "time": "12:50 AM",
-              "_id": "6544b40be1d9d30fc32f5c16"
-            }
-          ],
-          "_id": "6544b40be1d9d30fc32f5c12",
-          "name": "Rajhans Cinemas: Galaxy Plaza"
-        },
-        {
-          "id": "65449d6fac37ed25aefe3122",
-          "schedule": [
-            {
-              "date": "03 Nov, 2023",
-              "time": "11:30 AM",
-              "_id": "6544b40be1d9d30fc32f5c18"
-            },
-            {
-              "date": "03 Nov, 2023",
-              "time": "12:50 AM",
-              "_id": "6544b40be1d9d30fc32f5c19"
-            },
-            {
-              "date": "04 Nov, 2023",
-              "time": "11:30 AM",
-              "_id": "6544b40be1d9d30fc32f5c1a"
-            },
-            {
-              "date": "04 Nov, 2023",
-              "time": "12:50 AM",
-              "_id": "6544b40be1d9d30fc32f5c1b"
-            }
-          ],
-          "_id": "6544b40be1d9d30fc32f5c17",
-          "name": "PVR: Gaur City, Greater Noida"
-        },
-        {
-          "id": "65449e4b59fa70f16f3cbbbe",
-          "schedule": [
-            {
-              "date": "03 Nov, 2023",
-              "time": "11:30 AM",
-              "_id": "6544b40be1d9d30fc32f5c1d"
-            },
-            {
-              "date": "03 Nov, 2023",
-              "time": "12:50 AM",
-              "_id": "6544b40be1d9d30fc32f5c1e"
-            },
-            {
-              "date": "04 Nov, 2023",
-              "time": "11:30 AM",
-              "_id": "6544b40be1d9d30fc32f5c1f"
-            },
-            {
-              "date": "04 Nov, 2023",
-              "time": "12:50 AM",
-              "_id": "6544b40be1d9d30fc32f5c20"
-            }
-          ],
-          "_id": "6544b40be1d9d30fc32f5c1c",
-          "name": "PVR: Anupam Saket, Delhi"
-        }
-      ],
-      "cast": [
-        {
-          "img": "https://i.imgur.com/A5qj91R.png",
-          "name": "Edward Nortan",
-          "_id": "6544b40be1d9d30fc32f5c21"
-        },
-        {
-          "img": "https://i.imgur.com/nj1DNKk.jpg",
-          "name": "Liv Tyler",
-          "_id": "6544b40be1d9d30fc32f5c22"
-        },
-        {
-          "img": "https://i.imgur.com/lFUFiFk.png",
-          "name": "William Hurt",
-          "_id": "6544b40be1d9d30fc32f5c23"
-        },
-        {
-          "img": "https://i.imgur.com/w6Q0FqA.png",
-          "name": "Tim Roth",
-          "_id": "6544b40be1d9d30fc32f5c24"
-        },
-        {
-          "img": "https://i.imgur.com/jsqATWs.png",
-          "name": "Tim Blake Nelson",
-          "_id": "6544b40be1d9d30fc32f5c25"
-        }
-      ],
-      "description": "Depicting the events after the Gamma Bomb. 'The Incredible Hulk' tells the story of Dr Bruce Banner, who seeks a cure to his unique condition, which causes him to turn into a giant green monster under emotional stress. Whilst on the run from military which seeks his capture, Banner comes close to a cure. But all is lost when a new creature emerges: The Abomination.",
-      "__v": 0
-    },
-    {
-      "_id": "6544b40be1d9d30fc32f5ba9",
-      "title": "The Batman",
-      "banner": "https://i.imgur.com/rYffTtW.png",
-      "cinema": [
-        {
-          "id": "65449d6fac37ed25aefe3138",
-          "schedule": [
-            {
-              "date": "03 Nov, 2023",
-              "time": "11:30 AM",
-              "_id": "6544b40be1d9d30fc32f5bab"
-            },
-            {
-              "date": "03 Nov, 2023",
-              "time": "12:50 AM",
-              "_id": "6544b40be1d9d30fc32f5bac"
-            },
-            {
-              "date": "04 Nov, 2023",
-              "time": "11:30 AM",
-              "_id": "6544b40be1d9d30fc32f5bad"
-            },
-            {
-              "date": "04 Nov, 2023",
-              "time": "12:50 AM",
-              "_id": "6544b40be1d9d30fc32f5bae"
-            }
-          ],
-          "_id": "6544b40be1d9d30fc32f5baa",
-          "name": "US Cinemas: Galaxy Blue Sapphire"
-        },
-        {
-          "id": "65449d6fac37ed25aefe312d",
-          "schedule": [
-            {
-              "date": "03 Nov, 2023",
-              "time": "11:30 AM",
-              "_id": "6544b40be1d9d30fc32f5bb0"
-            },
-            {
-              "date": "03 Nov, 2023",
-              "time": "12:50 AM",
-              "_id": "6544b40be1d9d30fc32f5bb1"
-            },
-            {
-              "date": "04 Nov, 2023",
-              "time": "11:30 AM",
-              "_id": "6544b40be1d9d30fc32f5bb2"
-            },
-            {
-              "date": "04 Nov, 2023",
-              "time": "12:50 AM",
-              "_id": "6544b40be1d9d30fc32f5bb3"
-            }
-          ],
-          "_id": "6544b40be1d9d30fc32f5baf",
-          "name": "Rajhans Cinemas: Galaxy Plaza"
-        },
-        {
-          "id": "65449d6fac37ed25aefe3122",
-          "schedule": [
-            {
-              "date": "03 Nov, 2023",
-              "time": "11:30 AM",
-              "_id": "6544b40be1d9d30fc32f5bb5"
-            },
-            {
-              "date": "03 Nov, 2023",
-              "time": "12:50 AM",
-              "_id": "6544b40be1d9d30fc32f5bb6"
-            },
-            {
-              "date": "04 Nov, 2023",
-              "time": "11:30 AM",
-              "_id": "6544b40be1d9d30fc32f5bb7"
-            },
-            {
-              "date": "04 Nov, 2023",
-              "time": "12:50 AM",
-              "_id": "6544b40be1d9d30fc32f5bb8"
-            }
-          ],
-          "_id": "6544b40be1d9d30fc32f5bb4",
-          "name": "PVR: Gaur City, Greater Noida"
-        },
-        {
-          "id": "65449e4b59fa70f16f3cbbbe",
-          "schedule": [
-            {
-              "date": "03 Nov, 2023",
-              "time": "11:30 AM",
-              "_id": "6544b40be1d9d30fc32f5bba"
-            },
-            {
-              "date": "03 Nov, 2023",
-              "time": "12:50 AM",
-              "_id": "6544b40be1d9d30fc32f5bbb"
-            },
-            {
-              "date": "04 Nov, 2023",
-              "time": "11:30 AM",
-              "_id": "6544b40be1d9d30fc32f5bbc"
-            },
-            {
-              "date": "04 Nov, 2023",
-              "time": "12:50 AM",
-              "_id": "6544b40be1d9d30fc32f5bbd"
-            }
-          ],
-          "_id": "6544b40be1d9d30fc32f5bb9",
-          "name": "PVR: Anupam Saket, Delhi"
-        }
-      ],
-      "cast": [
-        {
-          "img": "https://i.imgur.com/PM5YrNR.png",
-          "name": "Robert Pattinson",
-          "_id": "6544b40be1d9d30fc32f5bbe"
-        },
-        {
-          "img": "https://i.imgur.com/VNI73s2.png",
-          "name": "Andy Serkis",
-          "_id": "6544b40be1d9d30fc32f5bbf"
-        },
-        {
-          "img": "https://i.imgur.com/bMIXL0h.png",
-          "name": "Colin Farrell",
-          "_id": "6544b40be1d9d30fc32f5bc0"
-        }
-      ],
-      "description": "Two years of nights have turned Bruce Wayne into a nocturnal animal. But as he continues to find his way as Gotham's dark knight Bruce is forced into a game of cat and mouse with his biggest threat so far, a manic killer known as 'The Riddler' who is filled with rage and determined to expose the corrupt system whilst picking off all of Gotham's key political figures. Working with both established and new allies, Bruce must track down the killer and see him brought to justice, while investigating his father's true legacy and questioning the effect that he has had on Gotham so far as 'The Batman.'",
-      "__v": 0
-    },
-    {
-      "_id": "6544b40be1d9d30fc32f5b90",
-      "title": "John Wick: Chapter 1",
-      "banner": "https://i.imgur.com/rHO6BQo.png",
-      "cinema": [
-        {
-          "id": "65449d6fac37ed25aefe3138",
-          "schedule": [
-            {
-              "date": "03 Nov, 2023",
-              "time": "11:30 AM",
-              "_id": "6544b40be1d9d30fc32f5b92"
-            },
-            {
-              "date": "03 Nov, 2023",
-              "time": "12:50 AM",
-              "_id": "6544b40be1d9d30fc32f5b93"
-            },
-            {
-              "date": "04 Nov, 2023",
-              "time": "11:30 AM",
-              "_id": "6544b40be1d9d30fc32f5b94"
-            },
-            {
-              "date": "04 Nov, 2023",
-              "time": "12:50 AM",
-              "_id": "6544b40be1d9d30fc32f5b95"
-            }
-          ],
-          "_id": "6544b40be1d9d30fc32f5b91",
-          "name": "US Cinemas: Galaxy Blue Sapphire"
-        },
-        {
-          "id": "65449d6fac37ed25aefe312d",
-          "schedule": [
-            {
-              "date": "03 Nov, 2023",
-              "time": "11:30 AM",
-              "_id": "6544b40be1d9d30fc32f5b97"
-            },
-            {
-              "date": "03 Nov, 2023",
-              "time": "12:50 AM",
-              "_id": "6544b40be1d9d30fc32f5b98"
-            },
-            {
-              "date": "04 Nov, 2023",
-              "time": "11:30 AM",
-              "_id": "6544b40be1d9d30fc32f5b99"
-            },
-            {
-              "date": "04 Nov, 2023",
-              "time": "12:50 AM",
-              "_id": "6544b40be1d9d30fc32f5b9a"
-            }
-          ],
-          "_id": "6544b40be1d9d30fc32f5b96",
-          "name": "Rajhans Cinemas: Galaxy Plaza"
-        },
-        {
-          "id": "65449d6fac37ed25aefe3122",
-          "schedule": [
-            {
-              "date": "03 Nov, 2023",
-              "time": "11:30 AM",
-              "_id": "6544b40be1d9d30fc32f5b9c"
-            },
-            {
-              "date": "03 Nov, 2023",
-              "time": "12:50 AM",
-              "_id": "6544b40be1d9d30fc32f5b9d"
-            },
-            {
-              "date": "04 Nov, 2023",
-              "time": "11:30 AM",
-              "_id": "6544b40be1d9d30fc32f5b9e"
-            },
-            {
-              "date": "04 Nov, 2023",
-              "time": "12:50 AM",
-              "_id": "6544b40be1d9d30fc32f5b9f"
-            }
-          ],
-          "name": "PVR: Gaur City, Greater Noida"
-        },
-        {
-          "schedule": [
-            {
-              "date": "03 Nov, 2023",
-              "time": "11:30 AM"
-            },
-            {
-              "date": "03 Nov, 2023",
-              "time": "12:50 AM"
-            },
-            {
-              "date": "04 Nov, 2023",
-              "time": "11:30 AM"
-            },
-            {
-              "date": "04 Nov, 2023",
-              "time": "12:50 AM"
-            }
-          ],
-          "name": "PVR: Anupam Saket, Delhi"
-        }
-      ],
-      "cast": [
-        {
-          "img": "https://i.imgur.com/ScLTn1p.png",
-          "name": "Keeanu Reeves"
-        },
-        {
-          "img": "https://i.imgur.com/1qCrekV.png",
-          "name": "Ian McShane"
-        },
-        {
-          "img": "https://i.imgur.com/ow2R5eN.png",
-          "name": "Alfie Allen"
-        },
-        {
-          "img": "https://i.imgur.com/NSx683h.png",
-          "name": "Michael Nyqvist"
-        }
-      ],
-      "description": "With the untimely death of his beloved wife still bitter in his mouth, John Wick, the expert former assassin, receives one final gift from her--a precious keepsake to help John find a new meaning in life now that she is gone. But when the arrogant Russian mob prince, Iosef Tarasov, and his men pay Wick a rather unwelcome visit to rob him of his prized 1969 Mustang and his wife's present, the legendary hitman will be forced to unearth his meticulously concealed identity.",
-      "__v": 0
+        ],
+        "description": "With the untimely death of his beloved wife still bitter in his mouth, John Wick, the expert former assassin, receives one final gift from her--a precious keepsake to help John find a new meaning in life now that she is gone. But when the arrogant Russian mob prince, Iosef Tarasov, and his men pay Wick a rather unwelcome visit to rob him of his prized 1969 Mustang and his wife's present, the legendary hitman will be forced to unearth his meticulously concealed identity."
     }
-  ]
+]
