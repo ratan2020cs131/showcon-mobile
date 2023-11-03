@@ -9,9 +9,9 @@ const TicketScreen = ({ route }) => {
     const dispatch = useDispatch();
     const {total, venue, seats, movie, time } = route.params.data;
 
-    // useEffect(()=>{
-    //     dispatch(resetTicket());
-    // },[])
+    useEffect(()=>{
+        dispatch(resetTicket());
+    },[])
 
     return (
         <View style={styles.container}>
