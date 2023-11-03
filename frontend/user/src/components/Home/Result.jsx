@@ -17,7 +17,7 @@ const Result = ({navigation}) => {
                 data={resultArray}
                 horizontal
                 showsHorizontalScrollIndicator={false}
-                renderItem={({ item, index }) => <Card wd={80} ht={100} key={item.id} image={item.image} title={item.title} navigation={navigation}/>}
+                renderItem={({ item, index }) => <Card m={5} wd={80} ht={100} key={item.id} image={item.image} title={item.title} navigation={navigation}/>}
                 keyExtractor={item => item.id}
             />
         </View>

@@ -12,7 +12,7 @@ const Show = ({ navigation, route }) => {
             showsVerticalScrollIndicator={false}
         >
             <View style={styles.container}>
-                <Poster image={image}/>
+                <Poster title={title} image={image}/>
                 <Places navigation={navigation} />
                 <Cast />
                 <Description />
