@@ -1,5 +1,7 @@
-import { useEffect } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { useEffect, useState } from 'react';
+import { StyleSheet } from 'react-native';
+import Loader from './src/components/Loader';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import StackRoute from './src/navigator/StackRoute';
@@ -7,7 +9,9 @@ import * as SplashScreen from "expo-splash-screen";
 import { Provider } from 'react-redux';
 import store from './src/Redux/Store';
 
-export default function App() {
+export default function App({ }) {
+  const [isLogged, setIsLogged] = useState(undefined);
+
   const [fontsLoaded] = useFonts({
     'Montserrat-Bold': require('./assets/fonts/Montserrat-Bold.ttf'),
     'Montserrat-Regular': require('./assets/fonts/Montserrat-Regular.ttf'),
@@ -22,30 +26,51 @@ export default function App() {
       await SplashScreen.preventAutoHideAsync();
     };
     initializeApp();
+    setTimeout(() => {
+      // getToken();
+    }, 2000);
   }, []);
+
+
+  // const getToken = async () => {
+  //   const value = await AsyncStorage.getItem('token');
+  //   if (value !== null) {
+  //     setIsLogged(true);
+  //   }
+  //   else {
+  //     console.log("No token found");
+  //     setIsLogged(false);
+  //   }
+  // };
+
 
   if (!fontsLoaded) {
     return null;
   } else {
-    SplashScreen.hideAsync();
+    setTimeout(() => {
+      SplashScreen.hideAsync();
+    }, 1000);
   }
-
 
 
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <StackRoute />
+        {
+          isLogged === undefined ?
+            <Loader setIsLogged={setIsLogged}/>
+            :
+            <>
+              {
+                isLogged === true ?
+                  <StackRoute isLogged={isLogged} />
+                  :
+                  <StackRoute />
+              }
+            </>
+
+        }
       </NavigationContainer>
     </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    width: "100%",
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

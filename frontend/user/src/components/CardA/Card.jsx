@@ -1,14 +1,16 @@
 import { TouchableOpacity, View, ImageBackground, StyleSheet, Text } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
-const Card = ({ image, title, navigation }) => {
+const Card = ({ image, title, navigation, wd, ht, m }) => {
     return (
-        <TouchableOpacity style={styles.item} onPress={() => navigation.navigate("ShowScreen")}>
+        <TouchableOpacity style={[styles.item, {margin:m?m:10, width: wd ? wd : 150, height: ht ? ht : 200 }]} onPress={() => navigation.navigate("ShowScreen", { image, title })}>
             <View style={styles.imageContainer}>
                 <ImageBackground style={styles.image} source={image} resizeMode='cover'>
-                    <View style={styles.titleContainer}>
-                        <Text style={[GlobalStyles.semiBoldText,styles.titleText]}>{title}</Text>
-                    </View>
+                    {!wd &&
+                        <View style={styles.titleContainer}>
+                            <Text style={[GlobalStyles.semiBoldText, styles.titleText]}>{title}</Text>
+                        </View>
+                    }
                 </ImageBackground>
             </View>
         </TouchableOpacity>
@@ -17,10 +19,8 @@ const Card = ({ image, title, navigation }) => {
 
 export default Card;
 
-const styles=StyleSheet.create({
+const styles = StyleSheet.create({
     item: {
-        width: 150,
-        height: 180,
         margin: 10,
     },
     imageContainer: {
@@ -47,6 +47,6 @@ const styles=StyleSheet.create({
     titleText: {
         color: 'white',
         textAlign: 'left',
-        paddingLeft:10,
+        paddingLeft: 10,
     },
 })

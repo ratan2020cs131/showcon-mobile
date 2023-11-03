@@ -6,9 +6,10 @@ const authRoutes = require('./routes/Auth');
 require('./database/Connect');
 
 const app=express();
+
 app.use(express.json({ limit: '8mb' }));
 app.use(express.urlencoded({ limit: '8mb', extended: true }));
-app.use(cors({origin: "*"}));
+app.use(cors({origin: "*", credentials:"*"}));
 
 app.use('/auth', authRoutes);
 

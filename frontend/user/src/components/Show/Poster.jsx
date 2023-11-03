@@ -1,10 +1,26 @@
-import { StyleSheet, View, Text, Image } from "react-native";
-import PosterImg from '../../../assets/images/poster.png';
+import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
+import GlobalStyles from "../../GlobalStyles";
+import { Ionicons } from "@expo/vector-icons";
+import { useState } from "react";
 
-const Poster = () => {
+const Poster = ({ image, title }) => {
+    const [like, setLike] = useState(false);
+    handleLike = () => setLike(!like);
+
     return (
-        <View style={styles.imgcontainer}>
-            <Image source={PosterImg} style={styles.image}></Image>
+        <View style={styles.itemContainer}>
+            <View style={styles.imgcontainer}>
+                <Image source={image} style={styles.image}></Image>
+            </View>
+            <View style={styles.container}>
+                <Text style={[GlobalStyles.semiBoldText, styles.title]}>{title}</Text>
+                <TouchableOpacity onPress={handleLike}>
+                    {like ?
+                        <Ionicons name="heart" style={styles.icon} ></Ionicons> :
+                        <Ionicons name="heart-outline" style={styles.icon}></Ionicons>
+                    }
+                </TouchableOpacity>
+            </View>
         </View>
     )
 }
@@ -12,17 +28,36 @@ const Poster = () => {
 export default Poster;
 
 const styles = StyleSheet.create({
-    image: {
-        borderRadius:10,
-        width: "100%",
-        height: "100%",
-        objectFit: "cover"
+    itemContainer:{
+        width:"100%",
+        alignItems:'center',
+        marginBottom:30,
     },
     imgcontainer: {
         width: 320,
         height: 500,
-        marginBottom: 20,
-        borderRadius:10,
+        borderRadius: 10,
+    },
+    image: {
+        borderRadius: 10,
+        width: "100%",
+        height: "100%",
+        objectFit: "cover"
+    },
+    container: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: 320,
+        paddingVertical: 10,
+        alignItems: 'center',
+        paddingHorizontal: 5,
+    },
+    title: {
+        fontSize: 20,
+    },
+    icon: {
+        fontSize: 35,
+        color: '#F55139'
     }
 })
 

@@ -1,10 +1,11 @@
 import { useState, useRef, useEffect } from "react";
 import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity, KeyboardAvoidingView, ScrollView, ActivityIndicator } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import GlobalStyles from "../../GlobalStyles";
 import Logo from "../../../assets/Logo.png";
 import { Ionicons } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
-import { verify, auth, resetError } from "../../Redux/Features/Auth/authSlice";
+import { verify, auth, resetError, getProfile } from "../../Redux/Features/Auth/authSlice";
 import { CommonActions } from '@react-navigation/native';
 
 const Otp = ({ navigation, route }) => {
@@ -19,8 +20,12 @@ const Otp = ({ navigation, route }) => {
   const [loginWithPassword, setLoginWithPassword] = useState(true);
   const otpInputs = useRef([]);
 
-  useEffect(() => {
+  const verified = async () => {
     if (authState.token) {
+
+      await AsyncStorage.setItem('token', authState.token);
+      dispatch(getProfile());
+
       navigation.dispatch(CommonActions.reset({
         index: 0,
         routes: [
@@ -28,6 +33,10 @@ const Otp = ({ navigation, route }) => {
         ],
       }));
     }
+  };
+
+  useEffect(() => {
+    verified();
   }, [authState])
 
   const toggleShowPassword = () => {
@@ -97,7 +106,7 @@ const Otp = ({ navigation, route }) => {
             ) : (
               <View style={{ flexDirection: "row" }}>
                 <TextInput
-                  placeholder="Set Password"
+                  placeholder="Enter Password"
                   placeholderTextColor="#E9E5D7"
                   maxLength={20}
                   secureTextEntry={showPassword}
