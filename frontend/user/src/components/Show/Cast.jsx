@@ -14,7 +14,6 @@ const Actor=({data})=>{
 }
 
 const Cast = ({data}) => {
-    console.log(data);
     return (
         <View style={styles.container}>
             <Text style={[GlobalStyles.boldText, styles.headline]}>CAST</Text>
@@ -22,7 +21,7 @@ const Cast = ({data}) => {
                 horizontal={true}
                 data={data}
                 renderItem={({ item }) => <Actor key={item._id} data={item}/>}
-                keyExtractor={(item) => item.id}
+                keyExtractor={(item) => item._id}
                 showsHorizontalScrollIndicator={false}
             />
         </View>
