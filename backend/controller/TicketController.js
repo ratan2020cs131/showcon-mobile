@@ -8,9 +8,9 @@ const createTicket = async(req,res)=>{
         const user = await User.findById({_id:req.user._id})
 
         user.history=saved._id;
-        const result = await user.save();
+        await user.save();
         
-        res.send(result.history);
+        res.send(saved);
     }
     catch(error){
         console.log("Create Ticket Error: ",error);
