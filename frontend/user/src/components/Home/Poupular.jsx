@@ -20,18 +20,23 @@ const Popular = ({ navigation }) => {
 
     return (
         <View style={{ width: '100%' }}>
-            <Text style={[GlobalStyles.boldText, { paddingLeft: 10, fontSize: 24, textAlign: "left", marginVertical: 10 }]}>Popular</Text>
-            <View style={styles.container}>
-                {movieState.isLoading ?
-                    <View style={{ marginTop: 100, width: '100%', flexDirection: "row", alignItems: 'center', justifyContent: 'center' }}>
-                        <ActivityIndicator size="large" color="#F55139" />
+            {movieState.isLoading ?
+                <View style={{ marginTop: 100, width: '100%', flexDirection: "row", alignItems: 'center', justifyContent: 'center' }}>
+                    <ActivityIndicator size="large" color="#F55139" />
+                </View>
+                :
+                <View style={{ width: '100%' }}>
+                    <Text style={[GlobalStyles.boldText, { paddingLeft: 10, fontSize: 24, textAlign: "left", marginVertical: 10 }]}>Popular</Text>
+                    <View style={styles.container}>
+                        {
+                            movieState.movies.map((item, index) => (
+                                <Card wd={150} key={item._id} navigation={navigation} data={item} title={item.title} />
+                            ))
+                        }
                     </View>
-                    :
-                    movieState.movies.map((item, index) => (
-                        <Card wd={150} key={item._id} navigation={navigation} data={item} title={item.title}/>
-                    ))
-                }
-            </View>
+                </View>
+            }
+
         </View>
     )
 }

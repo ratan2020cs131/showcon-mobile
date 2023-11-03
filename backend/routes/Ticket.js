@@ -4,6 +4,6 @@ const { AuthMiddleWare } = require('../middleware/AuthMiddleware.js')
 const { createTicket } = require('../controller/TicketController.js');
 
 
-route.post('/',AuthMiddleWare, createTicket);
+route.post('/', AuthMiddleWare, createTicket);
 
 module.exports = route;

@@ -1,11 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Image, Text, StyleSheet } from 'react-native';
 import GlobalStyles from '../GlobalStyles';
+import QRCode from 'react-native-qrcode-svg';
+import { useDispatch } from 'react-redux';
+import { resetTicket } from '../Redux/Features/Tickets/ticketSlice';
 
 const TicketScreen = ({ route }) => {
-    const bookedSeats = ['A1', 'B1'];
-    const date = "28 Oct";
-    const { cinema, choose, title, schedule } = route.params;
+    const dispatch = useDispatch();
+    const {total, venue, seats, movie, time } = route.params.data;
+
+    // useEffect(()=>{
+    //     dispatch(resetTicket());
+    // },[])
 
     return (
         <View style={styles.container}>
@@ -14,29 +20,30 @@ const TicketScreen = ({ route }) => {
                     <View style={[styles.dot1, styles.dotup]} />
                     <View style={[styles.dot2, styles.dotdown]} />
                     <View style={styles.qrCode}>
-                        <Image source={require('../../assets/images/qrcode.png')} style={styles.image} />
+                        {/* <Image source={require('../../assets/images/qrcode.png')} style={styles.image} /> */}
+                        <QRCode value={JSON.stringify({total, venue, seats, movie, time })} size={150}/>
                     </View>
                 </View>
 
                 <View style={styles.row2}>
-                    <Text style={[GlobalStyles.boldText, { fontSize: 20 }]}>{title}</Text>
-                    <Text style={[GlobalStyles.normalText, { fontSize: 16, textAlign:'center' }]}>Seats : {" "}
+                    <Text style={[GlobalStyles.boldText, { textAlign: 'center' }, { fontSize: 20 }]}>{movie}</Text>
+                    <Text style={[GlobalStyles.normalText, { fontSize: 16, textAlign: 'center' }]}>Seats : {" "}
                         {
-                            choose.map((item, index) => (
+                            seats.map((item, index) => (
                                 <Text key={index} style={[GlobalStyles.semiBoldText, { fontSize: 16, }]}>
-                                    {item.row + "" + item.no + ", "}
+                                    {item}
                                 </Text>
                             ))
                         }
                     </Text>
-                    <Text style={[GlobalStyles.semiBoldText]}>{schedule}</Text>
-                    <Text style={[GlobalStyles.normalText, { textAlign: 'center' }]}>{cinema}</Text>
-                    <Text style={[GlobalStyles.boldText,{fontSize:30, marginTop:30,marginBottom:10 }]}>{choose.length}</Text>
+                    <Text style={[GlobalStyles.semiBoldText, { textAlign: 'center' }]}>{time}</Text>
+                    <Text style={[GlobalStyles.normalText, { textAlign: 'center' }]}>{venue}</Text>
+                    <Text style={[GlobalStyles.boldText, { fontSize: 30, marginTop: 30, marginBottom: 10 }]}>{total}</Text>
                 </View>
             </View>
-            <View style={{width:'60%'}}>
-                    <Text style={[GlobalStyles.normalText, {textAlign:'center', fontSize:20}]}>Tickets for 
-                    <Text style={[GlobalStyles.boldText]}>{" "+title+" "}</Text>
+            <View style={{ width: '60%' }}>
+                <Text style={[GlobalStyles.normalText, { textAlign: 'center', fontSize: 20 }]}>Tickets for
+                    <Text style={[GlobalStyles.boldText]}>{" " + movie + " "}</Text>
                     has been Booked</Text>
             </View>
         </View>
@@ -45,13 +52,12 @@ const TicketScreen = ({ route }) => {
 
 const styles = StyleSheet.create({
     container: {
-        paddingTop:80,
+        paddingTop: 80,
         flex: 1,
         alignItems: 'center',
         justifyContent: 'space-around',
     },
     qrCode: {
-        backgroundColor:'red',
         height: 200,
         width: 200,
         alignItems: 'center',
@@ -60,10 +66,10 @@ const styles = StyleSheet.create({
     row2: {
         height: '50%',
         width: '100%',
-        paddingHorizontal:37,
+        paddingHorizontal: 37,
         alignItems: 'center',
         justifyContent: 'center',
-        gap:1
+        gap: 1
     },
     image: {
         width: '100%',
@@ -107,19 +113,19 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderStyle: 'dashed',
         borderBottomColor: '#a1a1a1',
-        position:'relative',
-        padding:30,
-        height:'50%'
+        position: 'relative',
+        padding: 30,
+        height: '50%'
     },
-    ticketContainer:{ 
-        overflow:'hidden',
-        backgroundColor: '#fff', 
-        borderRadius: 20, 
+    ticketContainer: {
+        overflow: 'hidden',
+        backgroundColor: '#fff',
+        borderRadius: 20,
         width: 250,
-        height:500,
-        justifyContent: 'space-between', 
-        alignItems: 'center', 
-        elevation:5
+        height: 500,
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        elevation: 5
     }
 
 });
