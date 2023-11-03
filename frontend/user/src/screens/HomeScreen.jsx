@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Alert, Dimensions, FlatList, ImageBackground, Modal, Pressable, View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { Dimensions, Modal, Pressable, View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { FontAwesome5, Feather } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import DateTimePicker from "@react-native-community/datetimepicker"
@@ -101,16 +101,16 @@ const HomeScreen = ({ navigation }) => {
                                     </View>
                                 </View>
                                 <View style={styles.confirmContainer}>
-                                    <Pressable
-                                        style={styles.confirmButton}
+                                    <TouchableOpacity
+                                        style={[GlobalStyles.button, styles.confirmButton]}
                                         onPress={() => {
                                             setModalVisible(!modalVisible);
                                             console.log(!modalVisible);
                                             setPlaceholder(`${date} at ${time}`)// Use this for confirmation
                                         }}
                                     >
-                                        <Text style={styles.confirmButtonText}>Confirm</Text>
-                                    </Pressable>
+                                        <Text style={[GlobalStyles.boldText, {color:"#E9E5D7"}]}>CONFIRM</Text>
+                                    </TouchableOpacity>
 
                                 </View>
                             </View>
@@ -236,11 +236,8 @@ const styles = StyleSheet.create({
         marginTop: 20,
     },
     confirmButton: {
-        backgroundColor: 'black',
-        borderRadius: 10,
-        padding: 15,
-        elevation: 5,
-        marginTop: 10,
+        backgroundColor: '#1E1F22',
+        width:100
     },
     confirmButtonText: {
         color: 'white',
