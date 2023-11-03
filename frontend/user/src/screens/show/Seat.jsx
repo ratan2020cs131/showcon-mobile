@@ -7,6 +7,8 @@ import { useState } from "react";
 const SeatScreen = ({ navigation, route }) => {
     const { schedule } = route.params;
     const [choose, setChoose] = useState([]);
+    const theaterName= route.params.cinema ; 
+    console.log("Schedule: ", schedule)
 
     return (
         <ScreenWrapper title={route.params.cinema}>
@@ -52,7 +54,7 @@ const SeatScreen = ({ navigation, route }) => {
                             </View>
                         </View>
                     }
-                    <TouchableOpacity style={[GlobalStyles.button, { marginTop: 'auto' }]}>
+                    <TouchableOpacity style={[GlobalStyles.button, { marginTop: 'auto' }]} onPress={() => navigation.navigate("TicketScreen", {ticketData: ""})}>
                         <Text style={[GlobalStyles.boldText]}>BOOK NOW</Text>
                     </TouchableOpacity>
                 </View>
