@@ -5,6 +5,7 @@ dotenv.config({ path: './.env' });
 const authRoutes = require('./routes/Auth');
 const movieRoute = require('./routes/Movie');
 const cinemaRoute = require('./routes/Cinema');
+const ticketRoute = require('./routes/Ticket');
 require('./database/Connect');
 
 const app=express();
@@ -16,6 +17,7 @@ app.use(cors({origin: "*", credentials:"*"}));
 app.use('/auth', authRoutes);
 app.use('/movie', movieRoute);
 app.use('/cinema', cinemaRoute);
+app.use('/ticket', ticketRoute);
 
 PORT=process.env.PORT
 app.listen(PORT, () => {

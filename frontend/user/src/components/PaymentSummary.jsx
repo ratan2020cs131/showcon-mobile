@@ -23,7 +23,7 @@ const PaymentSummary = ({ data }) => {
             </View>
             <View style={styles.ticket}>
                 <View style={[styles.dot, styles.dotUp]}></View>
-                <Text style={[GlobalStyles.boldText, { fontSize: 15 }]}>{totalticket}</Text>
+                <Text style={[GlobalStyles.boldText, { fontSize: 25 }]}>{totalticket}</Text>
                 <View style={[styles.dot, styles.dotBottom]}></View>
             </View>
         </View>
@@ -63,15 +63,18 @@ const styles = StyleSheet.create({
         position:'absolute',
         height:18,
         width:18,
-        backgroundColor:'#e1e1e1',
-        borderRadius:100
+        backgroundColor:'#e5e5e0',
     },
     dotUp:{
-        top:-14,
+        borderBottomLeftRadius:100,
+        borderBottomEndRadius:100,
+        top:-7,
         left:-10
     },
     dotBottom:{
-        bottom:-14,
+        borderTopLeftRadius:100,
+        borderTopEndRadius:100,
+        bottom:-7,
         left:-10
     }
 })

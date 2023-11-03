@@ -33,6 +33,12 @@ const user = new mongo.Schema({
             type: String,
             required: true
         }
+    ],
+    history:[
+        {
+            type: String,
+            required: false
+        }
     ]
 });
 
