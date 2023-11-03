@@ -23,7 +23,8 @@ const Register = async (req, res) => {
     const user = new User({ fname, lname, phone, email, password });
     const result = await user.save();
     if (result) {
-      res.status(201).json(result);
+      const token = await user.generateToken();
+      res.status(201).json({token});
     } else {
       res.status(401).json({ message: "User not ssaved" });
     }

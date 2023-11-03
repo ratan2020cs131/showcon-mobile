@@ -2,26 +2,26 @@ import { View, StyleSheet, Text, FlatList, Image } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
 const Actor=({data})=>{
-    const {actor, image}=data;
+    const {name, img}=data;
     return(
         <View style={styles.cast}>
         <View style={styles.actor}>
-            <Image source={image} style={styles.image}/>
+            <Image source={{uri:img}} style={styles.image}/>
         </View>
-        <Text style={[GlobalStyles.semiBoldText,{textAlign:'center'}]}>{actor}</Text>
+        <Text style={[GlobalStyles.semiBoldText,{textAlign:'center'}]}>{name}</Text>
         </View>
     )
 }
 
-const Cast = () => {
+const Cast = ({data}) => {
     return (
         <View style={styles.container}>
             <Text style={[GlobalStyles.boldText, styles.headline]}>CAST</Text>
             <FlatList
                 horizontal={true}
-                data={castArray}
-                renderItem={({ item }) => <Actor data={item}/>}
-                keyExtractor={(item) => item.id}
+                data={data}
+                renderItem={({ item }) => <Actor key={item._id} data={item}/>}
+                keyExtractor={(item) => item._id}
                 showsHorizontalScrollIndicator={false}
             />
         </View>
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     }
 })
 
-const castArray=[
+// const castArray=[
 //     {
 //         id:1,
 //         actor:"Keeanu Reeves",
@@ -92,4 +92,4 @@ const castArray=[
 //         actor:"Iam McShane",
 //         image:Ian
 //     },
-]
+// ]

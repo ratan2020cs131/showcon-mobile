@@ -2,9 +2,12 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import { useState } from "react";
 import ModalView from "../Modal";
+import { useDispatch } from "react-redux";
+import { resetCinema } from "../../Redux/Features/Movie/movieSlice";
 
 const Place = ({id, data, navigation }) => {
-
+    const dispatch=useDispatch();
+    
     const [box, setBox] = useState();
     const [modal, setModal]=useState(false);
     const [schedule, setSchedule]=useState();
@@ -24,7 +27,7 @@ const Place = ({id, data, navigation }) => {
                                     setBox(undefined)    
                                 }else{
                                 setBox(index)
-                                setSchedule(item.date.split(' ')[0]+" "+item.time);
+                                setSchedule(item.date.split(' ')[0]+" "+item.date.split(' ')[1]+" "+item.time);
                             }
                             }}
                             >
@@ -39,7 +42,8 @@ const Place = ({id, data, navigation }) => {
             <TouchableOpacity style={[GlobalStyles.buttonOutlined, styles.button]}
             activeOpacity={0.2}
             onPress={()=>{
-                box>=0?navigation.navigate("SeatScreen", {cinema:data.name, schedule,id}):setModal(true);
+                dispatch(resetCinema());
+                box>=0?navigation.navigate("SeatScreen", {cinema:data.name, schedule, id}):setModal(true);
             }}
             >
                 <Text style={[GlobalStyles.boldText, styles.btntext]}>BOOK</Text>
