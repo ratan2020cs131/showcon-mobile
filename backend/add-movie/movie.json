@@ -1,0 +1,111 @@
+[
+    {
+        "title": "John Wick: Chapter 1",
+        "banner": "https://i.imgur.com/rHO6BQo.png",
+        "cinema": [
+            {
+                "id": "65449d6fac37ed25aefe3138",
+                "schedule": [
+                    {
+                        "date": "03 Nov, 2023",
+                        "time": "11:30 AM"
+                    },
+                    {
+                        "date": "03 Nov, 2023",
+                        "time": "12:50 AM"
+                    },
+                    {
+                        "date": "04 Nov, 2023",
+                        "time": "11:30 AM"
+                    },
+                    {
+                        "date": "04 Nov, 2023",
+                        "time": "12:50 AM"
+                    }
+                ]
+            },
+            {
+                "id": "65449d6fac37ed25aefe312d",
+                "schedule": [
+                    {
+                        "date": "03 Nov, 2023",
+                        "time": "11:30 AM"
+                    },
+                    {
+                        "date": "03 Nov, 2023",
+                        "time": "12:50 AM"
+                    },
+                    {
+                        "date": "04 Nov, 2023",
+                        "time": "11:30 AM"
+                    },
+                    {
+                        "date": "04 Nov, 2023",
+                        "time": "12:50 AM"
+                    }
+                ]
+            },
+            {
+                "id": "65449d6fac37ed25aefe3122",
+                "schedule": [
+                    {
+                        "date": "03 Nov, 2023",
+                        "time": "11:30 AM"
+                    },
+                    {
+                        "date": "03 Nov, 2023",
+                        "time": "12:50 AM"
+                    },
+                    {
+                        "date": "04 Nov, 2023",
+                        "time": "11:30 AM"
+                    },
+                    {
+                        "date": "04 Nov, 2023",
+                        "time": "12:50 AM"
+                    }
+                ]
+            },
+            {
+                "id": "65449e4b59fa70f16f3cbbbe",
+                "schedule": [
+                    {
+                        "date": "03 Nov, 2023",
+                        "time": "11:30 AM"
+                    },
+                    {
+                        "date": "03 Nov, 2023",
+                        "time": "12:50 AM"
+                    },
+                    {
+                        "date": "04 Nov, 2023",
+                        "time": "11:30 AM"
+                    },
+                    {
+                        "date": "04 Nov, 2023",
+                        "time": "12:50 AM"
+                    }
+                ]
+            }
+        ],
+        "cast": [
+            {
+                "img": "https://i.imgur.com/ScLTn1p.png",
+                "name": "Keeanu Reeves"
+            },
+            {
+                "img": "https://i.imgur.com/1qCrekV.png",
+                "name": "Ian McShane"
+            },
+            {
+                "img": "https://i.imgur.com/ow2R5eN.png",
+                "name": "Alfie Allen"
+            },
+            {
+                "img": "https://i.imgur.com/NSx683h.png",
+                "name": "Michael Nyqvist"
+            }
+        ],
+        "description": "With the untimely death of his beloved wife still bitter in his mouth, John Wick, the expert former assassin, receives one final gift from her--a precious keepsake to help John find a new meaning in life now that she is gone. But when the arrogant Russian mob prince, Iosef Tarasov, and his men pay Wick a rather unwelcome visit to rob him of his prized 1969 Mustang and his wife's present, the legendary hitman will be forced to unearth his meticulously concealed identity."
+    }
+]
