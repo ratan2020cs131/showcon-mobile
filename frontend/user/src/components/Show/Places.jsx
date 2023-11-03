@@ -5,9 +5,9 @@ import Place from "../../components/Show/PlaceCard";
 const Places =({navigation})=>{
     return(
         <View>
-            <Text style={[GlobalStyles.boldText, styles.headline]}>
+            {/* <Text style={[GlobalStyles.boldText, styles.headline]}>
                 PLACES
-            </Text>
+            </Text> */}
             {
                 cinemaArray.map((item,index)=>(
                     <Place key={index} data={item} navigation={navigation}/>
@@ -24,7 +24,7 @@ const styles=StyleSheet.create({
     headline: {
         width: "100%",
         fontSize: 20,
-        paddingHorizontal: 20,
+        paddingHorizontal: 3,
         marginBottom: 10,
         marginTop:30,
     }

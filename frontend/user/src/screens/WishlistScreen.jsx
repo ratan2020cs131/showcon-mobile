@@ -2,7 +2,10 @@ import { ImageBackground, View, Text, StyleSheet, ScrollView, TouchableOpacity }
 import { Ionicons } from '@expo/vector-icons';
 import ScreenWrapper from './ScreenWrapper';
 import GlobalStyles from '../GlobalStyles';
-import posterImg from '../../assets/images/poster.png';
+import posterImg1 from '../../assets/images/poster6.png';
+import posterImg2 from '../../assets/images/poster2.png';
+import posterImg3 from '../../assets/images/poster4.png';
+import posterImg4 from '../../assets/images/poster5.png';
 import ModalView from "../components/Modal";
 import { useState } from 'react';
 
@@ -17,15 +20,15 @@ const WishlistScreen = ({ navigation }) => {
                     <View style={styles.likedcontainer}>
                         {
                             likedArray.map((item, index) => (
-                                <TouchableOpacity key={index} style={styles.item} onPress={() => navigation.navigate("ShowScreen")}>
+                                <TouchableOpacity key={index} style={styles.item} onPress={() => navigation.navigate("ShowScreen", {image:item.thumbnail})}>
                                     <View style={styles.imageContainer}>
                                         <ImageBackground style={styles.image} source={item.thumbnail} resizeMode='cover'>
                                             <TouchableOpacity style={styles.iconContainer} onPress={() => setModal(true)}>
                                             <Ionicons name="trash" style={styles.icon}></Ionicons>
                                             </TouchableOpacity>
-                                            <View style={styles.titleContainer}>
+                                            {/* <View style={styles.titleContainer}>
                                                 <Text style={[GlobalStyles.semiBoldText, styles.titleText]}>{item.movieName}</Text>
-                                            </View>
+                                            </View> */}
                                         </ImageBackground>
                                     </View>
                                 </TouchableOpacity>
@@ -34,7 +37,7 @@ const WishlistScreen = ({ navigation }) => {
                     </View>
                 </View>
             </ScrollView>
-            <ModalView visible={modal} onClose={onClose} title="Are you sure to remove this show from your wishlist"/>
+            <ModalView button={true} visible={modal} onClose={onClose} title="Are you sure to remove this show from your wishlist"/>
         </ScreenWrapper>
     )
 }
@@ -107,23 +110,19 @@ const styles = StyleSheet.create({
 const likedArray = [
     {
         id: 1,
-        thumbnail: posterImg,
-        movieName: 'Movie-A',
+        thumbnail: posterImg1,
     },
     {
         id: 2,
-        thumbnail: posterImg,
-        movieName: 'Movie-A',
+        thumbnail: posterImg2,
     },
     {
         id: 3,
-        thumbnail: posterImg,
-        movieName: 'Movie-A',
+        thumbnail: posterImg3,
     },
     {
         id: 4,
-        thumbnail: posterImg,
-        movieName: 'Movie-A',
+        thumbnail: posterImg4,
     },
     
 ];

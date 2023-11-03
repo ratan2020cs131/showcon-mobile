@@ -40,7 +40,6 @@ const Register = ({ navigation, route }) => {
         ],
       }));
     }
-    console.log("changed", authState)
   }, [authState])
 
   const handleInputChange = (field, value) => {

@@ -52,12 +52,46 @@ export const register = createAsyncThunk(
     }
 )
 
+export const getProfile = createAsyncThunk(
+    "auth/profile",
+    async (thunkAPI) => {
+        try {
+            const res = await authApi.getProfile();
+            if (!res) {
+                return thunkAPI.rejectWithValue(error);
+            }
+            return res;
+        }
+        catch (err) {
+            return thunkAPI.rejectWithValue(err.message);
+        }
+    }
+)
+
+export const logout = createAsyncThunk(
+    "auth/logout",
+    async (thunkAPI) => {
+        try {
+            const res = await authApi.logout();
+            if (!res) {
+                return thunkAPI.rejectWithValue(error);
+            }
+            return res;
+        }
+        catch (err) {
+            return thunkAPI.rejectWithValue(err.message);
+        }
+    }
+)
+
 const state = {
     isLoading: false,
     isRegistered: undefined,
     isVerified: undefined,
     token: null,
     error: undefined,
+    user:undefined,
+    isAuth:undefined,
 }
 
 const authSlice = createSlice({
@@ -66,6 +100,13 @@ const authSlice = createSlice({
     reducers: {
         resetError: (state, action) => {
             state.error = undefined
+        },
+        resetStates: (state, action) => {
+            state.isLoading= false,
+            state.isRegistered= undefined,
+            state.isVerified= undefined,
+            state.token= null,
+            state.error= undefined
         }
     },
     extraReducers: (builder) => {
@@ -91,15 +132,22 @@ const authSlice = createSlice({
                     state.error = action.payload
             })
             .addCase(register.pending, (state, action) => {
-                state.isLoading=true
+                state.isLoading = true
             })
             .addCase(register.fulfilled, (state, action) => {
-                state.isLoading=false,
-                state.isVerified = true
+                state.isLoading = false,
+                    state.isVerified = true
+            })
+            .addCase(getProfile.fulfilled, (state, action)=>{
+                state.user=action.payload,
+                state.isAuth=true
+            })
+            .addCase(getProfile.rejected, (state, action)=>{
+                state.isAuth=false
             })
     }
 });
 
-export const { resetError, } = authSlice.actions;
+export const { resetError, resetStates } = authSlice.actions;
 export const auth = (state) => state.auth;
 export default authSlice.reducer;

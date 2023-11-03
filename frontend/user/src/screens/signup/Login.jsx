@@ -3,7 +3,7 @@ import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity, ActivityInd
 import GlobalStyles from "../../GlobalStyles";
 import Logo from "../../../assets/Logo.png";
 import { useDispatch, useSelector } from 'react-redux';
-import { signin, auth } from "../../Redux/Features/Auth/authSlice";
+import { signin, auth, resetStates } from "../../Redux/Features/Auth/authSlice";
 
 const Login = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -22,6 +22,7 @@ const Login = ({ navigation }) => {
   }, [authState])
 
   const handleChange = (text) => {
+    dispatch(resetStates());
     if (phoneError) { setPhoneError(false) }
     setMobileNo(text);
   }
@@ -50,7 +51,7 @@ const Login = ({ navigation }) => {
         {
           phoneError &&
           <Text style={[GlobalStyles.boldText, GlobalStyles.pText, styles.error]}>
-            Enter Phone Number
+            Enter Complete Number
           </Text>
         }
         {authState.isLoading ?

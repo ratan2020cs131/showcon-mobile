@@ -4,15 +4,15 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import HomeRoute from './HomeRoute';
-import ProfileScreen from '../screens/ProfileScreen';
+import ProfileRoute from './ProfileRoute';
 import BookedShowScreen from '../screens/BookedShowScreen';
 import WishlistScreen from '../screens/WishlistScreen';
 import { useRoute } from '@react-navigation/native';
+import GlobalStyles from '../GlobalStyles';
 const Tab = createBottomTabNavigator();
 
 
-const TabRoute = ({route}) => {
-    const profileData = useRoute();
+const TabRoute = () => {
     
     //routes array
     const routes = [
@@ -43,7 +43,7 @@ const TabRoute = ({route}) => {
         {
             path: "Profile",
             name: "Profile",
-            component: ProfileScreen,
+            component: ProfileRoute,
             activeIcon:'person',
             inactiveIcon:'person-outline',
             params: null,
@@ -74,12 +74,12 @@ const TabRoute = ({route}) => {
                         options={({ }) => ({
                             tabBarLabel: ({ color, focused }) => (
                                 <Text
-                                    style={{
-                                        color,
+                                    style={[GlobalStyles.normalText,{
+                                        color:focused?'#F55139':'#1E1F22',
                                         fontSize: focused ? 14 : 12,
                                         transform: [{ translateY: -5 }],
-                                        fontWeight: focused ? "500" : "400",
-                                    }}
+                                        fontWeight: focused ? "900" : "400",
+                                    }]}
                                 >
                                     {item.name}
                                 </Text>
@@ -87,8 +87,8 @@ const TabRoute = ({route}) => {
                             tabBarIcon: ({ focused }) => (
                                 <View>
                                     {focused ?
-                                        <Ionicons name={item.activeIcon} size={20} color="#4169E1"></Ionicons> :
-                                        <Ionicons name={item.inactiveIcon} size={20} color="grey"></Ionicons>
+                                        <Ionicons name={item.activeIcon} size={20} color="#F55139"></Ionicons> :
+                                        <Ionicons name={item.inactiveIcon} size={20} color="#1E1F22"></Ionicons>
                                     }
                                 </View>
                             ),
