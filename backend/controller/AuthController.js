@@ -54,8 +54,8 @@ const Verify = async (req, res) => {
     }
   }
   catch (err) {
-  console.log("Signin Error: ", err);
-}
+    console.log("Signin Error: ", err);
+  }
 };
 
 
@@ -63,15 +63,33 @@ const Verify = async (req, res) => {
 const ProfileData = async (req, res) => {
   try {
     const { fname, lname, phone, email } = req.user
-    res.status(200).json({ fname, lname, email, phone })
+    res.status(200).json(req.user)
   } catch (err) {
     console.log(err)
   }
 };
 
+
+//LOGOUT
+const Logout = async (req, res) => {
+  try {
+    req.user.tokens = req.user.tokens.filter((item) => {
+      return item !== req.token;
+    })
+    req.user.tokens.forEach((item) => {
+      console.log(item);
+    })
+    await req.user.save();
+    res.status(200).send({ message: 'Logout Successfully' })
+  }
+  catch (err) {
+    console.log("Logout Error: ", err);
+  }
+}
 module.exports = {
   Signin,
   Register,
   Verify,
-  ProfileData
+  ProfileData,
+  Logout
 };

@@ -6,16 +6,17 @@ const AuthMiddleWare = async (req, res, next) => {
   try {
     const token = req.headers.authorization;
     const decodedToken = jwt.verify(token, process.env.SECRET_KEY);
-    const user = await User.findOne({ _id: decodedToken._id });
+    const user = await User.findOne({ _id: decodedToken._id, tokens: token });
     if (user) {
       req.user = user;
-      next();
+      req.token = token;
     }
     else {
       throw ("User not found");
     }
+    next();
   } catch (err) {
-    console.log("Get User Error : ", err)
+    res.status(401).json({ message: 'Unauthorised' });
   }
 };
 
