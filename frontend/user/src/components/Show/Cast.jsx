@@ -1,7 +1,5 @@
 import { View, StyleSheet, Text, FlatList, Image } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
-import Keeanu from '../../../assets/images/keeanu.png'
-import Ian from '../../../assets/images/Ian.png'
 
 const Actor=({data})=>{
     const {actor, image}=data;
@@ -64,34 +62,34 @@ const styles = StyleSheet.create({
 })
 
 const castArray=[
-    {
-        id:1,
-        actor:"Keeanu Reeves",
-        image:Keeanu
-    },
-    {
-        id:2,
-        actor:"Iam McShane",
-        image:Ian
-    },
-    {
-        id:3,
-        actor:"Keeanu Reeves",
-        image:Keeanu
-    },
-    {
-        id:4,
-        actor:"Iam McShane",
-        image:Ian
-    },
-    {
-        id:5,
-        actor:"Keeanu Reeves",
-        image:Keeanu
-    },
-    {
-        id:6,
-        actor:"Iam McShane",
-        image:Ian
-    },
+//     {
+//         id:1,
+//         actor:"Keeanu Reeves",
+//         image:Keeanu
+//     },
+//     {
+//         id:2,
+//         actor:"Iam McShane",
+//         image:Ian
+//     },
+//     {
+//         id:3,
+//         actor:"Keeanu Reeves",
+//         image:Keeanu
+//     },
+//     {
+//         id:4,
+//         actor:"Iam McShane",
+//         image:Ian
+//     },
+//     {
+//         id:5,
+//         actor:"Keeanu Reeves",
+//         image:Keeanu
+//     },
+//     {
+//         id:6,
+//         actor:"Iam McShane",
+//         image:Ian
+//     },
 ]

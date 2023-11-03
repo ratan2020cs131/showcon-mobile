@@ -2,21 +2,23 @@ import { ScrollView, StyleSheet, View, Text, TouchableOpacity } from "react-nati
 import Seats from "../../components/Seating/Seats";
 import ScreenWrapper from "../ScreenWrapper";
 import GlobalStyles from "../../GlobalStyles";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const SeatScreen = ({ navigation, route }) => {
-    const { schedule } = route.params;
+    const {id, cinema, schedule } = route.params;
+    console.log(id);
+    
     const [choose, setChoose] = useState([]);
 
     return (
-        <ScreenWrapper title={route.params.cinema}>
+        <ScreenWrapper title={cinema}>
             <ScrollView
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={{ flexGrow: 1 }}
             >
                 <View style={styles.container}>
                     <View style={styles.header}>
-                        <Text style={[GlobalStyles.semiBoldText, styles.date]}>{schedule.title} {schedule.month}</Text>
+                        <Text style={[GlobalStyles.semiBoldText, styles.date]}>{schedule.title} {schedule}</Text>
                     </View>
                     <View style={{maxHeight:350}}>
                         <ScrollView

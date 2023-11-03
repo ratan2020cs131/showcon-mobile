@@ -3,8 +3,8 @@ import GlobalStyles from "../../GlobalStyles";
 import { useState } from "react";
 import ModalView from "../Modal";
 
-const Place = ({ data,navigation }) => {
-    const { cinema, date } = data;
+const Place = ({id, data, navigation }) => {
+
     const [box, setBox] = useState();
     const [modal, setModal]=useState(false);
     const [schedule, setSchedule]=useState();
@@ -14,22 +14,22 @@ const Place = ({ data,navigation }) => {
     return (
         <View style={styles.container}>
             <View style={styles.title}>
-                <Text style={[GlobalStyles.semiBoldText, styles.heading]}>{cinema}</Text>
+                <Text style={[GlobalStyles.semiBoldText, styles.heading]}>{data.name}</Text>
                 <View style={styles.boxcontainer}>
                     {
-                        date.map((item, index) => (
+                        data.schedule.map((item, index) => (
                             <TouchableOpacity style={[styles.box, index===box?styles.seletedBox:'']} key={index}
                             onPress={()=>{
                                 if(box===index){
                                     setBox(undefined)    
                                 }else{
                                 setBox(index)
-                                setSchedule(item);
+                                setSchedule(item.date.split(' ')[0]+" "+item.time);
                             }
                             }}
                             >
-                                <Text style={[GlobalStyles.semiBoldText, styles.date]}>{item.title}</Text>
-                                <Text style={[styles.month, index===box?styles.selectedDate:'']}>{item.month}</Text>
+                                <Text style={[GlobalStyles.semiBoldText, styles.date]}>{item.date.split(' ')[0]}</Text>
+                                <Text style={[styles.month, index===box?styles.selectedDate:'']}>{item.time.split(' ')[0]}</Text>
                             </TouchableOpacity>
                         ))
                     }
@@ -39,7 +39,7 @@ const Place = ({ data,navigation }) => {
             <TouchableOpacity style={[GlobalStyles.buttonOutlined, styles.button]}
             activeOpacity={0.2}
             onPress={()=>{
-                box>=0?navigation.navigate("SeatScreen", {cinema, schedule}):setModal(true);
+                box>=0?navigation.navigate("SeatScreen", {cinema:data.name, schedule,id}):setModal(true);
             }}
             >
                 <Text style={[GlobalStyles.boldText, styles.btntext]}>BOOK</Text>
@@ -91,8 +91,8 @@ const styles = StyleSheet.create({
         color:'#000'
     },
     box: {
-        height: 35,
-        width: 35,
+        height: 40,
+        width: 45,
         borderColor: '#1E1F22',
         borderWidth: 1,
         borderRadius: 5,
@@ -102,8 +102,8 @@ const styles = StyleSheet.create({
     },
     seletedBox:{
         backgroundColor:'#F55139',
-        height: 35,
-        width: 35,
+        height: 40,
+        width: 45,
         borderColor: '#F55139',
         borderWidth: 1,
         borderRadius: 5,
