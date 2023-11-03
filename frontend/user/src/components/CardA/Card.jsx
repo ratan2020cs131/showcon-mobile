@@ -1,11 +1,11 @@
 import { TouchableOpacity, View, ImageBackground, StyleSheet, Text } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
-const Card = ({ image, title, navigation, wd, ht, m }) => {
+const Card = ({ data, title, navigation, wd, ht, m }) => {
     return (
-        <TouchableOpacity style={[styles.item, {margin:m?m:10, width: wd ? wd : 150, height: ht ? ht : 200 }]} onPress={() => navigation.navigate("ShowScreen", { image, title })}>
+        <TouchableOpacity style={[styles.item, {margin:m?m:10, width: wd ? wd : 150, height: ht ? ht : 200 }]} onPress={() => navigation.navigate("ShowScreen", { data })}>
             <View style={styles.imageContainer}>
-                <ImageBackground style={styles.image} source={image} resizeMode='cover'>
+                <ImageBackground style={styles.image} source={{uri:data.banner}} resizeMode='cover'>
                     {!wd &&
                         <View style={styles.titleContainer}>
                             <Text style={[GlobalStyles.semiBoldText, styles.titleText]}>{title}</Text>
@@ -13,6 +13,7 @@ const Card = ({ image, title, navigation, wd, ht, m }) => {
                     }
                 </ImageBackground>
             </View>
+            {title&&<Text style={[GlobalStyles.normalText, {color:'#1E1F22', paddingLeft: 10, fontSize: 13, textAlign: "left", marginVertical: 5, width:'100%' }]}>{title}</Text>}
         </TouchableOpacity>
     )
 }

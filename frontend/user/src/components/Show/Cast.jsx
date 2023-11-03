@@ -1,29 +1,27 @@
 import { View, StyleSheet, Text, FlatList, Image } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
-import Keeanu from '../../../assets/images/keeanu.png'
-import Ian from '../../../assets/images/Ian.png'
 
 const Actor=({data})=>{
-    const {actor, image}=data;
+    const {name, img}=data;
     return(
         <View style={styles.cast}>
         <View style={styles.actor}>
-            <Image source={image} style={styles.image}/>
+            <Image source={{uri:img}} style={styles.image}/>
         </View>
-        <Text style={[GlobalStyles.semiBoldText,{textAlign:'center'}]}>{actor}</Text>
+        <Text style={[GlobalStyles.semiBoldText,{textAlign:'center'}]}>{name}</Text>
         </View>
     )
 }
 
-const Cast = () => {
+const Cast = ({data}) => {
     return (
         <View style={styles.container}>
             <Text style={[GlobalStyles.boldText, styles.headline]}>CAST</Text>
             <FlatList
                 horizontal={true}
-                data={castArray}
-                renderItem={({ item }) => <Actor data={item}/>}
-                keyExtractor={(item) => item.id}
+                data={data}
+                renderItem={({ item }) => <Actor key={item._id} data={item}/>}
+                keyExtractor={(item) => item._id}
                 showsHorizontalScrollIndicator={false}
             />
         </View>
@@ -63,35 +61,35 @@ const styles = StyleSheet.create({
     }
 })
 
-const castArray=[
-    {
-        id:1,
-        actor:"Keeanu Reeves",
-        image:Keeanu
-    },
-    {
-        id:2,
-        actor:"Iam McShane",
-        image:Ian
-    },
-    {
-        id:3,
-        actor:"Keeanu Reeves",
-        image:Keeanu
-    },
-    {
-        id:4,
-        actor:"Iam McShane",
-        image:Ian
-    },
-    {
-        id:5,
-        actor:"Keeanu Reeves",
-        image:Keeanu
-    },
-    {
-        id:6,
-        actor:"Iam McShane",
-        image:Ian
-    },
-]
+// const castArray=[
+//     {
+//         id:1,
+//         actor:"Keeanu Reeves",
+//         image:Keeanu
+//     },
+//     {
+//         id:2,
+//         actor:"Iam McShane",
+//         image:Ian
+//     },
+//     {
+//         id:3,
+//         actor:"Keeanu Reeves",
+//         image:Keeanu
+//     },
+//     {
+//         id:4,
+//         actor:"Iam McShane",
+//         image:Ian
+//     },
+//     {
+//         id:5,
+//         actor:"Keeanu Reeves",
+//         image:Keeanu
+//     },
+//     {
+//         id:6,
+//         actor:"Iam McShane",
+//         image:Ian
+//     },
+// ]

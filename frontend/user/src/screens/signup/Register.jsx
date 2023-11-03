@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity, KeyboardAvoidingView, ScrollView, ActivityIndicator } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import GlobalStyles from "../../GlobalStyles";
 import Logo from "../../../assets/Logo.png";
 import { Ionicons } from "@expo/vector-icons";
 import TextIcon from "./TextIcon";
 import { useDispatch, useSelector } from "react-redux";
-import { register, auth } from "../../Redux/Features/Auth/authSlice";
+import { register, auth,getProfile } from "../../Redux/Features/Auth/authSlice";
 import { CommonActions } from '@react-navigation/native';
 
 const Register = ({ navigation, route }) => {
@@ -23,6 +24,16 @@ const Register = ({ navigation, route }) => {
     cpassword: "",
   });
 
+  const registered = async () => {
+    dispatch(getProfile());
+    await AsyncStorage.setItem('token', authState.token);
+    navigation.dispatch(CommonActions.reset({
+      index: 0,
+      routes: [
+        { name: 'Home' },
+      ],
+    }));
+  }
 
   useEffect(() => {
     if (user.phone === '') {
@@ -33,12 +44,7 @@ const Register = ({ navigation, route }) => {
     }
 
     if (authState.isVerified) {
-      navigation.dispatch(CommonActions.reset({
-        index: 0,
-        routes: [
-          { name: 'Home' },
-        ],
-      }));
+      registered();
     }
   }, [authState])
 

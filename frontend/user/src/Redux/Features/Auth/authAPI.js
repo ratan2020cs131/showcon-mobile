@@ -26,7 +26,7 @@ const verify = async (credentials) => {
 const register = async (credentials) => {
     try {
         const response = await axios.post(`${BASE_URL}auth/register`, credentials);
-        return response.data;
+        return response.data.token;
     }
     catch (err) {
         console.log("Register Error: ", err)

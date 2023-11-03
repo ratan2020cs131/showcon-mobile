@@ -45,6 +45,8 @@ export const register = createAsyncThunk(
             if (!res) {
                 return thunkAPI.rejectWithValue(error);
             }
+            console.log("token :",res);
+            return res;
         }
         catch (err) {
             return thunkAPI.rejectWithValue(err.message);
@@ -136,7 +138,8 @@ const authSlice = createSlice({
             })
             .addCase(register.fulfilled, (state, action) => {
                 state.isLoading = false,
-                    state.isVerified = true
+                    state.isVerified = true,
+                    state.token=action.payload
             })
             .addCase(getProfile.fulfilled, (state, action)=>{
                 state.user=action.payload,

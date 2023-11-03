@@ -2,15 +2,17 @@ import { StyleSheet, View, Text } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import Place from "../../components/Show/PlaceCard";
 
-const Places =({navigation})=>{
+const Places =({navigation, cinema})=>{
+
     return(
         <View>
             {/* <Text style={[GlobalStyles.boldText, styles.headline]}>
                 PLACES
             </Text> */}
+
             {
-                cinemaArray.map((item,index)=>(
-                    <Place key={index} data={item} navigation={navigation}/>
+                cinema.map((item,index)=>(
+                    <Place key={index} data={item} navigation={navigation} id={item.id}/>
                 ))
             }
         </View>

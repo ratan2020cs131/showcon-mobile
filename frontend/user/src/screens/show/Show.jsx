@@ -6,16 +6,16 @@ import Description from "../../components/Show/Description";
 import Rating from "../../components/Show/Rating";
 
 const Show = ({ navigation, route }) => {
-    const { image, title } = route.params
+    const { data } = route.params
     return (
         <ScrollView
             showsVerticalScrollIndicator={false}
         >
             <View style={styles.container}>
-                <Poster title={title} image={image}/>
-                <Places navigation={navigation} />
-                <Cast />
-                <Description />
+                <Poster title={data.title} image={data.banner}/>
+                <Places cinema={data.cinema} navigation={navigation} />
+                <Cast data={data.cast}/>
+                <Description data={data.description} />
                 <Rating />
             </View>
         </ScrollView>
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: "column",
         alignItems: "center",
-        backgroundColor: "#EEEEEE"
+        backgroundColor: "#EEEEEE",
     },
 });
 
