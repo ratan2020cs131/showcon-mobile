@@ -41,15 +41,15 @@ const SeatScreen = ({ navigation, route }) => {
               {schedule.title} {schedule}
             </Text>
           </View>
-          <View style={{ maxHeight: 350 }}>
+          <View style={{ maxHeight: 350, alignItems:'center' }}>
+            <View style={styles.screen}></View>
+            <Text style={[GlobalStyles.normalText,{ marginBottom: 30, paddingTop:10 }]}>Screen this Way</Text>
             <ScrollView
               horizontal
               showsHorizontalScrollIndicator={false}
               contentContainerStyle={{}}
             >
               <View style={styles.seatmap}>
-                <View style={styles.screen}></View>
-                <Text style={{ marginBottom: 30 }}>Screen this Way</Text>
                 <View>
                   {movieState.isLoading ? (
                     <View
