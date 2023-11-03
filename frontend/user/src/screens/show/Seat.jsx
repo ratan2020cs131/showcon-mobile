@@ -23,7 +23,7 @@ const SeatScreen = ({ navigation, route }) => {
     if (movieState.cinema === undefined) {
         dispatch(getCinema(id));
     } else {
-      console.log(movieState.cinema);
+      
     }
   }, [movieState.cinema]);
 
@@ -51,14 +51,14 @@ const SeatScreen = ({ navigation, route }) => {
                 <View style={styles.screen}></View>
                 <Text style={{ marginBottom: 30 }}>Screen this Way</Text>
                 <View>
-                  {true ? (
+                  {movieState.isLoading ? (
                     <View
                       style={{
                         marginTop: 100,
-                        width: "100%",
+                        width: "auto",
                         flexDirection: "row",
                         alignItems: "center",
-                        justifyContent: "center"
+                        justifyContent: "center",
                       }}
                     >
                       <ActivityIndicator size="large" color="#F55139" />
