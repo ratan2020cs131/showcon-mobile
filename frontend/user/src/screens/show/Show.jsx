@@ -13,7 +13,7 @@ const Show = ({ navigation, route }) => {
         >
             <View style={styles.container}>
                 <Poster title={data.title} image={data.banner}/>
-                <Places cinema={data.cinema} navigation={navigation} />
+                <Places title={data.title} cinema={data.cinema} navigation={navigation} />
                 <Cast data={data.cast}/>
                 <Description data={data.description} />
                 <Rating />

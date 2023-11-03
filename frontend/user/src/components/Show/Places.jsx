@@ -2,7 +2,7 @@ import { StyleSheet, View, Text } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import Place from "../../components/Show/PlaceCard";
 
-const Places =({navigation, cinema})=>{
+const Places =({navigation, cinema, title})=>{
 
     return(
         <View>
@@ -12,7 +12,7 @@ const Places =({navigation, cinema})=>{
 
             {
                 cinema.map((item,index)=>(
-                    <Place key={index} data={item} navigation={navigation} id={item.id}/>
+                    <Place key={index} data={item} navigation={navigation} id={item.id} title={title}/>
                 ))
             }
         </View>

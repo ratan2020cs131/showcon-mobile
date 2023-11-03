@@ -5,7 +5,7 @@ import ModalView from "../Modal";
 import { useDispatch } from "react-redux";
 import { resetCinema } from "../../Redux/Features/Movie/movieSlice";
 
-const Place = ({id, data, navigation }) => {
+const Place = ({id, data, navigation, title }) => {
     const dispatch=useDispatch();
     
     const [box, setBox] = useState();
@@ -43,7 +43,7 @@ const Place = ({id, data, navigation }) => {
             activeOpacity={0.2}
             onPress={()=>{
                 dispatch(resetCinema());
-                box>=0?navigation.navigate("SeatScreen", {cinema:data.name, schedule, id}):setModal(true);
+                box>=0?navigation.navigate("SeatScreen", {cinema:data.name, schedule, id, title}):setModal(true);
             }}
             >
                 <Text style={[GlobalStyles.boldText, styles.btntext]}>BOOK</Text>
