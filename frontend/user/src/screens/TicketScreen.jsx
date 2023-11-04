@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { PermissionsAndroid, View, ScrollView, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, ScrollView, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import GlobalStyles from '../GlobalStyles';
 import QRCode from 'react-native-qrcode-svg';
 import { useDispatch } from 'react-redux';
