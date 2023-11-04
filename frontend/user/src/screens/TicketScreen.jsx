@@ -4,87 +4,14 @@ import GlobalStyles from '../GlobalStyles';
 import QRCode from 'react-native-qrcode-svg';
 import { useDispatch } from 'react-redux';
 import { resetTicket } from '../Redux/Features/Tickets/ticketSlice';
-import { captureRef } from 'react-native-view-shot';
-import CameraRoll from '@react-native-community/cameraroll';
 
 const TicketScreen = ({ route }) => {
-    //viewRefs is View container what area you want to share or download.
-    const viewCurrentImgRef = useRef(null);
-
     const dispatch = useDispatch();
     const { total, venue, seats, movie, time } = route.params.data;
 
     useEffect(() => {
         dispatch(resetTicket());
     }, [])
-
-
-    // Function to request permission for WRITE_EXTERNAL_STORAGE on Android
-  const getPermissionAndroid = async () => {
-    try {
-      const granted = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
-        {
-          title: 'Image Download Permission',
-          message: 'Your permission is required to save images to your device',
-          buttonNegative: 'Cancel',
-          buttonPositive: 'OK',
-        }
-      );
-
-      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        return true;
-      } else {
-        Alert.alert(
-          'Permission required',
-          'Permission is required to save images to your device',
-          [{ text: 'OK', onPress: () => {} }],
-          { cancelable: false }
-        );
-        return false;
-      }
-    } catch (err) {
-      Alert.alert(
-        'Save remote image',
-        'Failed to save Image: ' + err.message,
-        [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
-        { cancelable: false }
-      );
-      return false;
-    }
-  };
-
-    // Function to download and save the captured image
-    const downloadImage = async () => {
-        try {
-            // Capture the component as an image
-            if (viewCurrentImgRef.current) {
-                const uri = await captureRef(viewCurrentImgRef, {
-                    format: 'png',
-                    quality: 0.8,
-                });
-
-                // Request permission to write to external storage (Android only)
-                if (Platform.OS === 'android') {
-                    const granted = await getPermissionAndroid();
-                    if (!granted) {
-                        return;
-                    }
-                }
-
-                // Save the image to the camera roll
-                await CameraRoll.save(uri, 'photo');
-                Alert.alert(
-                    'Image saved',
-                    'Successfully saved image to your gallery.',
-                    [{ text: 'OK', onPress: () => { } }],
-                    { cancelable: false }
-                );
-            }
-        } catch (error) {
-            console.log('error', error);
-        }
-    };
 
 
     return (
@@ -94,7 +21,7 @@ const TicketScreen = ({ route }) => {
                 style={{ height: '100%', width: '100%', paddingHorizontal: 10, paddingTop: 30, }}
                 contentContainerStyle={{ alignItems: 'center', justifyContent: 'space-between', gap: 60 }}
             >
-                <View style={styles.ticketContainer} ref={viewCurrentImgRef}>
+                <View style={styles.ticketContainer}>
                     <View style={styles.qrContainer}>
                         <View style={[styles.dot1, styles.dotup]} />
                         <View style={[styles.dot2, styles.dotdown]} />
@@ -127,7 +54,7 @@ const TicketScreen = ({ route }) => {
                     </Text>
                 </View> */}
             </ScrollView>
-            <TouchableOpacity activeOpacity={0.5} style={[GlobalStyles.button, { width: '90%', marginVertical: 20 }]} onPress={downloadImage}>
+            <TouchableOpacity activeOpacity={0.5} style={[GlobalStyles.button, { width: '90%', marginVertical: 20 }]}>
                 <Text style={[GlobalStyles.boldText]}>DOWNLOAD TIKCET</Text>
             </TouchableOpacity>
         </View>
