@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, Image, Text, StyleSheet } from 'react-native';
+import { View, ScrollView, Text, StyleSheet } from 'react-native';
 import GlobalStyles from '../GlobalStyles';
 import QRCode from 'react-native-qrcode-svg';
 import { useDispatch } from 'react-redux';
@@ -15,6 +15,11 @@ const TicketScreen = ({ route }) => {
 
     return (
         <View style={styles.container}>
+            <ScrollView
+                    showsVerticalScrollIndicator={false}
+                    style={{ height: '100%', width: '100%', paddingHorizontal:10, paddingTop:80,}}
+                    contentContainerStyle={{ alignItems: 'center', justifyContent: 'space-between', gap:60 }}
+                >
             <View style={styles.ticketContainer}>
                 <View style={styles.qrContainer}>
                     <View style={[styles.dot1, styles.dotup]} />
@@ -46,13 +51,13 @@ const TicketScreen = ({ route }) => {
                     <Text style={[GlobalStyles.boldText]}>{" " + movie + " "}</Text>
                     has been Booked</Text>
             </View>
+            </ScrollView>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        paddingTop: 80,
         flex: 1,
         alignItems: 'center',
         justifyContent: 'space-around',

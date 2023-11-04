@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, TouchableOpacity, View, ActivityIndicator } from 'react-native'
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View, ActivityIndicator } from 'react-native'
 import ScreenWrapper from './ScreenWrapper';
 import Card from '../components/CardC/Card';
 import PaytmLogo from '../../assets/images/paytm-logo.png';
@@ -43,19 +43,24 @@ const PaymentScreen = ({ navigation, route }) => {
     return (
         <ScreenWrapper title={title}>
             <View style={styles.container}>
-                <View style={{ width: '100%' }}>
-                    {
-                        cardArray.map((item, index) => (
-                            <Card key={item.title} data={item} select={select === index} setSelect={setSelect} index={index} />
-                        ))
-                    }
-                    <PaymentSummary data={{ title, totalticket: choose.length, cinema, schedule, choose }} />
-                </View>
+                <ScrollView
+                    showsVerticalScrollIndicator={false}
+                    style={{ height: '100%', width: '100%', paddingHorizontal:10 }}
+                    contentContainerStyle={{ alignItems: 'center', justifyContent: 'space-between' }}
+                >
+                    <View style={{ width: '100%', paddingVertical:10, paddingHorizontal:5 }}>
+                        {
+                            cardArray.map((item, index) => (
+                                <Card key={item.title} data={item} select={select === index} setSelect={setSelect} index={index} />
+                            ))
+                        }
+                        <PaymentSummary data={{ title, totalticket: choose.length, cinema, schedule, choose }} />
+                    </View>
+                </ScrollView>
                 {
                     ticketState.isLoading ?
                         <View
                             style={{
-                                marginTop: 100,
                                 width: "auto",
                                 flexDirection: "row",
                                 alignItems: "center",
@@ -65,7 +70,7 @@ const PaymentScreen = ({ navigation, route }) => {
                             <ActivityIndicator size="large" color="#F55139" />
                         </View>
                         :
-                        <TouchableOpacity activeOpacity={0.5} style={[GlobalStyles.button, { width: '95%' }]} onPress={handlePay}>
+                        <TouchableOpacity activeOpacity={0.5} style={[GlobalStyles.button, { width: '90%', marginTop:20 }]} onPress={handlePay}>
                             <Text style={[GlobalStyles.boldText]}>PAY NOW</Text>
                         </TouchableOpacity>
                 }
@@ -80,10 +85,9 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         width: '100%',
-        paddingHorizontal: 15,
         paddingVertical: 20,
         justifyContent: 'space-between',
-        alignItems: 'center'
+        alignItems: 'center',
     }
 })
 

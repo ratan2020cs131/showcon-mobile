@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
         elevation: 5,
         shadowRadius: 4,
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
     },
     ticket: {
         position:'relative',
