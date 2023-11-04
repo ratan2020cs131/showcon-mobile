@@ -1,57 +1,135 @@
-import React, { useEffect } from 'react';
-import { View, ScrollView, Text, StyleSheet } from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import { PermissionsAndroid, View, ScrollView, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import GlobalStyles from '../GlobalStyles';
 import QRCode from 'react-native-qrcode-svg';
 import { useDispatch } from 'react-redux';
 import { resetTicket } from '../Redux/Features/Tickets/ticketSlice';
+import { captureRef } from 'react-native-view-shot';
+import CameraRoll from '@react-native-community/cameraroll';
 
 const TicketScreen = ({ route }) => {
-    const dispatch = useDispatch();
-    const {total, venue, seats, movie, time } = route.params.data;
+    //viewRefs is View container what area you want to share or download.
+    const viewCurrentImgRef = useRef(null);
 
-    useEffect(()=>{
+    const dispatch = useDispatch();
+    const { total, venue, seats, movie, time } = route.params.data;
+
+    useEffect(() => {
         dispatch(resetTicket());
-    },[])
+    }, [])
+
+
+    // Function to request permission for WRITE_EXTERNAL_STORAGE on Android
+  const getPermissionAndroid = async () => {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+        {
+          title: 'Image Download Permission',
+          message: 'Your permission is required to save images to your device',
+          buttonNegative: 'Cancel',
+          buttonPositive: 'OK',
+        }
+      );
+
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        return true;
+      } else {
+        Alert.alert(
+          'Permission required',
+          'Permission is required to save images to your device',
+          [{ text: 'OK', onPress: () => {} }],
+          { cancelable: false }
+        );
+        return false;
+      }
+    } catch (err) {
+      Alert.alert(
+        'Save remote image',
+        'Failed to save Image: ' + err.message,
+        [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
+        { cancelable: false }
+      );
+      return false;
+    }
+  };
+
+    // Function to download and save the captured image
+    const downloadImage = async () => {
+        try {
+            // Capture the component as an image
+            if (viewCurrentImgRef.current) {
+                const uri = await captureRef(viewCurrentImgRef, {
+                    format: 'png',
+                    quality: 0.8,
+                });
+
+                // Request permission to write to external storage (Android only)
+                if (Platform.OS === 'android') {
+                    const granted = await getPermissionAndroid();
+                    if (!granted) {
+                        return;
+                    }
+                }
+
+                // Save the image to the camera roll
+                await CameraRoll.save(uri, 'photo');
+                Alert.alert(
+                    'Image saved',
+                    'Successfully saved image to your gallery.',
+                    [{ text: 'OK', onPress: () => { } }],
+                    { cancelable: false }
+                );
+            }
+        } catch (error) {
+            console.log('error', error);
+        }
+    };
+
 
     return (
         <View style={styles.container}>
             <ScrollView
-                    showsVerticalScrollIndicator={false}
-                    style={{ height: '100%', width: '100%', paddingHorizontal:10, paddingTop:80,}}
-                    contentContainerStyle={{ alignItems: 'center', justifyContent: 'space-between', gap:60 }}
-                >
-            <View style={styles.ticketContainer}>
-                <View style={styles.qrContainer}>
-                    <View style={[styles.dot1, styles.dotup]} />
-                    <View style={[styles.dot2, styles.dotdown]} />
-                    <View style={styles.qrCode}>
-                        {/* <Image source={require('../../assets/images/qrcode.png')} style={styles.image} /> */}
-                        <QRCode value={JSON.stringify({total, venue, seats, movie, time })} size={150}/>
+                showsVerticalScrollIndicator={false}
+                style={{ height: '100%', width: '100%', paddingHorizontal: 10, paddingTop: 30, }}
+                contentContainerStyle={{ alignItems: 'center', justifyContent: 'space-between', gap: 60 }}
+            >
+                <View style={styles.ticketContainer} ref={viewCurrentImgRef}>
+                    <View style={styles.qrContainer}>
+                        <View style={[styles.dot1, styles.dotup]} />
+                        <View style={[styles.dot2, styles.dotdown]} />
+                        <View style={styles.qrCode}>
+                            {/* <Image source={require('../../assets/images/qrcode.png')} style={styles.image} /> */}
+                            <QRCode value={JSON.stringify({ total, venue, seats, movie, time })} size={150} />
+                        </View>
+                    </View>
+
+                    <View style={styles.row2}>
+                        <Text style={[GlobalStyles.boldText, { textAlign: 'center' }, { fontSize: 20 }]}>{movie}</Text>
+                        <Text style={[GlobalStyles.normalText, { fontSize: 16, textAlign: 'center' }]}>Seats : {" "}
+                            {
+                                seats.map((item, index) => (
+                                    <Text key={index} style={[GlobalStyles.semiBoldText, { fontSize: 16, }]}>
+                                        {index === seats.length - 1 ? item : item + ','}
+                                    </Text>
+                                ))
+                            }
+                        </Text>
+                        <Text style={[GlobalStyles.semiBoldText, { textAlign: 'center' }]}>{time}</Text>
+                        <Text style={[GlobalStyles.normalText, { textAlign: 'center' }]}>{venue}</Text>
+                        <Text style={[GlobalStyles.boldText, { fontSize: 30, marginTop: 30, marginBottom: 10 }]}>{total}</Text>
                     </View>
                 </View>
-
-                <View style={styles.row2}>
-                    <Text style={[GlobalStyles.boldText, { textAlign: 'center' }, { fontSize: 20 }]}>{movie}</Text>
-                    <Text style={[GlobalStyles.normalText, { fontSize: 16, textAlign: 'center' }]}>Seats : {" "}
-                        {
-                            seats.map((item, index) => (
-                                <Text key={index} style={[GlobalStyles.semiBoldText, { fontSize: 16, }]}>
-                                    {item}
-                                </Text>
-                            ))
-                        }
+                {/* <View style={{ width: '60%' }}>
+                    <Text style={[GlobalStyles.normalText, { textAlign: 'center', fontSize: 20 }]}>Tickets for
+                        <Text style={[GlobalStyles.boldText]}>{" " + movie + " "}</Text>
+                        has been Booked
                     </Text>
-                    <Text style={[GlobalStyles.semiBoldText, { textAlign: 'center' }]}>{time}</Text>
-                    <Text style={[GlobalStyles.normalText, { textAlign: 'center' }]}>{venue}</Text>
-                    <Text style={[GlobalStyles.boldText, { fontSize: 30, marginTop: 30, marginBottom: 10 }]}>{total}</Text>
-                </View>
-            </View>
-            <View style={{ width: '60%' }}>
-                <Text style={[GlobalStyles.normalText, { textAlign: 'center', fontSize: 20 }]}>Tickets for
-                    <Text style={[GlobalStyles.boldText]}>{" " + movie + " "}</Text>
-                    has been Booked</Text>
-            </View>
+                </View> */}
             </ScrollView>
+            <TouchableOpacity activeOpacity={0.5} style={[GlobalStyles.button, { width: '90%', marginVertical: 20 }]} onPress={downloadImage}>
+                <Text style={[GlobalStyles.boldText]}>DOWNLOAD TIKCET</Text>
+            </TouchableOpacity>
         </View>
     );
 };
@@ -130,7 +208,8 @@ const styles = StyleSheet.create({
         height: 500,
         justifyContent: 'space-between',
         alignItems: 'center',
-        elevation: 5
+        elevation: 5,
+        marginVertical: 50,
     }
 
 });
