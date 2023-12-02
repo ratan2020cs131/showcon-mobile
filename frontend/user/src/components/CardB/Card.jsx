@@ -11,8 +11,6 @@ const Card = ({ item }) => {
 
     return (
         <TouchableOpacity style={styles.item} onPress={() => setModal(true)}>
-            <View style={[styles.dotup, styles.dot1]}></View>
-            <View style={[styles.dotdown, styles.dot2]}></View>
             <View style={styles.column1}>
                 <Image style={styles.thumbnail} source={thumbnail} />
             </View>
@@ -36,6 +34,8 @@ const Card = ({ item }) => {
                 </View>
             </View>
             <View style={styles.column3}>
+                {/* <View style={[styles.dotup, styles.dot1]}></View>
+                <View style={[styles.dotdown, styles.dot2]}></View> */}
                 <View style={styles.qrcontainer}>
                     <Image style={styles.barcode} source={qrcode} />
                 </View>
@@ -55,16 +55,13 @@ const styles = StyleSheet.create({
         borderColor: '#ccc',
         margin: 5,
         padding: 10,
-        borderRadius: 5,
+        marginBottom:10,
+        borderRadius: 10,
         height: 130,
         backgroundColor: '#fff',
-        shadowColor: 'black',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.9,
-        shadowRadius: 4,
-        elevation: 3,
+        elevation: 5,
         justifyContent: 'space-between',
-        position: 'relative',
+        overflow:'hidden'
     },
     column1: {
         width: 85,
@@ -125,7 +122,9 @@ const styles = StyleSheet.create({
         padding: 10,
         justifyContent: 'center',
         borderLeftWidth: 1,
-        borderLeftColor: '#ccc'
+        borderLeftColor: '#a0a0a0',
+        position: 'relative',
+        borderStyle:'dashed'
     },
     qrcontainer: {
         height: 70,
@@ -140,30 +139,26 @@ const styles = StyleSheet.create({
     dotdown: {
         height: 20,
         width: 20,
-        borderTopLeftRadius:50,
-        borderTopRightRadius:50,
-        backgroundColor: "#EEEEEE",
+        borderTopLeftRadius: 50,
+        borderTopRightRadius: 50,
+        backgroundColor: "#e0e0e0",
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        position: 'absolute',
+        bottom:-20,
+        left: -10,
     },
     dotup: {
         height: 20,
         width: 20,
-        borderBottomLeftRadius:50,
-        borderBottomRightRadius:50,
-        backgroundColor: "#EEEEEE",
+        borderBottomLeftRadius: 50,
+        borderBottomRightRadius: 50,
+        backgroundColor: "#e0e0e0",
         alignItems: 'center',
-        justifyContent: 'center'
-    },
-    dot1: {
+        justifyContent: 'center',
         position: 'absolute',
-        bottom: 117,
-        right: 84
-    },
-    dot2: {
-        position: 'absolute',
-        top: 117,
-        right: 84
+        top:-20,
+        left: -10,
     },
     insetShadow: {
         height: 18,

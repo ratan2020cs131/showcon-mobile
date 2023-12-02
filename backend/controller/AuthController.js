@@ -1,4 +1,5 @@
 const User = require("../database/models/User");
+const Ticket = require('../database/models/Ticket');
 const bcrypt = require("bcrypt");
 
 const Signin = async (req, res) => {
@@ -23,7 +24,8 @@ const Register = async (req, res) => {
     const user = new User({ fname, lname, phone, email, password });
     const result = await user.save();
     if (result) {
-      res.status(201).json(result);
+      const token = await user.generateToken();
+      res.status(201).json({ token });
     } else {
       res.status(401).json({ message: "User not ssaved" });
     }
@@ -70,6 +72,21 @@ const ProfileData = async (req, res) => {
 };
 
 
+//PUT PROFILE UPDATE
+const ProfileUpdate = async (req, res) => {
+  try {
+    const id = req.user._id;
+    const user = await User.findByIdAndUpdate({ _id: id }, req.body, { returnOriginal: false })
+    if (!user) {
+      return res.status(404).json({ err: "User not found" })
+    }
+    res.json(user)
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+
 //LOGOUT
 const Logout = async (req, res) => {
   try {
@@ -86,10 +103,32 @@ const Logout = async (req, res) => {
     console.log("Logout Error: ", err);
   }
 }
+
+
+//GET HISTORY
+const History = async (req, res) => {
+  try {
+    let tickets = [];
+    const result = await User.findById({ _id: req.user._id });
+    if (result) {
+      for (const item of result.history) {
+        const ticket = await Ticket.findById({ _id: item });
+        tickets.push(ticket);
+      }
+      res.send(tickets);
+    }
+  }
+  catch (err) {
+    console.log("Logout Error: ", err);
+  }
+}
+
 module.exports = {
   Signin,
   Register,
   Verify,
   ProfileData,
-  Logout
+  ProfileUpdate,
+  Logout,
+  History
 };

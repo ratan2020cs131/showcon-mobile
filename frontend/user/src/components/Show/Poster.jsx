@@ -10,7 +10,7 @@ const Poster = ({ image, title }) => {
     return (
         <View style={styles.itemContainer}>
             <View style={styles.imgcontainer}>
-                <Image source={image} style={styles.image}></Image>
+                <Image source={{uri:image}} style={styles.image}></Image>
             </View>
             <View style={styles.container}>
                 <Text style={[GlobalStyles.semiBoldText, styles.title]}>{title}</Text>

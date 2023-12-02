@@ -5,9 +5,8 @@ import ScreenWrapper from './ScreenWrapper';
 import GlobalStyles from '../GlobalStyles';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CommonActions } from '@react-navigation/native';
-import { resetStates } from '../Redux/Features/Auth/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { auth, logout } from '../Redux/Features/Auth/authSlice';
+import { auth, logout, resetStates } from '../Redux/Features/Auth/authSlice';
 
 const ProfileScreen = ({ navigation }) => {
     const dispatch = useDispatch();

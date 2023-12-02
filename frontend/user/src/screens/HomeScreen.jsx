@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Alert, Dimensions, FlatList, ImageBackground, Modal, Pressable, View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { Dimensions, Modal, Pressable, View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { FontAwesome5, Feather } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import DateTimePicker from "@react-native-community/datetimepicker"
@@ -101,16 +101,16 @@ const HomeScreen = ({ navigation }) => {
                                     </View>
                                 </View>
                                 <View style={styles.confirmContainer}>
-                                    <Pressable
-                                        style={styles.confirmButton}
+                                    <TouchableOpacity
+                                        style={[GlobalStyles.button, styles.confirmButton]}
                                         onPress={() => {
                                             setModalVisible(!modalVisible);
-                                            console.log(!modalVisible); 
+                                            console.log(!modalVisible);
                                             setPlaceholder(`${date} at ${time}`)// Use this for confirmation
                                         }}
                                     >
-                                        <Text style={styles.confirmButtonText}>Confirm</Text>
-                                    </Pressable>
+                                        <Text style={[GlobalStyles.boldText, {color:"#E9E5D7"}]}>CONFIRM</Text>
+                                    </TouchableOpacity>
 
                                 </View>
                             </View>
@@ -123,19 +123,21 @@ const HomeScreen = ({ navigation }) => {
                     <ScrollView style={styles.container} showsVerticalScrollIndicator={false} nestedScrollEnabled={true} >
                         {/* time */}
                         <View style={{ alignItems: 'center' }}>
-                            <TouchableOpacity style={[GlobalStyles.picker, { width: windowWidth - 35, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 5, marginVertical:10, }]} onPress={() => setModalVisible(!modalVisible)}>
-                                <View style={{flex:1}}>
-                                    <Text style={[GlobalStyles.boldText,(placeholder == 'Pickup Show Time') ? { color: '#8b8981' } : { color: '#F55139' }]}>{placeholder}</Text>
+                            <TouchableOpacity style={[GlobalStyles.picker, { width: windowWidth - 35, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 5, marginVertical: 10, }]} onPress={() => setModalVisible(!modalVisible)}>
+                                <View style={{ flex: 1 }}>
+                                    <Text style={[GlobalStyles.boldText, (placeholder === 'Pickup Show Time') ? { color: '#8b8981' } : { color: '#F55139' }]}>{placeholder}</Text>
                                 </View>
-                                <View style={{  position:'relative', justifyContent:'center', borderLeftWidth:2, borderColor:'#1E1F22', height:'100%', paddingHorizontal:5}}>
-                                    <Ionicons name="calendar" style={{fontSize:26, color:'#1E1F22'}}></Ionicons>
+                                <View style={{ position: 'relative', justifyContent: 'center', borderLeftWidth: 2, borderColor: '#1E1F22', height: '100%', paddingHorizontal: 5 }}>
+                                    <Ionicons name="calendar" style={{ fontSize: 26, color: '#1E1F22' }}></Ionicons>
                                 </View>
-                               
+
                             </TouchableOpacity>
                         </View>
-
-                        <Result navigation={navigation}/>
-                        <Popular navigation={navigation}/>
+                        {
+                            placeholder !== 'Pickup Show Time' ?
+                                <Result navigation={navigation} /> : null
+                        }
+                        <Popular navigation={navigation} />
                     </ScrollView>
                 )}
         </ScreenWrapper>
@@ -147,7 +149,7 @@ export default HomeScreen;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding:10,
+        padding: 10,
     },
     item: {
         width: 150,
@@ -234,11 +236,8 @@ const styles = StyleSheet.create({
         marginTop: 20,
     },
     confirmButton: {
-        backgroundColor: 'black',
-        borderRadius: 10,
-        padding: 15,
-        elevation: 5,
-        marginTop: 10,
+        backgroundColor: '#1E1F22',
+        width:100
     },
     confirmButtonText: {
         color: 'white',

@@ -8,10 +8,13 @@ import posterImg3 from '../../assets/images/poster4.png';
 import posterImg4 from '../../assets/images/poster5.png';
 import ModalView from "../components/Modal";
 import { useState } from 'react';
+import { movie } from '../Redux/Features/Movie/movieSlice';
+import { useSelector } from 'react-redux';
 
 const WishlistScreen = ({ navigation }) => {
-    const [modal, setModal]=useState(false);
-    onClose=()=>setModal(false)
+    const movieState = useSelector(movie);
+    const [modal, setModal] = useState(false);
+    onClose = () => setModal(false)
 
     return (
         <ScreenWrapper title="Whishlist">
@@ -19,12 +22,12 @@ const WishlistScreen = ({ navigation }) => {
                 <View style={{ width: '100%' }}>
                     <View style={styles.likedcontainer}>
                         {
-                            likedArray.map((item, index) => (
-                                <TouchableOpacity key={index} style={styles.item} onPress={() => navigation.navigate("ShowScreen", {image:item.thumbnail})}>
+                            movieState.movies.map((item, index) => (
+                                <TouchableOpacity key={index} style={styles.item} onPress={() => navigation.navigate("ShowScreen", { data:item })}>
                                     <View style={styles.imageContainer}>
-                                        <ImageBackground style={styles.image} source={item.thumbnail} resizeMode='cover'>
+                                        <ImageBackground style={styles.image} source={{uri:item.banner}} resizeMode='cover'>
                                             <TouchableOpacity style={styles.iconContainer} onPress={() => setModal(true)}>
-                                            <Ionicons name="trash" style={styles.icon}></Ionicons>
+                                                <Ionicons name="trash" style={styles.icon}></Ionicons>
                                             </TouchableOpacity>
                                             {/* <View style={styles.titleContainer}>
                                                 <Text style={[GlobalStyles.semiBoldText, styles.titleText]}>{item.movieName}</Text>
@@ -37,7 +40,7 @@ const WishlistScreen = ({ navigation }) => {
                     </View>
                 </View>
             </ScrollView>
-            <ModalView button={true} visible={modal} onClose={onClose} title="Are you sure to remove this show from your wishlist"/>
+            <ModalView button={true} visible={modal} onClose={onClose} title="Are you sure to remove this show from your wishlist" />
         </ScreenWrapper>
     )
 }
@@ -63,7 +66,7 @@ const styles = StyleSheet.create({
         width: 150,
         height: 180,
         margin: 10,
-        position:'relative'
+        position: 'relative'
     },
     imageContainer: {
         flex: 1,
@@ -91,18 +94,18 @@ const styles = StyleSheet.create({
         textAlign: 'left',
         paddingLeft: 10,
     },
-    iconContainer:{
-        alignItems:'flex-end', 
-        padding:7, 
-        position:'absolute',
-        bottom:0,
-        right:3,
-        borderRadius:50,
-        zIndex:5
+    iconContainer: {
+        alignItems: 'flex-end',
+        padding: 7,
+        position: 'absolute',
+        bottom: 0,
+        right: 3,
+        borderRadius: 50,
+        zIndex: 5
     },
-    icon:{
-        color:'white',
-        fontSize:19,
+    icon: {
+        color: 'white',
+        fontSize: 19,
     }
 });
 
@@ -124,5 +127,5 @@ const likedArray = [
         id: 4,
         thumbnail: posterImg4,
     },
-    
+
 ];
