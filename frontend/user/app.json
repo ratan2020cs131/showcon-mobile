@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "showcon",
+    "name": "Showcon",
     "slug": "showcon",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -26,6 +26,7 @@
     "web": {
       "favicon": "./assets/icon.png"
     },
-    "extra": {}
+    "extra": {
+    }
   }
 }

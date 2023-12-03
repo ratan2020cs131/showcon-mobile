@@ -7,7 +7,8 @@ const {
     Verify,
     ProfileData,
     Logout,
-    ProfileUpdate
+    ProfileUpdate,
+    History
 } = require('../controller/AuthController');
 
 route.get('/signin/:mobileNo', Signin);
@@ -16,5 +17,6 @@ route.post('/register', Register);
 route.get('/profile', AuthMiddleWare, ProfileData);
 route.put('/profile', AuthMiddleWare, ProfileUpdate);
 route.get('/logout', AuthMiddleWare, Logout);
+route.get('/history', AuthMiddleWare, History);
 
 module.exports = route;

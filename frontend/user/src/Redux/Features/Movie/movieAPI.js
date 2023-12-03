@@ -19,9 +19,9 @@ const getCinema = async (id) => {
   }
 };
 
-const authApi = {
+const movieAPI = {
   getMovies,
   getCinema
 };
 
-export default authApi;
+export default movieAPI;

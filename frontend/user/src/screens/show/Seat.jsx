@@ -12,12 +12,16 @@ import GlobalStyles from "../../GlobalStyles";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCinema, movie } from "../../Redux/Features/Movie/movieSlice";
+import ModalView from "../../components/Modal";
 
 const SeatScreen = ({ navigation, route }) => {
   const dispatch = useDispatch();
   const movieState = useSelector(movie);
 
-  const { id, cinema, schedule } = route.params;
+  const {title, id, cinema, schedule } = route.params;
+  const [choose, setChoose] = useState([]);
+  const [visible, setModal] = useState([]);
+  const onClose=()=>setModal(false)
 
   useEffect(() => {
     if (movieState.cinema === undefined) {
@@ -27,7 +31,14 @@ const SeatScreen = ({ navigation, route }) => {
     }
   }, [movieState.cinema]);
 
-  const [choose, setChoose] = useState([]);
+  const handleBook=()=>{
+    if(choose.length > 0){
+      navigation.navigate("PaymentScreen",{choose,cinema, title, schedule});
+    }else{
+      setModal(true);
+    }
+  }
+
 
   return (
     <ScreenWrapper title={cinema}>
@@ -41,15 +52,15 @@ const SeatScreen = ({ navigation, route }) => {
               {schedule.title} {schedule}
             </Text>
           </View>
-          <View style={{ maxHeight: 350 }}>
+          <View style={{ maxHeight: 350, alignItems:'center' }}>
+            <View style={styles.screen}></View>
+            <Text style={[GlobalStyles.normalText,{ marginBottom: 30, paddingTop:10 }]}>Screen this Way</Text>
             <ScrollView
               horizontal
               showsHorizontalScrollIndicator={false}
               contentContainerStyle={{}}
             >
               <View style={styles.seatmap}>
-                <View style={styles.screen}></View>
-                <Text style={{ marginBottom: 30 }}>Screen this Way</Text>
                 <View>
                   {movieState.isLoading ? (
                     <View
@@ -110,11 +121,13 @@ const SeatScreen = ({ navigation, route }) => {
           )}
           <TouchableOpacity
             style={[GlobalStyles.button, { marginTop: "auto" }]}
+            onPress={handleBook}
           >
             <Text style={[GlobalStyles.boldText]}>BOOK NOW</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
+      <ModalView title="Select Atleast One Seat" visible={visible} onClose={onClose}/>
     </ScreenWrapper>
   );
 };

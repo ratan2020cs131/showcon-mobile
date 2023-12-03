@@ -3,6 +3,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Show from '../screens/show/Show';
 import HomeScreen from '../screens/HomeScreen';
 import SeatScreen from '../screens/show/Seat';
+import PaymentScreen from '../screens/PaymentScreen';
+import TicketScreen from '../screens/TicketScreen';
 
 const Stack = createStackNavigator();
 
@@ -22,6 +24,16 @@ const StackRoute = () => {
         {
             path:"SeatScreen",
             component: SeatScreen,
+            option : { headerShown:false }
+        },
+        {
+            path:"PaymentScreen",
+            component: PaymentScreen,
+            option : { headerShown:false }
+        },
+        {
+            path:"TicketScreen",
+            component: TicketScreen,
             option : { headerShown:false }
         },
     ];
