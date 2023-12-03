@@ -6,6 +6,8 @@ const authRoutes = require('./routes/Auth');
 const movieRoute = require('./routes/Movie');
 const cinemaRoute = require('./routes/Cinema');
 const ticketRoute = require('./routes/Ticket');
+const favouriteRoute = require('./routes/Favourite');
+
 require('./database/Connect');
 
 const app=express();
@@ -18,6 +20,7 @@ app.use('/auth', authRoutes);
 app.use('/movie', movieRoute);
 app.use('/cinema', cinemaRoute);
 app.use('/ticket', ticketRoute);
+app.use('/favourite', favouriteRoute)
 
 PORT=process.env.PORT
 app.listen(PORT, () => {
