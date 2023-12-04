@@ -1,5 +1,5 @@
 const User = require("../database/models/User");
-const Ticket = require('../database/models/Ticket');
+const Ticket = require("../database/models/Ticket");
 const bcrypt = require("bcrypt");
 
 const Signin = async (req, res) => {
@@ -27,7 +27,7 @@ const Register = async (req, res) => {
       const token = await user.generateToken();
       res.status(201).json({ token });
     } else {
-      res.status(401).json({ message: "User not ssaved" });
+      res.status(401).json({ message: "User not saved" });
     }
   } catch (err) {
     console.log("Signin Error: ", err);
@@ -38,7 +38,7 @@ const Register = async (req, res) => {
 const Verify = async (req, res) => {
   try {
     const { mobileNo, password } = req.body;
-    const user = await User.findOne({ phone: mobileNo })
+    const user = await User.findOne({ phone: mobileNo });
     if (user) {
       const authorised = await bcrypt.compare(password, user.password);
       if (authorised) {
@@ -46,64 +46,60 @@ const Verify = async (req, res) => {
         res.status(200).send({ token });
       } else {
         res.status(200).send({
-          error: "Wrong Password"
+          error: "Wrong Password",
         });
       }
     } else {
       res.status(404).send({
-        error: "User not Found"
+        error: "User not Found",
       });
     }
-  }
-  catch (err) {
+  } catch (err) {
     console.log("Signin Error: ", err);
   }
 };
 
-
 //GET PROFILE DATA
 const ProfileData = async (req, res) => {
   try {
-    const { fname, lname, phone, email } = req.user
-    res.status(200).json({ fname, lname, phone, email })
+    const { fname, lname, phone, email } = req.user;
+    res.status(200).json({ fname, lname, phone, email });
   } catch (err) {
-    console.log(err)
+    console.log(err);
   }
 };
-
 
 //PUT PROFILE UPDATE
 const ProfileUpdate = async (req, res) => {
   try {
     const id = req.user._id;
-    const user = await User.findByIdAndUpdate({ _id: id }, req.body, { returnOriginal: false })
+    const user = await User.findByIdAndUpdate({ _id: id }, req.body, {
+      returnOriginal: false,
+    });
     if (!user) {
-      return res.status(404).json({ err: "User not found" })
+      return res.status(404).json({ err: "User not found" });
     }
-    res.json(user)
+    res.json(user);
   } catch (err) {
-    console.log(err)
+    console.log(err);
   }
-}
-
+};
 
 //LOGOUT
 const Logout = async (req, res) => {
   try {
     req.user.tokens = req.user.tokens.filter((item) => {
       return item !== req.token;
-    })
+    });
     req.user.tokens.forEach((item) => {
       console.log(item);
-    })
+    });
     await req.user.save();
-    res.status(200).send({ message: 'Logout Successfully' })
-  }
-  catch (err) {
+    res.status(200).send({ message: "Logout Successfully" });
+  } catch (err) {
     console.log("Logout Error: ", err);
   }
-}
-
+};
 
 //GET HISTORY
 const History = async (req, res) => {
@@ -117,11 +113,10 @@ const History = async (req, res) => {
       }
       res.send(tickets);
     }
-  }
-  catch (err) {
+  } catch (err) {
     console.log("Logout Error: ", err);
   }
-}
+};
 
 module.exports = {
   Signin,
@@ -130,5 +125,5 @@ module.exports = {
   ProfileData,
   ProfileUpdate,
   Logout,
-  History
+  History,
 };
