@@ -1,6 +1,7 @@
 import BASE_URL from '../../../api/BaseUrl';
 import axios from 'axios';
 import axiosToken from '../../../api/axiosToken';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const signin = async (credentials) => {
     try {
@@ -43,9 +44,20 @@ const getProfile = async () => {
     }
 }
 
+const update = async (data) => {
+    try {
+        const response = await axiosToken.put(`${BASE_URL}auth/profile`, data);
+        return response.data;
+    }
+    catch (err) {
+        console.log("UpdateProfile Error: ", err)
+    }
+}
+
 const logout = async () => {
     try {
         const response = await axiosToken.get(`${BASE_URL}auth/logout`);
+        await AsyncStorage.removeItem('token');
         return response.data;
     }
     catch (err) {
@@ -58,6 +70,7 @@ const authApi = {
     verify,
     register,
     getProfile,
+    update,
     logout
 }
 

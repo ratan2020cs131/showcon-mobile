@@ -45,7 +45,7 @@ export const register = createAsyncThunk(
             if (!res) {
                 return thunkAPI.rejectWithValue(error);
             }
-            console.log("token :",res);
+            console.log("token :", res);
             return res;
         }
         catch (err) {
@@ -59,6 +59,22 @@ export const getProfile = createAsyncThunk(
     async (thunkAPI) => {
         try {
             const res = await authApi.getProfile();
+            if (!res) {
+                return thunkAPI.rejectWithValue(error);
+            }
+            return res;
+        }
+        catch (err) {
+            return thunkAPI.rejectWithValue(err.message);
+        }
+    }
+)
+
+export const update = createAsyncThunk(
+    "auth/update",
+    async (data, thunkAPI) => {
+        try {
+            const res = await authApi.update(data);
             if (!res) {
                 return thunkAPI.rejectWithValue(error);
             }
@@ -92,8 +108,9 @@ const state = {
     isVerified: undefined,
     token: null,
     error: undefined,
-    user:undefined,
-    isAuth:undefined,
+    user: undefined,
+    isAuth: undefined,
+    isUpdated: false
 }
 
 const authSlice = createSlice({
@@ -104,11 +121,14 @@ const authSlice = createSlice({
             state.error = undefined
         },
         resetStates: (state, action) => {
-            state.isLoading= false,
-            state.isRegistered= undefined,
-            state.isVerified= undefined,
-            state.token= null,
-            state.error= undefined
+            state.isLoading = false,
+                state.isRegistered = undefined,
+                state.isVerified = undefined,
+                state.token = null,
+                state.error = undefined
+        },
+        resetUpdate:(state, action)=>{
+            state.isUpdated=false
         }
     },
     extraReducers: (builder) => {
@@ -139,18 +159,37 @@ const authSlice = createSlice({
             .addCase(register.fulfilled, (state, action) => {
                 state.isLoading = false,
                     state.isVerified = true,
-                    state.token=action.payload
+                    state.token = action.payload
             })
-            .addCase(getProfile.fulfilled, (state, action)=>{
-                state.user=action.payload,
-                state.isAuth=true
+            .addCase(getProfile.pending, (state, action) => {
+                state.isLoading=true
             })
-            .addCase(getProfile.rejected, (state, action)=>{
-                state.isAuth=false
+            .addCase(getProfile.fulfilled, (state, action) => {
+                state.isLoading=false,
+                state.user = action.payload,
+                    state.isAuth = true
             })
+            .addCase(getProfile.rejected, (state, action) => {
+                state.isLoading=false,
+                state.isAuth = false
+            })
+            .addCase(update.pending, (state, action) => {
+                state.isLoading = true,
+                    state.isUpdated = false,
+                    state.error = false
+            })
+            .addCase(update.fulfilled, (state, action) => {
+                state.isLoading = false,
+                    state.isUpdated = true
+            })
+            .addCase(update.rejected, (state, action) => {
+                state.isLoading = false,
+                    state.error = true
+            })
+
     }
 });
 
-export const { resetError, resetStates } = authSlice.actions;
+export const { resetError, resetStates, resetUpdate } = authSlice.actions;
 export const auth = (state) => state.auth;
 export default authSlice.reducer;

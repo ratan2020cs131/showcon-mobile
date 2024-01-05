@@ -81,6 +81,7 @@ const ProfileData = async (req, res) => {
 //PUT PROFILE UPDATE
 const ProfileUpdate = async (req, res) => {
   try {
+    console.log(req.body);
     const id = req.user._id;
     const user = await User.findByIdAndUpdate({ _id: id }, req.body, { returnOriginal: false })
     if (!user) {
