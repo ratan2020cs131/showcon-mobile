@@ -21,16 +21,22 @@ const Signin = async (req, res) => {
 const Register = async (req, res) => {
   try {
     const { fname, lname, phone, email, password } = req.body;
-    const user = new User({ fname, lname, phone, email, password });
-    const result = await user.save();
-    if (result) {
-      const token = await user.generateToken();
-      res.status(201).json({ token });
-    } else {
-      res.status(401).json({ message: "User not ssaved" });
+    const exist = await User.findOne({ $or: [{ phone }, { email }] });
+    if (exist) {
+      res.status(400).json({ message: "User already exist" });
+    }
+    else {
+      const user = new User({ fname, lname, phone, email, password });
+      const result = await user.save();
+      if (result) {
+        const token = await user.generateToken();
+        res.status(201).json({ token });
+      } else {
+        res.status(401).json({ message: "User not ssaved" });
+      }
     }
   } catch (err) {
-    console.log("Signin Error: ", err);
+    console.log("Signup Error: ", err);
   }
 };
 
