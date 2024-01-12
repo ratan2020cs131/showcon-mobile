@@ -2,11 +2,11 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 dotenv.config({ path: './.env' });
-const authRoutes = require('./routes/Auth');
-const movieRoute = require('./routes/Movie');
-const cinemaRoute = require('./routes/Cinema');
-const ticketRoute = require('./routes/Ticket');
-require('./database/Connect');
+const authRoutes = require('./src/routes/Auth');
+const movieRoute = require('./src/routes/Movie');
+const cinemaRoute = require('./src/routes/Cinema');
+const ticketRoute = require('./src/routes/Ticket');
+require('./src/database/Connect');
 
 const app=express();
 
