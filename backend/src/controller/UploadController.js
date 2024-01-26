@@ -1,15 +1,25 @@
 const Image = require('../database/models/Image');
 const { initializeApp } = require("firebase/app");
 const { getStorage, ref, getDownloadURL, uploadBytesResumable, deleteObject } = require('firebase/storage');
-const config = require('../config/firebase.config');
+// const config = require('../config/firebase.config');
 
-initializeApp(config.firebaseConfig);
+
+const firebaseConfig = {
+    apiKey: process.env.FIREBASE_APIKEY,
+    authDomain: process.env.FIREBASE_DOMAIN,
+    projectId: process.env.FIREBASE_PID,
+    storageBucket: process.env.FIREBASE_BUCKET,
+    messagingSenderId: process.env.FIREBASE_MSGID,
+    appId: process.env.FIREBASE_APPID,
+    measurementId: process.env.FIREBASE_MEASUREID,
+}
+
+initializeApp(firebaseConfig);
 const storage = getStorage();
 
 
 const imageUpload = async (req, res) => {
     try {
-        console.log('image upload api');
         if (req.file.size > 5 * 1024 * 1024) {      //check if image is less than 5 MB
             res.send({ message: "File should be less than 5MB", code: 11 })
         }
