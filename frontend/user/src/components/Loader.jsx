@@ -24,7 +24,7 @@ const Loader = ({ setIsLogged }) => {
             setIsLogged(false);
         }
 
-    }, [authState])
+    }, [authState.isAuth])
 
 
     return (

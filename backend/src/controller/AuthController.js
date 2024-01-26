@@ -81,6 +81,7 @@ const ProfileData = async (req, res) => {
 //PUT PROFILE UPDATE
 const ProfileUpdate = async (req, res) => {
   try {
+    console.log(req.body);
     const id = req.user._id;
     const user = await User.findByIdAndUpdate({ _id: id }, req.body, { returnOriginal: false })
     if (!user) {
@@ -114,18 +115,22 @@ const Logout = async (req, res) => {
 //GET HISTORY
 const History = async (req, res) => {
   try {
-    let tickets = [];
-    const result = await User.findById({ _id: req.user._id });
+    const result = await User.findById(req.user._id);
     if (result) {
-      for (const item of result.history) {
-        const ticket = await Ticket.findById({ _id: item });
-        tickets.push(ticket);
-      }
-      res.send(tickets);
+      const ticketIds = result.history;
+      // Use Promise.all to fetch all tickets concurrently
+      const ticketPromises = ticketIds.map(async (itemId) => {
+        const ticket = await Ticket.findById(itemId);
+        return ticket;
+      });
+      const tickets = await Promise.all(ticketPromises);
+      res.send(tickets.filter(Boolean)); // Filter out null or undefined values
+    } else {
+      res.send([]);
     }
   }
   catch (err) {
-    console.log("Logout Error: ", err);
+    console.log("History Error: ", err);
   }
 }
 
