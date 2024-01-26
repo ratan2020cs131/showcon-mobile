@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 dotenv.config({ path: './.env' });
+const { initializeApp } = require("firebase/app");
 
 const firebaseConfig = {
     apiKey: process.env.FIREBASE_APIKEY,

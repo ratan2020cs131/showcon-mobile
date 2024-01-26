@@ -1,5 +1,4 @@
 const Image = require('../database/models/Image');
-const { initializeApp } = require("firebase/app");
 const { getStorage, ref, getDownloadURL, uploadBytesResumable, deleteObject } = require('firebase/storage');
 // const config = require('../config/firebase.config');
 const storage = getStorage();
