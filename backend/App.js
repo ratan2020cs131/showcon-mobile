@@ -3,6 +3,18 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 dotenv.config({ path: './.env' });
 
+const firebaseConfig = {
+    apiKey: process.env.FIREBASE_APIKEY,
+    authDomain: process.env.FIREBASE_DOMAIN,
+    projectId: process.env.FIREBASE_PID,
+    storageBucket: process.env.FIREBASE_BUCKET,
+    messagingSenderId: process.env.FIREBASE_MSGID,
+    appId: process.env.FIREBASE_APPID,
+    measurementId: process.env.FIREBASE_MEASUREID,
+}
+
+initializeApp(firebaseConfig);
+
 const authRoutes = require('./src/routes/Auth');
 const movieRoute = require('./src/routes/Movie');
 const cinemaRoute = require('./src/routes/Cinema');
