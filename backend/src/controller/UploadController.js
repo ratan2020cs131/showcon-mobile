@@ -1,6 +1,11 @@
 const Image = require('../database/models/Image');
+const { initializeApp } = require("firebase/app");
 const { getStorage, ref, getDownloadURL, uploadBytesResumable, deleteObject } = require('firebase/storage');
-// const config = require('../config/firebase.config');
+const { signInWithEmailAndPassword,getAuth } = require("firebase/auth");
+const config = require('../config/firebase.config');
+
+const firebaseApp = initializeApp(config.firebaseConfig);
+const firebaseAuth = getAuth(firebaseApp)
 const storage = getStorage();
 
 
@@ -13,6 +18,7 @@ const imageUpload = async (req, res) => {
             res.json({ message: "Only image files are allowed", code: 12 });
         }
         else {
+            await signInWithEmailAndPassword(firebaseAuth, process.env.FIREBASE_USER, process.env.FIREBASE_PASS);
             const timestamp = new Date().getTime();
             const filePath = `images/${req.file.originalname}-${timestamp}`;
             const storageRef = ref(storage, filePath);
