@@ -34,7 +34,7 @@ const imageUpload = async (req, res) => {
 const imageDelete = async (req, res) => {
     try {
         const image = await Image.findOne({ url: req.body.url });
-        if (image.filePath) {
+        if (image) {
             const filePath = image.filePath;
             const imageRefToDelete = ref(storage, filePath);
             await deleteObject(imageRefToDelete);
