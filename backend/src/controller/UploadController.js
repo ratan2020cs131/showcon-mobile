@@ -3,16 +3,15 @@ const { initializeApp } = require("firebase/app");
 const { getStorage, ref, getDownloadURL, uploadBytesResumable, deleteObject } = require('firebase/storage');
 // const config = require('../config/firebase.config');
 
-
 const firebaseConfig = {
-    apiKey: process.env.FIREBASE_APIKEY,
-    authDomain: process.env.FIREBASE_DOMAIN,
-    projectId: process.env.FIREBASE_PID,
-    storageBucket: process.env.FIREBASE_BUCKET,
-    messagingSenderId: process.env.FIREBASE_MSGID,
-    appId: process.env.FIREBASE_APPID,
-    measurementId: process.env.FIREBASE_MEASUREID,
-}
+    apiKey: "AIzaSyAyfx2sb1YpNOASThJA7l2wT4yCjD73v48",
+    authDomain: "showcon-131.firebaseapp.com",
+    projectId: "showcon-131",
+    storageBucket: "showcon-131.appspot.com",
+    messagingSenderId: "958285449023",
+    appId: "1:958285449023:web:f641851a85cb843ca0b58a",
+    measurementId: "G-HZ5D5YXJH2"
+  };
 
 initializeApp(firebaseConfig);
 const storage = getStorage();
