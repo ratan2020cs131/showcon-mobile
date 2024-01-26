@@ -7,7 +7,7 @@ const authRoutes = require('./src/routes/Auth');
 const movieRoute = require('./src/routes/Movie');
 const cinemaRoute = require('./src/routes/Cinema');
 const ticketRoute = require('./src/routes/Ticket');
-const favouriteRoute = require('.src/routes/Favourite');
+const favouriteRoute = require('./src/routes/Favourite');
 const uploadRoute = require('./src/routes/Upload');
 require('./src/database/Connect');
 
