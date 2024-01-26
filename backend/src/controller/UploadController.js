@@ -9,6 +9,7 @@ const storage = getStorage();
 
 const imageUpload = async (req, res) => {
     try {
+        console.log('image upload api');
         if (req.file.size > 5 * 1024 * 1024) {      //check if image is less than 5 MB
             res.send({ message: "File should be less than 5MB", code: 11 })
         }
