@@ -2,6 +2,7 @@ const User = require("../database/models/User");
 const Ticket = require('../database/models/Ticket');
 const bcrypt = require("bcrypt");
 
+//CHECK WHETHER PHONE REGISTERED OR NOT
 const Signin = async (req, res) => {
   try {
     const { mobileNo } = req.params;
@@ -13,7 +14,8 @@ const Signin = async (req, res) => {
       res.send({ flag: false });
     }
   } catch (err) {
-    console.log("Signin Error: ", err);
+    console.log("Verify phone error: ", err.message);
+    res.status(500).send({ message: err.message });
   }
 };
 
@@ -36,7 +38,8 @@ const Register = async (req, res) => {
       }
     }
   } catch (err) {
-    console.log("Signup Error: ", err);
+    console.log("Signup Error: ", err.message);
+    res.status(500).send({ message: err.message });
   }
 };
 
@@ -62,7 +65,8 @@ const Verify = async (req, res) => {
     }
   }
   catch (err) {
-    console.log("Signin Error: ", err);
+    console.log("Signin Error: ", err.message);
+    res.status(500).send({ message: err.message });
   }
 };
 
@@ -73,7 +77,8 @@ const ProfileData = async (req, res) => {
     const { fname, lname, phone, email } = req.user
     res.status(200).json({ fname, lname, phone, email })
   } catch (err) {
-    console.log(err)
+    console.log("Get profile error: ", err.message);
+    res.status(500).send({ message: err.message });
   }
 };
 
@@ -85,11 +90,12 @@ const ProfileUpdate = async (req, res) => {
     const id = req.user._id;
     const user = await User.findByIdAndUpdate({ _id: id }, req.body, { returnOriginal: false })
     if (!user) {
-      return res.status(404).json({ err: "User not found" })
+      return res.status(404).json({ err: "User not found" });
     }
     res.json(user)
   } catch (err) {
-    console.log(err)
+    console.log("Profile update error: ", err.message);
+    res.status(500).send({ message: err.message })
   }
 }
 
@@ -107,7 +113,8 @@ const Logout = async (req, res) => {
     res.status(200).send({ message: 'Logout Successfully' })
   }
   catch (err) {
-    console.log("Logout Error: ", err);
+    console.log("Logout Error: ", err.message);
+    res.status(500).send({ message: err.message })
   }
 }
 
@@ -130,11 +137,13 @@ const History = async (req, res) => {
     }
   }
   catch (err) {
-    console.log("History Error: ", err);
+    console.log("History Error: ", err.message);
+    res.status(500).send({ message: err.message })
   }
 }
 
-module.exports = {
+
+const authController = {
   Signin,
   Register,
   Verify,
@@ -143,3 +152,5 @@ module.exports = {
   Logout,
   History
 };
+
+module.exports = authController;
