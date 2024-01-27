@@ -1,25 +1,24 @@
 const Image = require('../database/models/Image');
 const { initializeApp } = require("firebase/app");
-const { getStorage, ref, getDownloadURL, uploadBytesResumable, deleteObject } = require('firebase/storage');
-const { initializeAppCheck, ReCaptchaV3Provider } = require("firebase/app-check");
+const { getStorage, ref, getDownloadURL, uploadBytes, deleteObject } = require('firebase/storage');
 const config = require('../config/firebase.config');
 
 const firebaseApp = initializeApp(config.firebaseConfig);
-const appCheck = initializeAppCheck(firebaseApp, {
-    provider: new ReCaptchaV3Provider(process.env.FIREBASE_CAPTCHA),
-    isTokenAutoRefreshEnabled: true
-  });
 const storage = getStorage();
 
 
 const imageUpload = async (req, res) => {
     try {
-        if (req.file.size > 5 * 1024 * 1024) {      //check if image is less than 5 MB
+        //check if image is less than 5 MB
+        if (req.file.size > 5 * 1024 * 1024) {      
             res.send({ message: "File should be less than 5MB", code: 11 })
         }
-        else if (!req.file.mimetype.startsWith("image/")) {     //check if the file is an image
+
+        //check if the file is an image
+        else if (!req.file.mimetype.startsWith("image/")) {     
             res.json({ message: "Only image files are allowed", code: 12 });
         }
+        
         else {
             const timestamp = new Date().getTime();
             const filePath = `images/${req.file.originalname}-${timestamp}`;
@@ -29,7 +28,7 @@ const imageUpload = async (req, res) => {
             const metadata = { contentType: req.file.mimetype };      
 
             //upload the file in the bucket
-            const snapshot = await uploadBytesResumable(storageRef, req.file.buffer, metadata);
+            const snapshot = await uploadBytes(storageRef, req.file.buffer, metadata);
             console.log('snapshot: ',snapshot);
 
             // grab the uploaded image url
