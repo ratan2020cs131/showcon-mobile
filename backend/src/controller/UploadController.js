@@ -1,9 +1,14 @@
 const Image = require('../database/models/Image');
 const { initializeApp } = require("firebase/app");
 const { getStorage, ref, getDownloadURL, uploadBytesResumable, deleteObject } = require('firebase/storage');
+const { initializeAppCheck, ReCaptchaV3Provider } = require("firebase/app-check");
 const config = require('../config/firebase.config');
 
 const firebaseApp = initializeApp(config.firebaseConfig);
+const appCheck = initializeAppCheck(firebaseApp, {
+    provider: new ReCaptchaV3Provider(process.env.FIREBASE_CAPTCHA),
+    isTokenAutoRefreshEnabled: true
+  });
 const storage = getStorage();
 
 
@@ -19,13 +24,21 @@ const imageUpload = async (req, res) => {
             const timestamp = new Date().getTime();
             const filePath = `images/${req.file.originalname}-${timestamp}`;
             const storageRef = ref(storage, filePath);
-            console.log('storageRef: ',storageRef);
-            const metadata = { contentType: req.file.mimetype };      // create file metadata including the content type
-            const snapshot = await uploadBytesResumable(storageRef, req.file.buffer, metadata);     //upload the file in the bucket
+
+            // create file metadata including the content type
+            const metadata = { contentType: req.file.mimetype };      
+
+            //upload the file in the bucket
+            const snapshot = await uploadBytesResumable(storageRef, req.file.buffer, metadata);
             console.log('snapshot: ',snapshot);
-            const imageUrl = await getDownloadURL(snapshot.ref);    // grab the uploaded image url
-            const image = new Image({ filePath, url: imageUrl });      //save the url and file path in mongodb
+
+            // grab the uploaded image url
+            const imageUrl = await getDownloadURL(snapshot.ref);    
+
+            //save the url and file path in mongodb
+            const image = new Image({ filePath, url: imageUrl });      
             await image.save();
+
             res.send({ "image": imageUrl, code: 0 });
         }
     } catch (err) {
