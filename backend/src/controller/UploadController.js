@@ -22,8 +22,10 @@ const imageUpload = async (req, res) => {
             const timestamp = new Date().getTime();
             const filePath = `images/${req.file.originalname}-${timestamp}`;
             const storageRef = ref(storage, filePath);
+            console.log('storageRef: ',storageRef);
             const metadata = { contentType: req.file.mimetype };      // create file metadata including the content type
             const snapshot = await uploadBytesResumable(storageRef, req.file.buffer, metadata);     //upload the file in the bucket
+            console.log('snapshot: ',snapshot);
             const imageUrl = await getDownloadURL(snapshot.ref);    // grab the uploaded image url
             const image = new Image({ filePath, url: imageUrl });      //save the url and file path in mongodb
             await image.save();
