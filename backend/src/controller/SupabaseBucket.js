@@ -65,7 +65,6 @@ const imageDelete = async (req, res) => {
                 res.status(500).send({message: "Image deletion failed"})
             }
             else{
-                console.log(data);
                 const deleted = await Image.findOneAndDelete(image);
                 res.send({message: `Successfully deleted file: ${data[0].name}`})
             }
