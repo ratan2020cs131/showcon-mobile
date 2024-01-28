@@ -3,17 +3,36 @@ import ScreenWrapper from './ScreenWrapper';
 import GlobalStyles from '../GlobalStyles';
 import { FontAwesome, MaterialCommunityIcons, MaterialIcons, Feather, Ionicons } from '@expo/vector-icons';
 import PosterUpload from '../../assets/images/poster-upload.png';
+import PosterUpload2 from '../../assets/images/poster-upload2.png';
 import CastCard from '../components/movie/CastCard';
+import AddCastModal from '../components/movie/AddCastModal';
+import { useState } from 'react';
 
 const NewMovie = () => {
+    const [castModal, SetCastModal] = useState(false);
+    const onClose = () => SetCastModal(false);
+    const onOpen = () => SetCastModal(true);
+
     return (
         <View style={styles.container}>
             <ScreenWrapper title="Add new movie" />
             <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnabled={true} >
                 <View style={styles.form}>
-                    <TouchableOpacity style={styles.posterImage}>
-                        <Image source={PosterUpload} alt="upload poster" style={{ width: '100%', height: '100%', resizeMode: 'cover' }}></Image>
-                    </TouchableOpacity>
+                    <View style={{ height: 250, width: '100%', flexDirection: 'row', justifyContent:'space-between' }}>
+                        <View style={{width:'48%'}}>
+                            <TouchableOpacity style={styles.posterImage}>
+                                <Image source={PosterUpload} alt="upload poster" style={{ width: '100%', height: '100%', resizeMode: 'cover' }}></Image>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={{width:'48%', justifyContent:'space-between' }}>
+                            <TouchableOpacity style={styles.posterImage2}>
+                                <Image source={PosterUpload2} alt="upload poster" style={{ width: '100%', height: '100%', resizeMode: 'cover' }}></Image>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.posterImage2}>
+                                <Image source={PosterUpload2} alt="upload poster" style={{ width: '100%', height: '100%', resizeMode: 'cover' }}></Image>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
 
                     <View style={styles.inputContainer}>
                         <View style={{ flexDirection: 'row', backgroundColor: '#E0E0E0', borderRadius: 7, paddingHorizontal: 10, alignItems: 'center' }}>
@@ -37,13 +56,13 @@ const NewMovie = () => {
                         <ScrollView
                             horizontal
                             showsHorizontalScrollIndicator={false}
-                            contentContainerStyle={{ minWidth:'100%'}}
+                            contentContainerStyle={{ minWidth: '100%' }}
                         >
                             {data.map((item, index) => (
                                 <CastCard title={item.title} key={index} />
                             ))}
 
-                            <TouchableOpacity style={styles.castaddContainer}>
+                            <TouchableOpacity style={styles.castaddContainer} onPress={onOpen}>
                                 <View style={styles.addCast}>
                                     <Ionicons name="person-add-outline" size={24} color="black" />
                                 </View>
@@ -54,6 +73,7 @@ const NewMovie = () => {
                     </View>
                 </View>
             </ScrollView>
+            <AddCastModal visible={castModal} onClose={onClose} />
         </View>
     )
 }
@@ -97,9 +117,15 @@ const styles = StyleSheet.create({
         width: '100%',
         gap: 10
     },
+    posterImage2: {
+        height: 118,
+        width: '100%',
+        borderRadius: 10,
+        overflow: 'hidden'
+    },
     posterImage: {
-        height: 380,
-        width: 250,
+        height: '100%',
+        width: '100%',
         borderRadius: 10,
         overflow: 'hidden'
     },
