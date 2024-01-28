@@ -3,7 +3,7 @@ import { Text, View } from "react-native";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import HomeRoute from '../components/home/Home';
-import MoviePage from '../components/movie/Movie';
+import MovieRoutes from './MovieRoutes';
 import { useRoute } from '@react-navigation/native';
 import GlobalStyles from '../GlobalStyles';
 const Tab = createBottomTabNavigator();
@@ -22,9 +22,9 @@ const BottomRoutes = () => {
             params: null,
         },
         {
-            path: "ShowsScreen",
-            name:"Shows",
-            component: MoviePage,
+            path: "MovieConsole",
+            name:"Movies",
+            component: MovieRoutes,
             activeIcon:'albums',
             inactiveIcon:'albums-outline',
             params: null,

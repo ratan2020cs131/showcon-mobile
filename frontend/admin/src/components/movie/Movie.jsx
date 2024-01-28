@@ -2,11 +2,12 @@ import React from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import GlobalStyles from '../../GlobalStyles';
 
-const Movie = () => {
+const Movie = ({navigation}) => {
   return (
     <View style={styles.container}>
-      {/* <Text> Movie Page </Text> */}
-      <TouchableOpacity style={GlobalStyles.button}>
+      <TouchableOpacity style={GlobalStyles.button}
+      onPress={()=>{navigation.navigate("NewMovieForm")}}
+      >
         <Text style={GlobalStyles.boldText}>ADD MOVIE</Text>
       </TouchableOpacity>
       <TouchableOpacity style={[GlobalStyles.button, {backgroundColor:'#1E1F22'}]}>

@@ -61,6 +61,11 @@ const GlobalStyles = StyleSheet.create({
         borderWidth:2,
         borderColor:'#1E1F22',
         borderRadius:10,
+    },
+    image:{
+        width:'100%',
+        height:'100%',
+        resizeMode:'cover'
     }
 });
 

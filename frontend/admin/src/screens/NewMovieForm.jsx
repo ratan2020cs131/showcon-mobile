@@ -1,0 +1,130 @@
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image, ScrollView, FlatList } from 'react-native';
+import ScreenWrapper from './ScreenWrapper';
+import GlobalStyles from '../GlobalStyles';
+import { FontAwesome, MaterialCommunityIcons, MaterialIcons, Feather, Ionicons } from '@expo/vector-icons';
+import PosterUpload from '../../assets/images/poster-upload.png';
+import CastCard from '../components/movie/CastCard';
+
+const NewMovie = () => {
+    return (
+        <View style={styles.container}>
+            <ScreenWrapper title="Add new movie" />
+            <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnabled={true} >
+                <View style={styles.form}>
+                    <TouchableOpacity style={styles.posterImage}>
+                        <Image source={PosterUpload} alt="upload poster" style={{ width: '100%', height: '100%', resizeMode: 'cover' }}></Image>
+                    </TouchableOpacity>
+
+                    <View style={styles.inputContainer}>
+                        <View style={{ flexDirection: 'row', backgroundColor: '#E0E0E0', borderRadius: 7, paddingHorizontal: 10, alignItems: 'center' }}>
+                            <MaterialCommunityIcons name="movie-edit-outline" size={20} color="black" />
+                            <TextInput placeholder={'Movie title'} style={[GlobalStyles.input, GlobalStyles.normalText, { color: 'black', borderWidth: 0, paddingHorizontal: 8, flex: 1 }]} />
+                        </View>
+
+                        <View style={{ backgroundColor: '#E0E0E0', borderRadius: 7, minHeight: 120, maxHeight: 140 }}>
+                            <View style={{ flexDirection: 'row', paddingHorizontal: 10 }}>
+                                <Feather name="file-text" size={20} color="black" style={{ paddingTop: 12 }} />
+                                <TextInput
+                                    style={{ alignItems: 'flex-start', minHeight: 45, paddingLeft: 10, fontFamily: "Montserrat-Regular", width: '90%', fontSize: 16 }}
+                                    multiline
+                                    maxLength={500}
+                                    placeholder="Description"
+                                />
+                            </View>
+                        </View>
+
+
+                        <ScrollView
+                            horizontal
+                            showsHorizontalScrollIndicator={false}
+                            contentContainerStyle={{ minWidth:'100%'}}
+                        >
+                            {data.map((item, index) => (
+                                <CastCard title={item.title} key={index} />
+                            ))}
+
+                            <TouchableOpacity style={styles.castaddContainer}>
+                                <View style={styles.addCast}>
+                                    <Ionicons name="person-add-outline" size={24} color="black" />
+                                </View>
+                                <Text style={[GlobalStyles.semiBoldText, { textAlign: 'center' }]}>Add Cast</Text>
+                            </TouchableOpacity>
+                        </ScrollView>
+
+                    </View>
+                </View>
+            </ScrollView>
+        </View>
+    )
+}
+export default NewMovie;
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        width: '100%',
+    },
+    form: {
+        marginTop: 30,
+        height: 'fit-content',
+        paddingHorizontal: 20,
+        alignItems: 'center',
+        gap: 20,
+        marginBottom: 30
+    },
+    formContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    section: {
+        // width: '85%',
+        backgroundColor: '#E0E0E0',
+        marginBottom: 10,
+        justifyContent: 'flex-start',
+        flexDirection: 'row',
+        borderRadius: 7,
+        alignItems: 'center',
+        paddingHorizontal: 10
+    },
+    input2: {
+        color: 'black',
+        borderWidth: 0,
+        flex: 1,
+        paddingHorizontal: 8
+    },
+    inputContainer: {
+        width: '100%',
+        gap: 10
+    },
+    posterImage: {
+        height: 380,
+        width: 250,
+        borderRadius: 10,
+        overflow: 'hidden'
+    },
+    addCast: {
+        width: 70,
+        height: 70,
+        backgroundColor: '#E0E0E0',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 100,
+        paddingRight: 4
+    },
+    castaddContainer: {
+        justifyContent: 'flex-start',
+        width: 70,
+        marginRight: 10
+    },
+})
+
+
+const data = [
+    { title: 'Ratan Deep Singh' },
+    // { title: 'Himanshu Verma' },
+    // { title: 'Ratan Deep Singh' },
+    // { title: 'Himanshu Verma' }
+]
+
+// const data = []
