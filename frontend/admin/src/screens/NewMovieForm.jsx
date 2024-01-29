@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image, ScrollView, FlatList } from 'react-native';
-import { FontAwesome, MaterialCommunityIcons, MaterialIcons, Feather, Ionicons } from '@expo/vector-icons';
+import { AntDesign, MaterialCommunityIcons, MaterialIcons, Feather, Ionicons } from '@expo/vector-icons';
 import ScreenWrapper from './ScreenWrapper';
 import GlobalStyles from '../GlobalStyles';
 import PosterUpload from '../../assets/images/poster-upload.png';
@@ -41,10 +41,13 @@ const NewMovie = () => {
                     <View style={{ height: 250, width: '100%', flexDirection: 'row', justifyContent: 'space-between' }}>
                         {loading && image.prim === '0' ?
                             <Shimmer style={{ width: '48%', borderRadius: 10 }} /> :
-                            <View style={{ width: '48%' }}>
+                            <View style={{ width: '48%', position: 'relative' }}>
                                 <TouchableOpacity style={styles.posterImage} onPress={() => handleImage("prim")}>
                                     <Image source={image.prim ? { uri: image.prim } : PosterUpload} alt="upload poster" style={{ width: '100%', height: '100%', resizeMode: 'cover' }}></Image>
                                 </TouchableOpacity>
+                                {image.prim && <TouchableOpacity style={{ position: 'absolute', top: 5, left: 5, zIndex: 10 }} onPress={() => { imageDelete(image['prim']); setImage({ ...image, ['prim']: null }); }}>
+                                    <AntDesign name="closecircle" size={20} color="#808080" />
+                                </TouchableOpacity>}
                             </View>
                         }
                         <View style={{ width: '48%', justifyContent: 'space-between' }}>
@@ -52,12 +55,18 @@ const NewMovie = () => {
                                 <Shimmer style={{ width: '100%', height: 118, borderRadius: 10 }} /> :
                                 <TouchableOpacity style={styles.posterImage2} onPress={() => handleImage("sec1")}>
                                     <Image source={image.sec1 ? { uri: image.sec1 } : PosterUpload2} alt="upload poster" style={{ width: '100%', height: '100%', resizeMode: 'cover' }}></Image>
+                                    {image.sec1 && <TouchableOpacity style={{ position: 'absolute', top: 5, right: 5, zIndex: 10 }} onPress={() => { imageDelete(image['sec1']); setImage({ ...image, ['sec1']: null }); }}>
+                                        <AntDesign name="closecircle" size={20} color="#808080" />
+                                    </TouchableOpacity>}
                                 </TouchableOpacity>
                             }
                             {loading && image.sec2 === '0' ?
                                 <Shimmer style={{ width: '100%', height: 118, borderRadius: 10 }} /> :
                                 <TouchableOpacity style={styles.posterImage2} onPress={() => handleImage("sec2")}>
                                     <Image source={image.sec2 ? { uri: image.sec2 } : PosterUpload2} alt="upload poster" style={{ width: '100%', height: '100%', resizeMode: 'cover' }}></Image>
+                                    {image.sec2 && <TouchableOpacity style={{ position: 'absolute', top: 5, right: 5, zIndex: 10 }} onPress={() => { imageDelete(image['sec2']); setImage({ ...image, ['sec2']: null }); }}>
+                                        <AntDesign name="closecircle" size={20} color="#808080" />
+                                    </TouchableOpacity>}
                                 </TouchableOpacity>
                             }
                         </View>
@@ -79,7 +88,7 @@ const NewMovie = () => {
                                 <TextInput placeholder={'Genre'} style={[GlobalStyles.input, GlobalStyles.normalText, { color: 'black', borderWidth: 0, paddingHorizontal: 8, flex: 1 }]} />
                             </View> */}
                             <View style={{ width: '54%' }}>
-                                <GenreDropdown list={genreList} title={'Genre'}/>
+                                <GenreDropdown list={genreList} title={'Genre'} />
                             </View>
                         </View>
 
@@ -166,7 +175,8 @@ const styles = StyleSheet.create({
         height: 118,
         width: '100%',
         borderRadius: 10,
-        overflow: 'hidden'
+        overflow: 'hidden',
+        position: 'relative'
     },
     posterImage: {
         height: '100%',
@@ -201,11 +211,12 @@ const data = [
 const genreList = [
     'Thriller',
     'Science Fiction',
-    'Horro',
+    'Horror',
     'Romance',
     'Action',
     'Drama',
     'Adventure',
     'Mystery',
     'Comedy',
+    'Fantasy'
 ]

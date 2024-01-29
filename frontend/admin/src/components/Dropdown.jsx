@@ -26,10 +26,10 @@ const DropDown = ({ title, list }) => {
     return (
         <View style={{ width: '100%', position: 'relative', justifyContent: 'center' }}>
             <TouchableOpacity activeOpacity={0.5} style={{ width: '100%', height: 45, flexDirection: 'row', backgroundColor: '#E0E0E0', borderTopLeftRadius: 7, borderTopRightRadius: 7, paddingHorizontal: 10, borderBottomLeftRadius: open ? 0 : 7, borderBottomRightRadius: open ? 0 : 7, alignItems: 'center', gap: 3 }} onPress={toggleOpen}>
-                <Octicons name="stack" size={20} color="black" />
+                <Octicons name="stack" size={19} color="black" />
                 {open ?
-                    <TextInput ref={input} placeholder={title} style={[GlobalStyles.input, GlobalStyles.normalText, { color: 'black', borderWidth: 0, paddingHorizontal: 8, flex: 1 }]} onChangeText={(value) => handleSearch(value)} /> :
-                    <Text style={[GlobalStyles.normalText, { color: '#808080', fontSize: 17, borderWidth: 0, paddingHorizontal: 8, flex: 1 }]}>{title}</Text>
+                    <TextInput ref={input} placeholder={title} style={[GlobalStyles.input, GlobalStyles.normalText, { color: 'black', borderWidth: 0, paddingHorizontal: 8, flex: 1, fontSize:17 }]} onChangeText={(value) => handleSearch(value)} /> :
+                    <Text style={[GlobalStyles.normalText, { color: '#808080', fontSize: 18, borderWidth: 0, paddingHorizontal: 8, flex: 1 }]}>{title}</Text>
                 }
                 <FontAwesome name={open ? "caret-up" : "caret-down"} size={24} color="black" style={{ width: 25, textAlign: 'right', height: '1005', position: 'absolute', right: 10 }} />
             </TouchableOpacity>
@@ -61,7 +61,7 @@ const ListItem = ({ text }) => {
         <TouchableOpacity activeOpacity={0.6} style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', width: '100%', gap: 5 }}
             onPress={handleSelect}
         >
-            <Checkbox status={check ? 'checked' : 'unchecked'} color={"#808080"} />
+            <Checkbox status={check ? 'checked' : 'unchecked'} color={"#F55139"} />
             <Text style={[GlobalStyles.semiBoldText, { letterSpacing: 0.3 }]}>{text}</Text>
         </TouchableOpacity>
     )
