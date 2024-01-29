@@ -1,30 +1,42 @@
+import { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image, ScrollView, FlatList } from 'react-native';
+import { FontAwesome, MaterialCommunityIcons, MaterialIcons, Feather, Ionicons } from '@expo/vector-icons';
 import ScreenWrapper from './ScreenWrapper';
 import GlobalStyles from '../GlobalStyles';
-import { FontAwesome, MaterialCommunityIcons, MaterialIcons, Feather, Ionicons } from '@expo/vector-icons';
 import PosterUpload from '../../assets/images/poster-upload.png';
 import PosterUpload2 from '../../assets/images/poster-upload2.png';
 import CastCard from '../components/movie/CastCard';
 import AddCastModal from '../components/movie/AddCastModal';
-import { useState } from 'react';
+import { singleImageHandler } from '../utils/ImagePicker';
+// import ShimmerLoading from '../components/ShimmerLoad';
+
 
 const NewMovie = () => {
+    const [image, setImage] = useState()
     const [castModal, SetCastModal] = useState(false);
     const onClose = () => SetCastModal(false);
     const onOpen = () => SetCastModal(true);
+
+    const handleImage = async () => {
+        const image = await singleImageHandler();
+        console.log(image);
+        setImage(image);
+    }
+
 
     return (
         <View style={styles.container}>
             <ScreenWrapper title="Add new movie" />
             <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnabled={true} >
+                {/* <ShimmerLoading/> */}
                 <View style={styles.form}>
-                    <View style={{ height: 250, width: '100%', flexDirection: 'row', justifyContent:'space-between' }}>
-                        <View style={{width:'48%'}}>
-                            <TouchableOpacity style={styles.posterImage}>
-                                <Image source={PosterUpload} alt="upload poster" style={{ width: '100%', height: '100%', resizeMode: 'cover' }}></Image>
+                    <View style={{ height: 250, width: '100%', flexDirection: 'row', justifyContent: 'space-between' }}>
+                        <View style={{ width: '48%' }}>
+                            <TouchableOpacity style={styles.posterImage} onPress={handleImage}>
+                                <Image source={image?{uri:image}:PosterUpload} alt="upload poster" style={{ width: '100%', height: '100%', resizeMode: 'cover' }}></Image>
                             </TouchableOpacity>
                         </View>
-                        <View style={{width:'48%', justifyContent:'space-between' }}>
+                        <View style={{ width: '48%', justifyContent: 'space-between' }}>
                             <TouchableOpacity style={styles.posterImage2}>
                                 <Image source={PosterUpload2} alt="upload poster" style={{ width: '100%', height: '100%', resizeMode: 'cover' }}></Image>
                             </TouchableOpacity>
@@ -64,7 +76,7 @@ const NewMovie = () => {
 
                             <TouchableOpacity style={styles.castaddContainer} onPress={onOpen}>
                                 <View style={styles.addCast}>
-                                    <Ionicons name="person-add-outline" size={24} color="black" />
+                                    <Ionicons name="person-add-outline" size={25} color="black" />
                                 </View>
                                 <Text style={[GlobalStyles.semiBoldText, { textAlign: 'center' }]}>Add Cast</Text>
                             </TouchableOpacity>
@@ -136,7 +148,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 100,
-        paddingRight: 4
+        paddingRight: 3
     },
     castaddContainer: {
         justifyContent: 'flex-start',

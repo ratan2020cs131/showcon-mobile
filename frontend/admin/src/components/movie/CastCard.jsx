@@ -1,5 +1,5 @@
 import { View, Text, Image, StyleSheet } from 'react-native';
-import Avtar from '../../../assets/images/avtar.png';
+import Avtar from '../../../assets/images/avtar2.png';
 import GlobalStyles from '../../GlobalStyles';
 
 const CastCard = ({title}) => {
