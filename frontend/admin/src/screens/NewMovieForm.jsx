@@ -12,15 +12,18 @@ import Shimmer from '../components/Shimmer';
 
 
 const NewMovie = () => {
-    const [image, setImage] = useState()
+    const [loading, setLoading] = useState(false);
+    const [image, setImage] = useState({ prim: "", sec1: "", sec2: "" });
     const [castModal, SetCastModal] = useState(false);
     const onClose = () => SetCastModal(false);
     const onOpen = () => SetCastModal(true);
 
-    const handleImage = async () => {
-        const image = await singleImageHandler();
-        console.log(image);
-        setImage(image);
+    const handleImage = async (type) => {
+        setImage({ ...image, [type]: null });
+        setLoading(true);
+        const imageUrl = await singleImageHandler();
+        console.log(imageUrl);
+        setImage({ ...image, [type]: imageUrl });
     }
 
 
@@ -31,27 +34,27 @@ const NewMovie = () => {
 
                 <View style={styles.form}>
                     <View style={{ height: 250, width: '100%', flexDirection: 'row', justifyContent: 'space-between' }}>
-                        {false ?
+                        {loading && image.prim===null ?
                             <Shimmer style={{ width: '48%', borderRadius: 10 }} /> :
                             <View style={{ width: '48%' }}>
-                                <TouchableOpacity style={styles.posterImage} onPress={handleImage}>
-                                    <Image source={image ? { uri: image } : PosterUpload} alt="upload poster" style={{ width: '100%', height: '100%', resizeMode: 'cover' }}></Image>
+                                <TouchableOpacity style={styles.posterImage} onPress={() => handleImage("prim")}>
+                                    <Image source={image.prim ? { uri: image.prim } : PosterUpload} alt="upload poster" style={{ width: '100%', height: '100%', resizeMode: 'cover' }}></Image>
                                 </TouchableOpacity>
                             </View>
                         }
                         <View style={{ width: '48%', justifyContent: 'space-between' }}>
-                            {false ?
+                            {loading && image.sec1===null ?
                                 <Shimmer style={{ width: '100%', height: 118, borderRadius: 10 }} /> :
-                                <TouchableOpacity style={styles.posterImage2}>
-                                    <Image source={PosterUpload2} alt="upload poster" style={{ width: '100%', height: '100%', resizeMode: 'cover' }}></Image>
+                                <TouchableOpacity style={styles.posterImage2} onPress={() => handleImage("sec1")}>
+                                    <Image source={image.sec1 ? { uri: image.sec1 } : PosterUpload2} alt="upload poster" style={{ width: '100%', height: '100%', resizeMode: 'cover' }}></Image>
                                 </TouchableOpacity>
                             }
-                            {false?
-                            <Shimmer style={{ width: '100%', height: 118, borderRadius: 10 }} />:
-                            <TouchableOpacity style={styles.posterImage2}>
-                                <Image source={PosterUpload2} alt="upload poster" style={{ width: '100%', height: '100%', resizeMode: 'cover' }}></Image>
-                            </TouchableOpacity>
-}
+                            {loading && image.sec2===null ?
+                                <Shimmer style={{ width: '100%', height: 118, borderRadius: 10 }} /> :
+                                <TouchableOpacity style={styles.posterImage2} onPress={() => handleImage("sec2")}>
+                                    <Image source={image.sec2 ? { uri: image.sec2 } : PosterUpload2} alt="upload poster" style={{ width: '100%', height: '100%', resizeMode: 'cover' }}></Image>
+                                </TouchableOpacity>
+                            }
                         </View>
                     </View>
 
@@ -104,6 +107,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         width: '100%',
+        alignItems: 'center'
     },
     form: {
         marginTop: 30,
@@ -111,7 +115,8 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         alignItems: 'center',
         gap: 20,
-        marginBottom: 30
+        marginBottom: 30,
+        maxWidth: 380
     },
     formContainer: {
         flex: 1,

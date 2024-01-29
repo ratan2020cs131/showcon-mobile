@@ -1,11 +1,13 @@
-import { View, SafeAreaView, StyleSheet, Text } from "react-native";
+import { View, SafeAreaView, StyleSheet, Text, useWindowDimensions } from "react-native";
 import GlobalStyles from "../GlobalStyles";
 
 const TopBar = ({ title }) => {
+  const windowWidth = useWindowDimensions().width;
+
   return (
     <SafeAreaView>
       <View
-        style={styles.container}
+        style={[styles.container, {width:windowWidth}]}
       >
         {title && <Text style={[GlobalStyles.boldText, styles.title]}>{title}</Text>}
       </View>

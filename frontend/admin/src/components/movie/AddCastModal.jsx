@@ -44,7 +44,7 @@ export default AddCastModal;
 const styles = StyleSheet.create({
     modalContainer: {
         flex: 1,
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         alignItems: 'center',
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
     },
@@ -54,10 +54,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: 'white',
         padding: 20,
-        paddingTop:40,
+        paddingVertical:40,
         borderRadius: 10,
         elevation: 5,
-        position: 'relative'
+        position: 'relative',
+        top:330
     },
     icon: {
         position: 'absolute',

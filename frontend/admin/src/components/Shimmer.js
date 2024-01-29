@@ -6,7 +6,6 @@ export default function App({ style }) {
   let windowWidth;
   if (typeof style.width === 'string') {
     windowWidth = Math.ceil(useWindowDimensions().width * (parseFloat(style.width) - 4) / 100);
-    console.log(windowWidth);
   } else {
     windowWidth = style.width
   }
