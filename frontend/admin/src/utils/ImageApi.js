@@ -6,7 +6,7 @@ export const uploadImage = async (image) => {
         const formData = new FormData();
         formData.append('image', {
             uri: image,
-            type: 'image/jpeg', // or the MIME type of your image
+            type: 'image/png', // or the MIME type of your image
             name: 'poster', // the name the server will receive the file as
         });
         const config = {
@@ -18,5 +18,17 @@ export const uploadImage = async (image) => {
         return res.data;
     } catch (err) {
         console.log("Image upload err: ", err);
+    }
+}
+
+
+export const imageDelete = async (url) => {
+    try {
+        console.log("url: ",url);
+        const res = await axios.delete(`${BASE_URL}/upload/image`, { data: { url } });
+        console.log(res.data);
+        return res.data;
+    } catch (err) {
+        console.log("Image delete err: ", err);
     }
 }

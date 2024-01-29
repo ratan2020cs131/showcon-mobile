@@ -9,17 +9,22 @@ import CastCard from '../components/movie/CastCard';
 import AddCastModal from '../components/movie/AddCastModal';
 import { singleImageHandler } from '../utils/ImagePicker';
 import Shimmer from '../components/Shimmer';
+import { imageDelete } from '../utils/ImageApi';
+import GenreDropdown from '../components/Dropdown';
 
 
 const NewMovie = () => {
     const [loading, setLoading] = useState(false);
-    const [image, setImage] = useState({ prim: "", sec1: "", sec2: "" });
+    const [image, setImage] = useState({ prim: null, sec1: null, sec2: null });
     const [castModal, SetCastModal] = useState(false);
     const onClose = () => SetCastModal(false);
     const onOpen = () => SetCastModal(true);
 
     const handleImage = async (type) => {
-        setImage({ ...image, [type]: null });
+        if (image[type] !== null) {
+            imageDelete(image[type]);
+        }
+        setImage({ ...image, [type]: '0' });
         setLoading(true);
         const imageUrl = await singleImageHandler();
         console.log(imageUrl);
@@ -34,7 +39,7 @@ const NewMovie = () => {
 
                 <View style={styles.form}>
                     <View style={{ height: 250, width: '100%', flexDirection: 'row', justifyContent: 'space-between' }}>
-                        {loading && image.prim===null ?
+                        {loading && image.prim === '0' ?
                             <Shimmer style={{ width: '48%', borderRadius: 10 }} /> :
                             <View style={{ width: '48%' }}>
                                 <TouchableOpacity style={styles.posterImage} onPress={() => handleImage("prim")}>
@@ -43,13 +48,13 @@ const NewMovie = () => {
                             </View>
                         }
                         <View style={{ width: '48%', justifyContent: 'space-between' }}>
-                            {loading && image.sec1===null ?
+                            {loading && image.sec1 === '0' ?
                                 <Shimmer style={{ width: '100%', height: 118, borderRadius: 10 }} /> :
                                 <TouchableOpacity style={styles.posterImage2} onPress={() => handleImage("sec1")}>
                                     <Image source={image.sec1 ? { uri: image.sec1 } : PosterUpload2} alt="upload poster" style={{ width: '100%', height: '100%', resizeMode: 'cover' }}></Image>
                                 </TouchableOpacity>
                             }
-                            {loading && image.sec2===null ?
+                            {loading && image.sec2 === '0' ?
                                 <Shimmer style={{ width: '100%', height: 118, borderRadius: 10 }} /> :
                                 <TouchableOpacity style={styles.posterImage2} onPress={() => handleImage("sec2")}>
                                     <Image source={image.sec2 ? { uri: image.sec2 } : PosterUpload2} alt="upload poster" style={{ width: '100%', height: '100%', resizeMode: 'cover' }}></Image>
@@ -62,6 +67,20 @@ const NewMovie = () => {
                         <View style={{ flexDirection: 'row', backgroundColor: '#E0E0E0', borderRadius: 7, paddingHorizontal: 10, alignItems: 'center' }}>
                             <MaterialCommunityIcons name="movie-edit-outline" size={20} color="black" />
                             <TextInput placeholder={'Movie title'} style={[GlobalStyles.input, GlobalStyles.normalText, { color: 'black', borderWidth: 0, paddingHorizontal: 8, flex: 1 }]} />
+                        </View>
+
+                        <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between' }}>
+                            <View style={{ width: '43%', flexDirection: 'row', backgroundColor: '#E0E0E0', borderRadius: 7, paddingHorizontal: 10, alignItems: 'center' }}>
+                                <MaterialCommunityIcons name="movie-edit-outline" size={20} color="black" />
+                                <TextInput placeholder={'Duration'} style={[GlobalStyles.input, GlobalStyles.normalText, { color: 'black', borderWidth: 0, paddingHorizontal: 8, flex: 1 }]} />
+                            </View>
+                            {/* <View style={{ width:'54%', flexDirection: 'row', backgroundColor: '#E0E0E0', borderRadius: 7, paddingHorizontal: 10, alignItems: 'center' }}>
+                                <MaterialCommunityIcons name="movie-edit-outline" size={20} color="black" />
+                                <TextInput placeholder={'Genre'} style={[GlobalStyles.input, GlobalStyles.normalText, { color: 'black', borderWidth: 0, paddingHorizontal: 8, flex: 1 }]} />
+                            </View> */}
+                            <View style={{ width: '54%' }}>
+                                <GenreDropdown list={genreList} title={'Genre'}/>
+                            </View>
                         </View>
 
                         <View style={{ backgroundColor: '#E0E0E0', borderRadius: 7, minHeight: 120, maxHeight: 140 }}>
@@ -179,4 +198,14 @@ const data = [
     // { title: 'Himanshu Verma' }
 ]
 
-// const data = []
+const genreList = [
+    'Thriller',
+    'Science Fiction',
+    'Horro',
+    'Romance',
+    'Action',
+    'Drama',
+    'Adventure',
+    'Mystery',
+    'Comedy',
+]
