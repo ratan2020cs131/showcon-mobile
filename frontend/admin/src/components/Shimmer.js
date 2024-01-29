@@ -8,6 +8,8 @@ export default function App({ style }) {
     windowWidth = Math.ceil(useWindowDimensions().width * (parseFloat(style.width) - 5) / 100);
     console.log(parseFloat(style.width));
     console.log(windowWidth);
+  }else{
+    windowWidth = style.width
   }
   const animatedValue = useRef(new Animated.Value(0)).current;
 
