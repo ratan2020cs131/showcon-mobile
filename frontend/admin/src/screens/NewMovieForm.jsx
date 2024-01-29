@@ -8,7 +8,6 @@ import PosterUpload2 from '../../assets/images/poster-upload2.png';
 import CastCard from '../components/movie/CastCard';
 import AddCastModal from '../components/movie/AddCastModal';
 import { singleImageHandler } from '../utils/ImagePicker';
-// import ShimmerLoading from '../components/ShimmerLoad';
 import Shimmer from '../components/Shimmer';
 
 
@@ -29,25 +28,30 @@ const NewMovie = () => {
         <View style={styles.container}>
             <ScreenWrapper title="Add new movie" />
             <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnabled={true} >
-                {/* <ShimmerLoading/> */}
-                
+
                 <View style={styles.form}>
                     <View style={{ height: 250, width: '100%', flexDirection: 'row', justifyContent: 'space-between' }}>
-                        {/* <View style={{ width: '48%' }}>
-                            <TouchableOpacity style={styles.posterImage} onPress={handleImage}>
-                                <Image source={image?{uri:image}:PosterUpload} alt="upload poster" style={{ width: '100%', height: '100%', resizeMode: 'cover' }}></Image>
-                            </TouchableOpacity>
-                        </View> */}
-                        <Shimmer style={{width:'48%'}}/>
+                        {false ?
+                            <Shimmer style={{ width: '48%', borderRadius: 10 }} /> :
+                            <View style={{ width: '48%' }}>
+                                <TouchableOpacity style={styles.posterImage} onPress={handleImage}>
+                                    <Image source={image ? { uri: image } : PosterUpload} alt="upload poster" style={{ width: '100%', height: '100%', resizeMode: 'cover' }}></Image>
+                                </TouchableOpacity>
+                            </View>
+                        }
                         <View style={{ width: '48%', justifyContent: 'space-between' }}>
-                            {/* <TouchableOpacity style={styles.posterImage2}>
+                            {false ?
+                                <Shimmer style={{ width: '100%', height: 118, borderRadius: 10 }} /> :
+                                <TouchableOpacity style={styles.posterImage2}>
+                                    <Image source={PosterUpload2} alt="upload poster" style={{ width: '100%', height: '100%', resizeMode: 'cover' }}></Image>
+                                </TouchableOpacity>
+                            }
+                            {false?
+                            <Shimmer style={{ width: '100%', height: 118, borderRadius: 10 }} />:
+                            <TouchableOpacity style={styles.posterImage2}>
                                 <Image source={PosterUpload2} alt="upload poster" style={{ width: '100%', height: '100%', resizeMode: 'cover' }}></Image>
-                            </TouchableOpacity> */}
-                            <Shimmer style={{width:'100%', height: 118,}}/>
-                            {/* <TouchableOpacity style={styles.posterImage2}>
-                                <Image source={PosterUpload2} alt="upload poster" style={{ width: '100%', height: '100%', resizeMode: 'cover' }}></Image>
-                            </TouchableOpacity> */}
-                            <Shimmer style={{width:'100%', height: 118,}}/>
+                            </TouchableOpacity>
+}
                         </View>
                     </View>
 

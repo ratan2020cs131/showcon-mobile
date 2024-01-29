@@ -5,10 +5,9 @@ import { LinearGradient } from 'expo-linear-gradient';
 export default function App({ style }) {
   let windowWidth;
   if (typeof style.width === 'string') {
-    windowWidth = Math.ceil(useWindowDimensions().width * (parseFloat(style.width) - 5) / 100);
-    console.log(parseFloat(style.width));
+    windowWidth = Math.ceil(useWindowDimensions().width * (parseFloat(style.width) - 4) / 100);
     console.log(windowWidth);
-  }else{
+  } else {
     windowWidth = style.width
   }
   const animatedValue = useRef(new Animated.Value(0)).current;
@@ -30,11 +29,11 @@ export default function App({ style }) {
   });
 
   return (
-    <View style={[styles.gradientContainer, { width: style.width, height:style.height }]}>
+    <View style={[styles.gradientContainer, { width: style.width, height: style.height, borderRadius: style.borderRadius }]}>
       <Animated.View
         style={[
           styles.gradient,
-          { transform: [{ translateX }], flexShrink: 0, right: windowWidth },
+          { transform: [{ translateX }], flexShrink: 0, width: 2 * windowWidth, right: windowWidth },
         ]}
       >
         <LinearGradient
@@ -47,7 +46,7 @@ export default function App({ style }) {
       <Animated.View
         style={[
           styles.gradient,
-          { transform: [{ translateX }], flexShrink: 0, right: windowWidth },
+          { transform: [{ translateX }], flexShrink: 0, width: 2 * windowWidth, right: windowWidth },
         ]}
       >
         <LinearGradient
@@ -74,7 +73,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'yellowgreen'
   },
   gradient: {
-    width: '200%',
     flexDirection: 'row',
     position: 'relative',
   },
