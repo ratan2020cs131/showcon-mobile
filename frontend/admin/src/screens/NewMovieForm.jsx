@@ -9,6 +9,7 @@ import CastCard from '../components/movie/CastCard';
 import AddCastModal from '../components/movie/AddCastModal';
 import { singleImageHandler } from '../utils/ImagePicker';
 // import ShimmerLoading from '../components/ShimmerLoad';
+import Shimmer from '../components/Shimmer';
 
 
 const NewMovie = () => {
@@ -29,20 +30,24 @@ const NewMovie = () => {
             <ScreenWrapper title="Add new movie" />
             <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnabled={true} >
                 {/* <ShimmerLoading/> */}
+                
                 <View style={styles.form}>
                     <View style={{ height: 250, width: '100%', flexDirection: 'row', justifyContent: 'space-between' }}>
-                        <View style={{ width: '48%' }}>
+                        {/* <View style={{ width: '48%' }}>
                             <TouchableOpacity style={styles.posterImage} onPress={handleImage}>
                                 <Image source={image?{uri:image}:PosterUpload} alt="upload poster" style={{ width: '100%', height: '100%', resizeMode: 'cover' }}></Image>
                             </TouchableOpacity>
-                        </View>
+                        </View> */}
+                        <Shimmer style={{width:'48%'}}/>
                         <View style={{ width: '48%', justifyContent: 'space-between' }}>
-                            <TouchableOpacity style={styles.posterImage2}>
+                            {/* <TouchableOpacity style={styles.posterImage2}>
                                 <Image source={PosterUpload2} alt="upload poster" style={{ width: '100%', height: '100%', resizeMode: 'cover' }}></Image>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.posterImage2}>
+                            </TouchableOpacity> */}
+                            <Shimmer style={{width:'100%', height: 118,}}/>
+                            {/* <TouchableOpacity style={styles.posterImage2}>
                                 <Image source={PosterUpload2} alt="upload poster" style={{ width: '100%', height: '100%', resizeMode: 'cover' }}></Image>
-                            </TouchableOpacity>
+                            </TouchableOpacity> */}
+                            <Shimmer style={{width:'100%', height: 118,}}/>
                         </View>
                     </View>
 

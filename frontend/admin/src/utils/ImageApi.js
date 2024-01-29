@@ -7,7 +7,7 @@ export const uploadImage = async (image) => {
         formData.append('image', {
             uri: image,
             type: 'image/jpeg', // or the MIME type of your image
-            name: 'image.jpg', // the name the server will receive the file as
+            name: 'poster', // the name the server will receive the file as
         });
         const config = {
             headers: {
