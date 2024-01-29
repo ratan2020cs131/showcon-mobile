@@ -71,7 +71,7 @@ const NewMovie = () => {
 
                         <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between' }}>
                             <View style={{ width: '43%', flexDirection: 'row', backgroundColor: '#E0E0E0', borderRadius: 7, paddingHorizontal: 10, alignItems: 'center' }}>
-                                <MaterialCommunityIcons name="movie-edit-outline" size={20} color="black" />
+                                <MaterialIcons name="access-time" size={21} color="black" />
                                 <TextInput placeholder={'Duration'} style={[GlobalStyles.input, GlobalStyles.normalText, { color: 'black', borderWidth: 0, paddingHorizontal: 8, flex: 1 }]} />
                             </View>
                             {/* <View style={{ width:'54%', flexDirection: 'row', backgroundColor: '#E0E0E0', borderRadius: 7, paddingHorizontal: 10, alignItems: 'center' }}>
