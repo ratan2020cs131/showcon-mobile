@@ -3,15 +3,12 @@ import { Text, SafeAreaView, StyleSheet, Animated, Easing, View, useWindowDimens
 import { LinearGradient } from 'expo-linear-gradient';
 
 export default function App({ style }) {
-  // let windowWidth;
-  // if (typeof style.width === 'string') {
-  //   windowWidth = Math.ceil(useWindowDimensions().width * (parseFloat(style.width) - 2) / 100);
-  //   // windowWidth = useWindowDimensions().width * (48 - 5) / 100;
-
-  //   console.log(parseFloat(style.width));
-  //   console.log(windowWidth);
-  // }
-  windowWidth = useWindowDimensions().width * (48 - 5) / 100;
+  let windowWidth;
+  if (typeof style.width === 'string') {
+    windowWidth = Math.ceil(useWindowDimensions().width * (parseFloat(style.width) - 5) / 100);
+    console.log(parseFloat(style.width));
+    console.log(windowWidth);
+  }
   const animatedValue = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
