@@ -8,6 +8,7 @@ import Avtar from '../../../assets/images/avtar2.png';
 import WhiteCheck from '../../../assets/images/check.png';
 import { singleImageHandler } from '../../utils/ImagePicker';
 import { actor, addActor, resestAddNewActor, getActors } from '../../redux/features/actor/ActorSlice';
+import { movie, setNewMovie } from '../../redux/features/movie/MovieSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { imageDelete } from '../../utils/ImageApi';
 import Shimmer from '../Shimmer';
@@ -196,7 +197,7 @@ const CastDropDown = ({ openForm, onClose, refresh }) => {
 
     useEffect(() => {
         const regexPattern = new RegExp(`^${search}`, 'i');
-        const filteredArray = actorState.actors.filter(item => regexPattern.test(item.name));
+        const filteredArray = actorState.actors?.filter(item => regexPattern.test(item.name));
         setSearchResult(filteredArray)
     }, [search])
 
@@ -249,16 +250,26 @@ const CastDropDown = ({ openForm, onClose, refresh }) => {
 }
 
 const ListCast = ({ item }) => {
-    const [check, setCheck] = useState(false);
-    const handleSelect = () => {
-        setCheck(!check)
+    const dispatch = useDispatch();
+    const movieState = useSelector(movie);
+    const handleSelect = (value) => {
+        if (!movieState.newMovie.casts?.includes(value)) {
+            dispatch(setNewMovie({ key: 'casts', value: [...movieState.newMovie.casts, value] }));
+        } else {
+            dispatch(setNewMovie({ key: 'casts', value: movieState.newMovie.casts.filter((item) => item !== value)}));
+        }
+        console.log(movieState.newMovie.casts);
     }
+
+
+
+
     return (
         <TouchableOpacity activeOpacity={0.6} style={styles.castListcontainer}
-            onPress={handleSelect}
+            onPress={() => handleSelect(item._id)}
         >
             <View style={styles.castListImage}>
-                {check &&
+                {movieState.newMovie.casts?.includes(item._id)&&
                     <View style={[GlobalStyles.image, { position: 'absolute', top: 0, left: 0, zIndex: 10, alignItems: 'center', justifyContent: 'center', backgroundColor: '#00000090', borderRadius: 100 }]}>
                         <Image source={WhiteCheck} style={{ width: 50, height: 50 }}></Image>
                     </View>
