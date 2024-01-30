@@ -79,14 +79,15 @@ const NewMovie = () => {
                         </View>
 
                         <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between' }}>
-                            <View style={{ width: '43%', flexDirection: 'row', backgroundColor: '#E0E0E0', borderRadius: 7, paddingHorizontal: 10, alignItems: 'center' }}>
+                            <View style={{ width: '43%', flexDirection: 'row', backgroundColor: '#E0E0E0', borderRadius: 7, paddingLeft: 10, alignItems: 'center' }}>
                                 <MaterialIcons name="access-time" size={21} color="black" />
-                                <TextInput placeholder={'Duration'} style={[GlobalStyles.input, GlobalStyles.normalText, { color: 'black', borderWidth: 0, paddingHorizontal: 8, flex: 1 }]} />
+                                <View style={{ flex: 1, flexDirection: 'row', width: '100%', alignItems:'center'}}>
+                                    <TextInput maxLength={2} keyboardType='numeric' placeholder={'HH'} style={[GlobalStyles.input, GlobalStyles.normalText, {textAlign:'center', width: '33%', color: 'black', borderWidth: 0, paddingHorizontal: 0, flex: 1 }]} />
+                                    <Text style={{fontSize:18, fontWeight:700}}>:</Text>
+                                    <TextInput maxLength={2} keyboardType='numeric' placeholder={'MM'} style={[GlobalStyles.input, GlobalStyles.normalText, {textAlign:'center', width: '33%', color: 'black', borderWidth: 0, paddingHorizontal: 0, flex: 1 }]} />
+                                </View>
                             </View>
-                            {/* <View style={{ width:'54%', flexDirection: 'row', backgroundColor: '#E0E0E0', borderRadius: 7, paddingHorizontal: 10, alignItems: 'center' }}>
-                                <MaterialCommunityIcons name="movie-edit-outline" size={20} color="black" />
-                                <TextInput placeholder={'Genre'} style={[GlobalStyles.input, GlobalStyles.normalText, { color: 'black', borderWidth: 0, paddingHorizontal: 8, flex: 1 }]} />
-                            </View> */}
+                            
                             <View style={{ width: '54%' }}>
                                 <GenreDropdown list={genreList} title={'Genre'} />
                             </View>
@@ -125,7 +126,7 @@ const NewMovie = () => {
                     </View>
                 </View>
             </ScrollView>
-            <AddCastModal visible={castModal} onClose={onClose} />
+            {castModal && <AddCastModal visible={castModal} onClose={onClose} />}
         </View>
     )
 }
