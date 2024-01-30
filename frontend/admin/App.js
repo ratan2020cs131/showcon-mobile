@@ -4,6 +4,8 @@ import { useFonts } from 'expo-font';
 import * as SplashScreen from "expo-splash-screen";
 import { NavigationContainer } from '@react-navigation/native';
 import BottomRoutes from './src/navigator/BottomRoutes';
+import { Provider } from 'react-redux';
+import store from './src/redux/store';
 
 export default function App({ }) {
   const [isLogged, setIsLogged] = useState(undefined);
@@ -38,11 +40,13 @@ export default function App({ }) {
 
 
   return (
-    <NavigationContainer>
-    {/* <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    <Provider store={store}>
+      <NavigationContainer>
+        {/* <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Text>showcon-admin</Text>
     </View> */}
-    <BottomRoutes/>
-    </NavigationContainer>
+        <BottomRoutes />
+      </NavigationContainer>
+    </Provider>
   );
 }
