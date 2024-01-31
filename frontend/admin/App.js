@@ -4,8 +4,10 @@ import { useFonts } from 'expo-font';
 import * as SplashScreen from "expo-splash-screen";
 import { NavigationContainer } from '@react-navigation/native';
 import BottomRoutes from './src/navigator/BottomRoutes';
+import AuthRoutes from './src/navigator/AuthRoutes';
 import { Provider } from 'react-redux';
 import store from './src/redux/store';
+import TokenVerification from './src/components/TokenVerification';
 
 export default function App({ }) {
   const [isLogged, setIsLogged] = useState(undefined);
@@ -42,10 +44,15 @@ export default function App({ }) {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        {/* <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>showcon-admin</Text>
-    </View> */}
-        <BottomRoutes />
+        {isLogged === undefined ?
+          <TokenVerification setLog={setIsLogged} /> :
+          <>
+            {isLogged === true ?
+              <BottomRoutes /> :
+              <AuthRoutes />
+            }
+          </>
+        }
       </NavigationContainer>
     </Provider>
   );

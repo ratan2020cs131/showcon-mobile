@@ -17,61 +17,83 @@ const PosterImages = () => {
     const [image, setImage] = useState({ prim: null, sec1: null, sec2: null });
 
     const handleImage = async (type) => {
-        if (image[type] !== null) {
-            imageDelete(image[type]);
+        const [property, index] = type.split('[');
+        if (index) {
+            const numericIndex = parseInt(index.replace(']', ''), 10);
+            if (movieState.newMovie[property][numericIndex] !== null) {
+                imageDelete(movieState.newMovie[property][numericIndex]);
+            }
+        } else {
+            imageDelete(movieState.newMovie[property]);
         }
-        setImage({ ...image, [type]: '0' });
+        // if (movieState.newMovie.type !== null) {
+        //     imageDelete(image[type]);
+        // }
+        // setImage({ ...image, [type]: '0' });
+        dispatch(setNewMovie({key:type, value: '0'}))
         setLoading(true);
         const imageUrl = await singleImageHandler();
         console.log(imageUrl);
-        setImage({ ...image, [type]: imageUrl });
-        if(type==='prim') dispatch(setNewMovie({key:"primaryPoster", value: imageUrl}))
-        else dispatch(setNewMovie({key:"secondaryPoster", value: [...movieState.newMovie.secondaryPoster, imageUrl]}))
+        dispatch(setNewMovie({key:type, value: imageUrl}))
+        console.log(movieState.newMovie);
+        // setImage({ ...image, [type]: imageUrl });
+        // if(type==='prim') dispatch(setNewMovie({key:"primaryPoster", value: imageUrl}))
+        // else if(type==='prim') dispatch(setNewMovie({key:"secondaryPoster", value: [...movieState.newMovie.secondaryPoster, imageUrl]}))
     }
 
     const handleDelete = (type) => {
-        imageDelete(image[type]);
-        setImage({ ...image, [type]: null });
-        if(type==='prim') dispatch(setNewMovie({key:"primaryPoster", value: null}))
-        else dispatch(setNewMovie({key:"secondaryPoster", value: []}))
+        const [property, index] = type.split('[');
+        if (index) {
+            const numericIndex = parseInt(index.replace(']', ''), 10);
+                imageDelete(movieState.newMovie[property][numericIndex]);
+                dispatch(setNewMovie({key:type, value: undefined}))
+        } else {
+            imageDelete(movieState.newMovie[property]);
+            dispatch(setNewMovie({key:type, value: null}))
+        }
+
+        // imageDelete(image[type]);
+        // setImage({ ...image, [type]: null });
+        // if (type === 'prim') dispatch(setNewMovie({ key: "primaryPoster", value: null }))
+        // else dispatch(setNewMovie({ key: "secondaryPoster", value: [] }))
     }
 
     return (
         <View style={styles.constainer}>
-            {loading && image.prim === '0' ?
+            {loading && movieState.newMovie.primaryPoster === '0' ?
                 <Shimmer style={{ width: '48%', borderRadius: 10 }} /> :
                 <View style={{ width: '48%', position: 'relative' }}>
-                    <TouchableOpacity style={styles.posterImage} onPress={() => handleImage("prim")}>
-                        <Image source={image.prim ? { uri: image.prim } : PosterUpload} alt="upload poster" style={{ width: '100%', height: '100%', resizeMode: 'cover' }}></Image>
+                    <TouchableOpacity style={styles.posterImage} onPress={() => handleImage("primaryPoster")}>
+                        <Image source={movieState.newMovie.primaryPoster ? { uri: movieState.newMovie.primaryPoster } : PosterUpload} alt="upload poster" style={{ width: '100%', height: '100%', resizeMode: 'cover' }}></Image>
                     </TouchableOpacity>
-                    {image.prim &&
+                    {movieState.newMovie.primaryPoster &&
                         <TouchableOpacity style={styles.closeIcon}
-                            onPress={()=>handleDelete('prim')}
+                            onPress={() => handleDelete('primaryPoster')}
                         >
                             <AntDesign name="closecircle" size={20} color="#808080" />
                         </TouchableOpacity>}
                 </View>
             }
             <View style={{ width: '48%', justifyContent: 'space-between' }}>
-                {loading && image.sec1 === '0' ?
+                {loading && movieState.newMovie.secondaryPoster[0] === '0' ?
                     <Shimmer style={{ width: '100%', height: 118, borderRadius: 10 }} /> :
-                    <TouchableOpacity style={styles.posterImage2} onPress={() => handleImage("sec1")}>
-                        <Image source={image.sec1 ? { uri: image.sec1 } : PosterUpload2} alt="upload poster" style={{ width: '100%', height: '100%', resizeMode: 'cover' }}></Image>
-                        {image.sec1 &&
+                    <TouchableOpacity style={styles.posterImage2} onPress={() => handleImage("secondaryPoster[0]")}>
+                        <Image source={movieState.newMovie.secondaryPoster[0] ? { uri: movieState.newMovie.secondaryPoster[0] } : PosterUpload2} alt="upload poster" style={{ width: '100%', height: '100%', resizeMode: 'cover' }}></Image>
+                        {movieState.newMovie.secondaryPoster[0] &&
                             <TouchableOpacity style={styles.closeIcon}
-                                onPress={()=>handleDelete('sec1')}
+                                onPress={() => handleDelete('secondaryPoster[0]')}
                             >
                                 <AntDesign name="closecircle" size={20} color="#808080" />
                             </TouchableOpacity>}
                     </TouchableOpacity>
                 }
-                {loading && image.sec2 === '0' ?
+                {loading && movieState.newMovie.secondaryPoster[1] === '0' ?
                     <Shimmer style={{ width: '100%', height: 118, borderRadius: 10 }} /> :
-                    <TouchableOpacity style={styles.posterImage2} onPress={() => handleImage("sec2")}>
-                        <Image source={image.sec2 ? { uri: image.sec2 } : PosterUpload2} alt="upload poster" style={{ width: '100%', height: '100%', resizeMode: 'cover' }}></Image>
-                        {image.sec2 &&
+                    <TouchableOpacity style={styles.posterImage2} onPress={() => handleImage("secondaryPoster[1]")}>
+                        <Image source={movieState.newMovie.secondaryPoster[1] ? { uri: movieState.newMovie.secondaryPoster[1] } : PosterUpload2} alt="upload poster" style={{ width: '100%', height: '100%', resizeMode: 'cover' }}></Image>
+                        {movieState.newMovie.secondaryPoster[1] &&
                             <TouchableOpacity style={styles.closeIcon}
-                                onPress={()=>handleDelete('sec2')}
+                                onPress={() => handleDelete('secondaryPoster[1]')}
                             >
                                 <AntDesign name="closecircle" size={20} color="#808080" />
                             </TouchableOpacity>}

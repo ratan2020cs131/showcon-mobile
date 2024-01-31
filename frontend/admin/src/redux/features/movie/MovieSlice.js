@@ -49,7 +49,6 @@ const movieSlice = createSlice({
         setNewMovie: (state, action) => {
             const { key, value } = action.payload;
             const [property, index] = key.split('[');
-
             if (index) {
                 const numericIndex = parseInt(index.replace(']', ''), 10);
                 state.newMovie[property][numericIndex] = value;
@@ -64,7 +63,7 @@ const movieSlice = createSlice({
                 title: '',
                 genre: [],
                 primaryPoster: null,
-                secondaryPoster: [],
+                secondaryPoster: [1,2],
                 duration: [],
                 description: '',
                 casts: [],
