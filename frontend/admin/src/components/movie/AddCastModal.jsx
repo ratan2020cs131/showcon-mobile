@@ -258,7 +258,6 @@ const ListCast = ({ item }) => {
         } else {
             dispatch(setNewMovie({ key: 'casts', value: movieState.newMovie.casts.filter((item) => item._id !== value._id) }));
         }
-        console.log(movieState.newMovie);
     }
 
 

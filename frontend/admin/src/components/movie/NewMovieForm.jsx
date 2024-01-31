@@ -37,12 +37,10 @@ const NewMovieForm = () => {
 
     const handleData = (key, value) => {
         dispatch(setNewMovie({ key: key, value: value }));
-        console.log(movieState.newMovie);
     }
 
     useEffect(() => {
         dispatch(setNewMovie({ key: 'genre', value: genre }));
-        console.log(movieState.newMovie);
     }, [genre])
 
 

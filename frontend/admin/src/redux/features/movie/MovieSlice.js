@@ -1,20 +1,26 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import MovieApi from "./MovieApi";
 
 export const addNewMovie = createAsyncThunk(
     'movie/addNewMovie',
-    async(data, thunkApi)=>{
+    async (data, thunkApi) => {
         try {
             let body = {
-                title:data.title,
-                primaryPoster:data.primaryPoster,
-                secondaryPoster:data.secondaryPoster,
-                duration:data.duration,
-                description:data.description,
-                genre:data.genre,
+                title: data.title,
+                primaryPoster: data.primaryPoster,
+                secondaryPoster: data.secondaryPoster,
+                duration: data.duration,
+                description: data.description,
+                genre: data.genre,
                 casts: data.casts.map(item => item._id),
-                release:data.release
+                release: data.release
             }
-            console.log("add movie api cast: ", body);
+
+            const res = await MovieApi.addNewMovie(body);
+            if (!res) {
+                return thunkApi.rejectWithValue(err.message);
+            }
+            return res;
         } catch (err) {
             return thunkApi.rejectWithValue(err.message);
         }
@@ -22,6 +28,8 @@ export const addNewMovie = createAsyncThunk(
 )
 
 const initialState = {
+    isCreatingNewMovie: false,
+    isMovieCreated: false,
     newMovie: {
         title: '',
         genre: [],
@@ -30,7 +38,7 @@ const initialState = {
         duration: [],
         description: '',
         casts: [],
-        release:null
+        release: null
     }
 }
 
@@ -48,14 +56,36 @@ const movieSlice = createSlice({
             } else {
                 state.newMovie[property] = value;
             }
+        },
+        resetNewMovieState: (state, action) => {
+            state.isCreatingNewMovie = false;
+            state.isMovieCreated = false;
+            let form = {
+                title: '',
+                genre: [],
+                primaryPoster: null,
+                secondaryPoster: [],
+                duration: [],
+                description: '',
+                casts: [],
+                release: null
+            }
+            state.newMovie = form
         }
     },
     extraReducers: (builder) => {
         builder
-
+            .addCase(addNewMovie.pending, (state, action) => {
+                state.isCreatingNewMovie = true
+                state.isMovieCreated = false
+            })
+            .addCase(addNewMovie.fulfilled, (state, action) => {
+                state.isCreatingNewMovie = false,
+                    state.isMovieCreated = true
+            })
     }
 })
 
-export const { setNewMovie } = movieSlice.actions;
+export const { setNewMovie, resetNewMovieState } = movieSlice.actions;
 export const movie = (state) => state.movie;
 export default movieSlice.reducer;

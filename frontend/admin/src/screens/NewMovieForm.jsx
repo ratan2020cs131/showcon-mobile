@@ -2,10 +2,10 @@ import { View, StyleSheet, ScrollView, TouchableOpacity, Text } from 'react-nati
 import ScreenWrapper from './ScreenWrapper';
 import PosterImages from '../components/movie/PosterImages';
 import NewMovieForm from '../components/movie/NewMovieForm';
-import { movie, addNewMovie } from '../redux/features/movie/MovieSlice';
+import { movie, addNewMovie, resetNewMovieState } from '../redux/features/movie/MovieSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import SubmitModal from '../components/movie/SubmitModal';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import GlobalStyles from '../GlobalStyles';
 import ErrorModal from '../components/ErrorModal';
 
@@ -34,6 +34,13 @@ const NewMovie = () => {
         dispatch(addNewMovie(movieState.newMovie))
     }
 
+    useEffect(()=>{
+        if(movieState.isMovieCreated){
+            setTimeout(()=>dispatch(resetNewMovieState()), 3100);
+        }
+    },[movieState.isMovieCreated])
+
+
     return (
         <View style={styles.container}>
             <ScreenWrapper title="Add new movie" />
@@ -49,7 +56,7 @@ const NewMovie = () => {
                     </TouchableOpacity>
                 </View>
             </ScrollView>
-            {modal&&<SubmitModal visible={modal} onClose={onClose} onSubmit={addMovie}/>}
+            {modal&&<SubmitModal visible={modal} onClose={onClose} onSubmit={addMovie} onLoading={movieState.isCreatingNewMovie} onSuccess={movieState.isMovieCreated}/>}
             {error&&<ErrorModal visible={error!==null} onClose={onCloseError} error={error}/>}
         </View>
     )
@@ -69,6 +76,6 @@ const styles = StyleSheet.create({
         gap: 20,
         marginVertical: 30,
         maxWidth: 380,
-        width: '100%'
+        width: '100%',
     },
 })
