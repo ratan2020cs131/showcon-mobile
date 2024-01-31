@@ -1,4 +1,5 @@
 const Actor = require('../database/models/Actor');
+const Movie = require('../database/models/Movie');
 
 //ADD NEW ACTOR
 const addCast = async (req, res) => {
@@ -21,9 +22,9 @@ const addCast = async (req, res) => {
 const getAllActors = async (req, res) => {
     try {
         const actors = await Actor.find();
-        if(actors){
+        if (actors) {
             res.send(actors)
-        }else{
+        } else {
             throw new Error("Error in fetching actors from mongoDB");
         }
     } catch (err) {
@@ -31,9 +32,45 @@ const getAllActors = async (req, res) => {
     }
 }
 
+const addMovie = async (req, res) => {
+    try {
+        const { title, genre, primaryPoster, secondaryPoster, duration, description, casts, release } = req.body;
+        const movie = new Movie({ title, genre, primaryPoster, secondaryPoster, duration, description, casts, release });
+        const result = await movie.save();
+        if (result) {
+            res.send(result);
+        } else {
+            throw new Error("Error in saving movie in mongoDB")
+        }
+    } catch (err) {
+        console.log({ 'Add new movie error: ': err.message });
+        res.status(500).send({ message: err.message })
+    }
+}
+
+
+
+const getLatestMovies = async (req, res) => {
+    try {
+        if (req.query.limit > 100) {
+            res.status(400).send({ message: "Only 100 movies at a time" });
+        }
+        else {
+            const result = await Movie.find().sort({ _id: -1 }).limit(req.query.limit || 1)
+            res.send(result);
+        }
+    } catch (err) {
+        console.log("Get latest movie error: ", err.message);
+        res.status(500).send({ message: err.messge });
+    }
+}
+
+
 
 
 module.exports = {
     addCast,
-    getAllActors
+    getAllActors,
+    addMovie,
+    getLatestMovies
 }

@@ -3,11 +3,11 @@ const mongo = require('mongoose');
 const actor = new mongo.Schema({
     name:{
         type:String,
-        require:true
+        required:true
     },
     image:{
         type:String,
-        require:true
+        required:true
     }
 })
 

@@ -5,5 +5,7 @@ const AdminController = require('../controller/AdminController');
 
 route.get('/cast', AdminController.getAllActors);
 route.post('/cast', AdminController.addCast);
+route.post('/movie', AdminController.addMovie);
+route.get('/latest-movies', AdminController.getLatestMovies)
 
 module.exports = route;
