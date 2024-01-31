@@ -9,7 +9,7 @@ const TopBar = ({ title }) => {
       <View
         style={[styles.container, {width:windowWidth}]}
       >
-        {title && <Text style={[GlobalStyles.boldText, styles.title]}>{title}</Text>}
+        {title && <Text style={[GlobalStyles.semiBoldText, styles.title]}>{title}</Text>}
       </View>
     </SafeAreaView>
   );

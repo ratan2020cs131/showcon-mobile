@@ -2,11 +2,11 @@ import { View, Text, Image, StyleSheet } from 'react-native';
 import Avtar from '../../../assets/images/avtar2.png';
 import GlobalStyles from '../../GlobalStyles';
 
-const CastCard = ({title}) => {
+const CastCard = ({image, title}) => {
     return (
         <View style={styles.container}>
             <View style={styles.castImage}>
-                <Image source={Avtar} style={GlobalStyles.image}></Image>
+                <Image source={image?{uri:image}:Avtar} style={GlobalStyles.image}></Image>
             </View>
             <Text style={[GlobalStyles.semiBoldText, { textAlign: 'center' }]}>{title?title:'Actor Name'}</Text>
         </View>
@@ -25,6 +25,6 @@ const styles = StyleSheet.create({
         width: 70,
         height: 70,
         borderRadius: 100,
-        backgroundColor: 'red'
+        overflow:'hidden'
     }
 })

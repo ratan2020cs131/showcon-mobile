@@ -1,132 +1,56 @@
-import { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image, ScrollView, FlatList } from 'react-native';
-import { AntDesign, MaterialCommunityIcons, MaterialIcons, Feather, Ionicons } from '@expo/vector-icons';
+import { View, StyleSheet, ScrollView, TouchableOpacity, Text } from 'react-native';
 import ScreenWrapper from './ScreenWrapper';
+import PosterImages from '../components/movie/PosterImages';
+import NewMovieForm from '../components/movie/NewMovieForm';
+import { movie, addNewMovie } from '../redux/features/movie/MovieSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import SubmitModal from '../components/movie/SubmitModal';
+import { useState } from 'react';
 import GlobalStyles from '../GlobalStyles';
-import PosterUpload from '../../assets/images/poster-upload.png';
-import PosterUpload2 from '../../assets/images/poster-upload2.png';
-import CastCard from '../components/movie/CastCard';
-import AddCastModal from '../components/movie/AddCastModal';
-import { singleImageHandler } from '../utils/ImagePicker';
-import Shimmer from '../components/Shimmer';
-import { imageDelete } from '../utils/ImageApi';
-import GenreDropdown from '../components/Dropdown';
-
+import ErrorModal from '../components/ErrorModal';
 
 const NewMovie = () => {
-    const [loading, setLoading] = useState(false);
-    const [image, setImage] = useState({ prim: null, sec1: null, sec2: null });
-    const [castModal, SetCastModal] = useState(false);
-    const onClose = () => SetCastModal(false);
-    const onOpen = () => SetCastModal(true);
-
-    const handleImage = async (type) => {
-        if (image[type] !== null) {
-            imageDelete(image[type]);
-        }
-        setImage({ ...image, [type]: '0' });
-        setLoading(true);
-        const imageUrl = await singleImageHandler();
-        console.log(imageUrl);
-        setImage({ ...image, [type]: imageUrl });
+    const movieState = useSelector(movie);
+    const dispatch = useDispatch();
+    const [modal, setModal] = useState(false);
+    const [error, setError] = useState();
+    const onClose = ()=>setModal(false);
+    const onCloseError = ()=> {
+        setError(null);
     }
 
+    const handleSubmit = ()=>{
+        if(!movieState.newMovie.primaryPoster) setError("Add primary poster")
+        else if(!movieState.newMovie.title) setError("Add title to proceed")
+        else if(!movieState.newMovie.duration[0]||!movieState.newMovie.duration[1]) setError("Add duration of movie")
+        else if(!movieState.newMovie.genre?.length>0) setError("Select atleast one genre")
+        else if(!movieState.newMovie.description) setError("Add description")
+        else if(!movieState.newMovie.casts.length>0) setError("Add casts to proceed")
+        else if(!movieState.newMovie.release) setError("Select the release date");
+        else setModal(true)
+    }
+
+    const addMovie = ()=>{
+        dispatch(addNewMovie(movieState.newMovie))
+    }
 
     return (
         <View style={styles.container}>
             <ScreenWrapper title="Add new movie" />
-            <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnabled={true} >
-
+            <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnabled={true} contentContainerStyle={{ alignItems: 'center' }}>
                 <View style={styles.form}>
-                    <View style={{ height: 250, width: '100%', flexDirection: 'row', justifyContent: 'space-between' }}>
-                        {loading && image.prim === '0' ?
-                            <Shimmer style={{ width: '48%', borderRadius: 10 }} /> :
-                            <View style={{ width: '48%', position: 'relative' }}>
-                                <TouchableOpacity style={styles.posterImage} onPress={() => handleImage("prim")}>
-                                    <Image source={image.prim ? { uri: image.prim } : PosterUpload} alt="upload poster" style={{ width: '100%', height: '100%', resizeMode: 'cover' }}></Image>
-                                </TouchableOpacity>
-                                {image.prim && <TouchableOpacity style={{ position: 'absolute', top: 5, left: 5, zIndex: 10 }} onPress={() => { imageDelete(image['prim']); setImage({ ...image, ['prim']: null }); }}>
-                                    <AntDesign name="closecircle" size={20} color="#808080" />
-                                </TouchableOpacity>}
-                            </View>
-                        }
-                        <View style={{ width: '48%', justifyContent: 'space-between' }}>
-                            {loading && image.sec1 === '0' ?
-                                <Shimmer style={{ width: '100%', height: 118, borderRadius: 10 }} /> :
-                                <TouchableOpacity style={styles.posterImage2} onPress={() => handleImage("sec1")}>
-                                    <Image source={image.sec1 ? { uri: image.sec1 } : PosterUpload2} alt="upload poster" style={{ width: '100%', height: '100%', resizeMode: 'cover' }}></Image>
-                                    {image.sec1 && <TouchableOpacity style={{ position: 'absolute', top: 5, right: 5, zIndex: 10 }} onPress={() => { imageDelete(image['sec1']); setImage({ ...image, ['sec1']: null }); }}>
-                                        <AntDesign name="closecircle" size={20} color="#808080" />
-                                    </TouchableOpacity>}
-                                </TouchableOpacity>
-                            }
-                            {loading && image.sec2 === '0' ?
-                                <Shimmer style={{ width: '100%', height: 118, borderRadius: 10 }} /> :
-                                <TouchableOpacity style={styles.posterImage2} onPress={() => handleImage("sec2")}>
-                                    <Image source={image.sec2 ? { uri: image.sec2 } : PosterUpload2} alt="upload poster" style={{ width: '100%', height: '100%', resizeMode: 'cover' }}></Image>
-                                    {image.sec2 && <TouchableOpacity style={{ position: 'absolute', top: 5, right: 5, zIndex: 10 }} onPress={() => { imageDelete(image['sec2']); setImage({ ...image, ['sec2']: null }); }}>
-                                        <AntDesign name="closecircle" size={20} color="#808080" />
-                                    </TouchableOpacity>}
-                                </TouchableOpacity>
-                            }
-                        </View>
-                    </View>
-
-                    <View style={styles.inputContainer}>
-                        <View style={{ flexDirection: 'row', backgroundColor: '#E0E0E0', borderRadius: 7, paddingHorizontal: 10, alignItems: 'center' }}>
-                            <MaterialCommunityIcons name="movie-edit-outline" size={20} color="black" />
-                            <TextInput placeholder={'Movie title'} style={[GlobalStyles.input, GlobalStyles.normalText, { color: 'black', borderWidth: 0, paddingHorizontal: 8, flex: 1 }]} />
-                        </View>
-
-                        <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between' }}>
-                            <View style={{ width: '43%', flexDirection: 'row', backgroundColor: '#E0E0E0', borderRadius: 7, paddingLeft: 10, alignItems: 'center' }}>
-                                <MaterialIcons name="access-time" size={21} color="black" />
-                                <View style={{ flex: 1, flexDirection: 'row', width: '100%', alignItems:'center'}}>
-                                    <TextInput maxLength={2} keyboardType='numeric' placeholder={'HH'} style={[GlobalStyles.input, GlobalStyles.normalText, {textAlign:'center', width: '33%', color: 'black', borderWidth: 0, paddingHorizontal: 0, flex: 1 }]} />
-                                    <Text style={{fontSize:18, fontWeight:700}}>:</Text>
-                                    <TextInput maxLength={2} keyboardType='numeric' placeholder={'MM'} style={[GlobalStyles.input, GlobalStyles.normalText, {textAlign:'center', width: '33%', color: 'black', borderWidth: 0, paddingHorizontal: 0, flex: 1 }]} />
-                                </View>
-                            </View>
-                            
-                            <View style={{ width: '54%' }}>
-                                <GenreDropdown list={genreList} title={'Genre'} />
-                            </View>
-                        </View>
-
-                        <View style={{ backgroundColor: '#E0E0E0', borderRadius: 7, minHeight: 120, maxHeight: 140 }}>
-                            <View style={{ flexDirection: 'row', paddingHorizontal: 10 }}>
-                                <Feather name="file-text" size={20} color="black" style={{ paddingTop: 12 }} />
-                                <TextInput
-                                    style={{ alignItems: 'flex-start', minHeight: 45, paddingLeft: 10, fontFamily: "Montserrat-Regular", width: '90%', fontSize: 16 }}
-                                    multiline
-                                    maxLength={500}
-                                    placeholder="Description"
-                                />
-                            </View>
-                        </View>
-
-
-                        <ScrollView
-                            horizontal
-                            showsHorizontalScrollIndicator={false}
-                            contentContainerStyle={{ minWidth: '100%' }}
-                        >
-                            {data.map((item, index) => (
-                                <CastCard title={item.title} key={index} />
-                            ))}
-
-                            <TouchableOpacity style={styles.castaddContainer} onPress={onOpen}>
-                                <View style={styles.addCast}>
-                                    <Ionicons name="person-add-outline" size={25} color="black" />
-                                </View>
-                                <Text style={[GlobalStyles.semiBoldText, { textAlign: 'center' }]}>Add Cast</Text>
-                            </TouchableOpacity>
-                        </ScrollView>
-
-                    </View>
+                    <PosterImages />
+                    <NewMovieForm />
+                    <TouchableOpacity 
+                    style={[GlobalStyles.button, { marginTop: 30, width: '100%'}]}
+                    onPress={handleSubmit}
+                    >
+                        <Text style={[GlobalStyles.boldText]}>ADD MOVIE</Text>
+                    </TouchableOpacity>
                 </View>
             </ScrollView>
-            {castModal && <AddCastModal visible={castModal} onClose={onClose} />}
+            {modal&&<SubmitModal visible={modal} onClose={onClose} onSubmit={addMovie}/>}
+            {error&&<ErrorModal visible={error!==null} onClose={onCloseError} error={error}/>}
         </View>
     )
 }
@@ -136,88 +60,15 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         width: '100%',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     form: {
-        marginTop: 30,
         height: 'fit-content',
         paddingHorizontal: 20,
         alignItems: 'center',
         gap: 20,
-        marginBottom: 30,
-        maxWidth: 380
-    },
-    formContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    section: {
-        // width: '85%',
-        backgroundColor: '#E0E0E0',
-        marginBottom: 10,
-        justifyContent: 'flex-start',
-        flexDirection: 'row',
-        borderRadius: 7,
-        alignItems: 'center',
-        paddingHorizontal: 10
-    },
-    input2: {
-        color: 'black',
-        borderWidth: 0,
-        flex: 1,
-        paddingHorizontal: 8
-    },
-    inputContainer: {
-        width: '100%',
-        gap: 10
-    },
-    posterImage2: {
-        height: 118,
-        width: '100%',
-        borderRadius: 10,
-        overflow: 'hidden',
-        position: 'relative'
-    },
-    posterImage: {
-        height: '100%',
-        width: '100%',
-        borderRadius: 10,
-        overflow: 'hidden'
-    },
-    addCast: {
-        width: 70,
-        height: 70,
-        backgroundColor: '#E0E0E0',
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 100,
-        paddingRight: 3
-    },
-    castaddContainer: {
-        justifyContent: 'flex-start',
-        width: 70,
-        marginRight: 10
+        marginVertical: 30,
+        maxWidth: 380,
+        width: '100%'
     },
 })
-
-
-const data = [
-    { title: 'Ratan Deep Singh' },
-    // { title: 'Himanshu Verma' },
-    // { title: 'Ratan Deep Singh' },
-    // { title: 'Himanshu Verma' }
-]
-
-const genreList = [
-    'Thriller',
-    'Science Fiction',
-    'Horror',
-    'Romance',
-    'Action',
-    'Drama',
-    'Adventure',
-    'Mystery',
-    'Comedy',
-    'Fantasy'
-]

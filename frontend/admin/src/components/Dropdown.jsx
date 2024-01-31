@@ -4,11 +4,12 @@ import GlobalStyles from '../GlobalStyles';
 import { Octicons, FontAwesome } from '@expo/vector-icons';
 import { useEffect, useRef, useState } from 'react';
 
-const DropDown = ({ title, list }) => {
+const DropDown = ({ title, list, set, get }) => {
     const input = useRef(null);
     const [open, setOpen] = useState(false);
     const [search, setSearch] = useState('');
-    const [searchResult, setSearchResult] = useState(list)
+    const [searchResult, setSearchResult] = useState(list);
+    const [selected, setSelected] = useState([]);
     const toggleOpen = () => setOpen(!open);
     const handleSearch = (value) => setSearch(value);
 
@@ -19,8 +20,12 @@ const DropDown = ({ title, list }) => {
     }, [search])
 
     useEffect(() => {
-        if (open) input.current.focus();
+        // if (open) input.current.focus();
     }, [open])
+
+    useEffect(() => set(selected), [selected])
+
+
 
 
     return (
@@ -28,8 +33,18 @@ const DropDown = ({ title, list }) => {
             <TouchableOpacity activeOpacity={0.5} style={{ width: '100%', height: 45, flexDirection: 'row', backgroundColor: '#E0E0E0', borderTopLeftRadius: 7, borderTopRightRadius: 7, paddingHorizontal: 10, borderBottomLeftRadius: open ? 0 : 7, borderBottomRightRadius: open ? 0 : 7, alignItems: 'center', gap: 3 }} onPress={toggleOpen}>
                 <Octicons name="stack" size={19} color="black" />
                 {open ?
-                    <TextInput ref={input} placeholder={title} style={[GlobalStyles.input, GlobalStyles.normalText, { color: 'black', borderWidth: 0, paddingHorizontal: 8, flex: 1, fontSize:17 }]} onChangeText={(value) => handleSearch(value)} /> :
-                    <Text style={[GlobalStyles.normalText, { color: '#808080', fontSize: 18, borderWidth: 0, paddingHorizontal: 8, flex: 1 }]}>{title}</Text>
+                    <TextInput ref={input}
+                        placeholder={open ? 'Search' : title}
+                        style={[GlobalStyles.input, GlobalStyles.normalText, { color: 'black', borderWidth: 0, paddingHorizontal: 8, flex: 1, fontSize: 17 }]}
+                        onChangeText={(value) => handleSearch(value)} /> :
+                    <View style={{ paddingLeft: 5, flexDirection: 'row', width: '77%', overflow: 'scroll' }}>
+                        {selected.length > 0 ?
+                            <>
+                                {selected.map((item, index) => (<Text key={item} style={[GlobalStyles.normalText, { fontSize: 16 }]}>{selected.length - 1 === index ? item : item + ", "}</Text>))}
+                            </> :
+                            <Text style={[GlobalStyles.normalText, {color: '#707070', fontSize: 16 }]}>{title}</Text>
+                        }
+                    </View>
                 }
                 <FontAwesome name={open ? "caret-up" : "caret-down"} size={24} color="black" style={{ width: 25, textAlign: 'right', height: '1005', position: 'absolute', right: 10 }} />
             </TouchableOpacity>
@@ -39,7 +54,7 @@ const DropDown = ({ title, list }) => {
                     {searchResult.length > 0 ?
                         <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnabled={true} style={{ width: '100%' }}>
                             {searchResult.map((item, index) => (
-                                <ListItem key={index} text={item} />
+                                <ListItem key={index} text={item} setSelected={setSelected} get={get} />
                             ))}
                         </ScrollView> :
                         <Text style={[GlobalStyles.normalText, { letterSpacing: 0.3, fontSize: 15, paddingVertical: 4 }]}>No result</Text>
@@ -52,16 +67,21 @@ const DropDown = ({ title, list }) => {
 export default DropDown;
 
 
-const ListItem = ({ text }) => {
-    const [check, setCheck] = useState(false);
-    const handleSelect = () => {
-        setCheck(!check)
+const ListItem = ({ text, setSelected, get }) => {
+    // const [check, setCheck] = useState(false);
+    const handleSelect = (text) => {
+        if (!get.includes(text)) {
+            setSelected((prev) => [...prev, text]);
+        } else {
+            setSelected((prev) => prev.filter((item) => item !== text));
+        }
     }
+
     return (
         <TouchableOpacity activeOpacity={0.6} style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', width: '100%', gap: 5 }}
-            onPress={handleSelect}
+            onPress={() => handleSelect(text)}
         >
-            <Checkbox status={check ? 'checked' : 'unchecked'} color={"#F55139"} />
+            <Checkbox status={get.includes(text) ? 'checked' : 'unchecked'} color={"#F55139"} />
             <Text style={[GlobalStyles.semiBoldText, { letterSpacing: 0.3 }]}>{text}</Text>
         </TouchableOpacity>
     )

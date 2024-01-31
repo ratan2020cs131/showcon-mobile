@@ -15,10 +15,10 @@ const addNewActor = async(data)=>{
 const getActors = async(data)=>{
     try{
         const res = await axios.get(`${BASE_URL}/admin/cast`);
-        console.log("get actor api res: ",res.data);
+        console.log("get actors api res: ",res.data);
         return res.data;
     }catch(err){
-        console.log("Add new actor error: ", err.message);
+        console.log("get actors error: ", err.message);
     }
 }
 

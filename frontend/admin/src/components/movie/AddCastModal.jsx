@@ -253,12 +253,12 @@ const ListCast = ({ item }) => {
     const dispatch = useDispatch();
     const movieState = useSelector(movie);
     const handleSelect = (value) => {
-        if (!movieState.newMovie.casts?.includes(value)) {
+        if (!movieState.newMovie.casts?.some(obj => obj._id === value._id)) {
             dispatch(setNewMovie({ key: 'casts', value: [...movieState.newMovie.casts, value] }));
         } else {
-            dispatch(setNewMovie({ key: 'casts', value: movieState.newMovie.casts.filter((item) => item !== value)}));
+            dispatch(setNewMovie({ key: 'casts', value: movieState.newMovie.casts.filter((item) => item._id !== value._id) }));
         }
-        console.log(movieState.newMovie.casts);
+        console.log(movieState.newMovie);
     }
 
 
@@ -266,10 +266,10 @@ const ListCast = ({ item }) => {
 
     return (
         <TouchableOpacity activeOpacity={0.6} style={styles.castListcontainer}
-            onPress={() => handleSelect(item._id)}
+            onPress={() => handleSelect(item)}
         >
             <View style={styles.castListImage}>
-                {movieState.newMovie.casts?.includes(item._id)&&
+                {movieState.newMovie.casts?.some(obj => obj._id === item._id) &&
                     <View style={[GlobalStyles.image, { position: 'absolute', top: 0, left: 0, zIndex: 10, alignItems: 'center', justifyContent: 'center', backgroundColor: '#00000090', borderRadius: 100 }]}>
                         <Image source={WhiteCheck} style={{ width: 50, height: 50 }}></Image>
                     </View>
