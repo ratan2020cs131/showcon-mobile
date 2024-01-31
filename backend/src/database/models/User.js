@@ -24,6 +24,10 @@ const user = new mongo.Schema({
         type: String,
         require: true
     },
+    role:{
+        type: String,
+        require: false
+    },
     resetPass: {
         type: String,
         required: false

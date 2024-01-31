@@ -5,6 +5,10 @@ const Cinema = require('../database/models/Cinema')
 //ADD NEW ACTOR
 const addCast = async (req, res) => {
     try {
+        if(req.user.role!=='admin'){
+            res.send({message:'Non-admin access denied'});
+            throw new Error("Non-admin access denied")
+        }
         const { name, image } = req.body;
         const actor = new Actor({ name, image });
         const result = await actor.save();
@@ -22,6 +26,10 @@ const addCast = async (req, res) => {
 //GET ALL ACTORS
 const getAllActors = async (req, res) => {
     try {
+        if(req.user.role!=='admin'){
+            res.send({message:'Non-admin access denied'});
+            throw new Error("Non-admin access denied")
+        }
         const actors = await Actor.find();
         if (actors) {
             res.send(actors)
@@ -36,6 +44,10 @@ const getAllActors = async (req, res) => {
 
 const addMovie = async (req, res) => {
     try {
+        if(req.user.role!=='admin'){
+            res.send({message:'Non-admin access denied'});
+            throw new Error("Non-admin access denied")
+        }
         const { title, genre, primaryPoster, secondaryPoster, duration, description, casts, release } = req.body;
         const movie = new Movie({ title, genre, primaryPoster, secondaryPoster, duration, description, casts, release });
         const result = await movie.save();
@@ -53,6 +65,10 @@ const addMovie = async (req, res) => {
 
 const getLatestMovies = async (req, res) => {
     try {
+        if(req.user.role!=='admin'){
+            res.send({message:'Non-admin access denied'});
+            throw new Error("Non-admin access denied")
+        }
         if (req.query.limit > 100) {
             res.status(400).send({ message: "Only 100 movies at a time" });
         }
@@ -68,6 +84,10 @@ const getLatestMovies = async (req, res) => {
 
 const getTotalMovieCount = async (req, res) => {
     try {
+        if(req.user.role!=='admin'){
+            res.send({message:'Non-admin access denied'});
+            throw new Error("Non-admin access denied")
+        }
         const count = await Movie.countDocuments({});
         if(count){
             res.send({count:count})
@@ -82,6 +102,10 @@ const getTotalMovieCount = async (req, res) => {
 
 const getTotalCinema = async (req, res) => {
     try {
+        if(req.user.role!=='admin'){
+            res.send({message:'Non-admin access denied'});
+            throw new Error("Non-admin access denied")
+        }
         const count = await Cinema.countDocuments({});
         if(count){
             res.send({count:count})
