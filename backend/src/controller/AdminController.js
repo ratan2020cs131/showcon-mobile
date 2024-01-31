@@ -56,7 +56,7 @@ const getLatestMovies = async (req, res) => {
             res.status(400).send({ message: "Only 100 movies at a time" });
         }
         else {
-            const result = await Movie.find().sort({ _id: -1 }).limit(req.query.limit || 1)
+            const result = await Movie.find().sort({ _id: -1 }).limit(req.query.limit || 1).populate('casts', 'name image')
             res.send(result);
         }
     } catch (err) {
