@@ -1,5 +1,6 @@
 const Actor = require('../database/models/Actor');
 const Movie = require('../database/models/Movie');
+const Cinema = require('../database/models/Cinema')
 
 //ADD NEW ACTOR
 const addCast = async (req, res) => {
@@ -32,6 +33,7 @@ const getAllActors = async (req, res) => {
     }
 }
 
+
 const addMovie = async (req, res) => {
     try {
         const { title, genre, primaryPoster, secondaryPoster, duration, description, casts, release } = req.body;
@@ -49,7 +51,6 @@ const addMovie = async (req, res) => {
 }
 
 
-
 const getLatestMovies = async (req, res) => {
     try {
         if (req.query.limit > 100) {
@@ -65,12 +66,39 @@ const getLatestMovies = async (req, res) => {
     }
 }
 
+const getTotalMovieCount = async (req, res) => {
+    try {
+        const count = await Movie.countDocuments({});
+        if(count){
+            res.send({count:count})
+        }else{
+            throw new Error("Error in fetching data from mongoDB");
+        }
+    } catch (err) {
+        console.log("Get total movie count error: ", err.message);
+    }
+}
 
+
+const getTotalCinema = async (req, res) => {
+    try {
+        const count = await Cinema.countDocuments({});
+        if(count){
+            res.send({count:count})
+        }else{
+            throw new Error("Error in fetching data from mongoDB");
+        }
+    } catch (err) {
+        console.log("Get total cinema count error: ", err.message);
+    }
+}
 
 
 module.exports = {
     addCast,
     getAllActors,
     addMovie,
-    getLatestMovies
+    getLatestMovies,
+    getTotalMovieCount,
+    getTotalCinema,
 }

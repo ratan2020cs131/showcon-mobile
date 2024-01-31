@@ -5,6 +5,8 @@ const AdminController = require('../controller/AdminController');
 
 route.get('/cast', AdminController.getAllActors);
 route.post('/cast', AdminController.addCast);
+route.get('/movies-count', AdminController.getTotalMovieCount)
+route.get('/cinemas-count', AdminController.getTotalCinema)
 route.post('/movie', AdminController.addMovie);
 route.get('/latest-movies', AdminController.getLatestMovies)
 
