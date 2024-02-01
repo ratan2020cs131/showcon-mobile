@@ -3,12 +3,15 @@ import {StyleSheet} from 'react-native';
 const GlobalStyles = StyleSheet.create({
     boldText:{
         fontFamily:"Montserrat-Bold",
+        color:'#1E1F22'
     },
     semiBoldText:{
         fontFamily:"Montserrat-SemiBold",
+        color:'#1E1F22'
     },
     normalText:{
         fontFamily:"Montserrat-Regular",
+        color:'#1E1F22'
     },
 
     logo: {
@@ -61,6 +64,11 @@ const GlobalStyles = StyleSheet.create({
         borderWidth:2,
         borderColor:'#1E1F22',
         borderRadius:10,
+    },
+    image:{
+        width:'100%',
+        height:'100%',
+        resizeMode:'cover'
     }
 });
 

@@ -1,14 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Camera } from "expo-camera";
-import {
-  Button,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  Animated,
-  Easing,
-} from "react-native";
+import { Button, StyleSheet, Text, TouchableOpacity, View, Animated, Easing } from "react-native";
+import GlobalStyles from '../GlobalStyles';
 
 export default function App() {
   const [permission, requestPermission] = Camera.useCameraPermissions();
@@ -39,10 +32,15 @@ export default function App() {
     // Camera permissions are not granted yet
     return (
       <View style={styles.container}>
-        <Text style={{ textAlign: "center" }}>
-          We need your permission to show the camera
-        </Text>
-        <Button onPress={requestPermission} title="grant permission" />
+        <Text style={{ textAlign: "center" }}> We need your permission to show the camera </Text>
+        <TouchableOpacity
+          style={[GlobalStyles.button]}
+          onPress={requestPermission}>
+          <Text style={[GlobalStyles.semiBoldText]}>
+            Grant Camera Permission
+          </Text>
+        </TouchableOpacity>
+        {/* <Button onPress={requestPermission} title="grant permission" /> */}
       </View>
     );
   }
@@ -54,26 +52,28 @@ export default function App() {
 
   return (
     <View style={styles.container}>
+      <View style={styles.camera}>
       <Camera
-        style={styles.camera}
+        style={[GlobalStyles.image]}
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
       >
         <Animated.View style={[styles.line, { transform: [{ translateY }] }]} />
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => setScanned(false)}
-          >
-            <Text style={styles.text}>Scan Again</Text>
-          </TouchableOpacity>
-        </View>
       </Camera>
+      </View>
+        <TouchableOpacity
+          style={[GlobalStyles.button,{width:255}]}
+          onPress={() => setScanned(false)}
+        >
+          <Text style={[GlobalStyles.semiBoldText,{fontSize:17}]}>Scan Again</Text>
+        </TouchableOpacity>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    width: '100%',
+    gap:20,
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
@@ -83,12 +83,8 @@ const styles = StyleSheet.create({
     height: 250,
     justifyContent: "center",
     alignItems: "center",
-  },
-  buttonContainer: {
-    flex: 1,
-    flexDirection: "row",
-    backgroundColor: "transparent",
-    margin: 20,
+    borderRadius:10,
+    overflow:'hidden'
   },
   button: {
     flex: 1,
@@ -106,6 +102,7 @@ const styles = StyleSheet.create({
     top: -30,
     width: 250,
     height: 2,
-    backgroundColor: "#0FFF50",
+    // backgroundColor: "#0FFF50",
+    backgroundColor: '#F55139'
   },
 });
