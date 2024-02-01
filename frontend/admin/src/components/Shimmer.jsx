@@ -36,7 +36,7 @@ export default function App({ style }) {
         ]}
       >
         <LinearGradient
-          colors={['#ddd', '#ccc', '#999999', '#ccc', '#ddd']}
+          colors={style.colors?style.colors:['#ddd', '#ccc', '#999999', '#ccc', '#ddd']}
           start={{ x: 0, y: 0.5 }}
           end={{ x: 1, y: 0.5 }}
           style={{ flex: 1 }}

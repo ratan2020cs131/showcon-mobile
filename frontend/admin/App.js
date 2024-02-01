@@ -48,7 +48,7 @@ export default function App({ }) {
           <TokenVerification setLog={setIsLogged} /> :
           <>
             {isLogged === true ?
-              <BottomRoutes /> :
+              <AuthRoutes isLogged={isLogged}/>:
               <AuthRoutes />
             }
           </>

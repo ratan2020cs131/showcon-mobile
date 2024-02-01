@@ -1,5 +1,6 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 import GloabalStyles from '../../GlobalStyles';
+import Shimmer from '../Shimmer';
 
 const SquareCard = ({ count, title, color }) => {
     return (
@@ -18,7 +19,7 @@ const styles = StyleSheet.create({
         padding:10,
         elevation: 10,
         shadowColor:'#000',
-        backgroundColor: '#d0d0d0',
+        backgroundColor: '#e0e0e0',
         borderRadius: 10,
         alignItems: 'center',
         justifyContent: 'center'

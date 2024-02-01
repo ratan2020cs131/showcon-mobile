@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import HomeRoute from '../components/home/Home';
 import MovieRoutes from './MovieRoutes';
+import ProfileRoutes from './ProfileRoutes';
 import { useRoute } from '@react-navigation/native';
 import GlobalStyles from '../GlobalStyles';
 const Tab = createBottomTabNavigator();
@@ -27,6 +28,14 @@ const BottomRoutes = () => {
             component: MovieRoutes,
             activeIcon:'albums',
             inactiveIcon:'albums-outline',
+            params: null,
+        },
+        {
+            path: "ProfilePage",
+            name:"Profile",
+            component: ProfileRoutes,
+            activeIcon:'person',
+            inactiveIcon:'person-outline',
             params: null,
         }
     ];

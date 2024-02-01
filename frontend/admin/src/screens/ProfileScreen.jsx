@@ -1,17 +1,17 @@
 import {View, Text, StyleSheet} from 'react-native';
-import Home from '../components/home/Home';
+import Profile from '../components/profile/Profile';
 
-const HomeScreem = ()=>{
+const ProfileScreen = ({navigation})=>{
     return(
         <View style={styles.container}>
-            <Home/>
+            <Profile navigation={navigation}/>
         </View>
     )
 }
-export default HomeScreem;
+export default ProfileScreen;
 
 const styles = StyleSheet.create({
     container:{
         flex:1,
-    }
+    },
 })

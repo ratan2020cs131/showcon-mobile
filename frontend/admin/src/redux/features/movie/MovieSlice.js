@@ -27,9 +27,37 @@ export const addNewMovie = createAsyncThunk(
     }
 )
 
+
+export const getTotalMovieCount = createAsyncThunk(
+    'movie/getTotalMovieCount',
+    async (thunkApi)=>{
+        try{
+            const res = await MovieApi.getTotalMovieCount();
+            return res;
+        }catch(err){
+            return thunkApi.rejectWithValue(err.message);
+        }
+    }
+)
+
+
+export const getTotalCinemaCount = createAsyncThunk(
+    'movie/getTotalCinemaCount',
+    async (thunkApi)=>{
+        try{
+            const res = await MovieApi.getTotalCinemaCount();
+            return res;
+        }catch(err){
+            return thunkApi.rejectWithValue(err.message);
+        }
+    }
+)
+
 const initialState = {
     isCreatingNewMovie: false,
     isMovieCreated: false,
+    totalMovies:null,
+    totalCinemas:null,
     newMovie: {
         title: '',
         genre: [],
@@ -81,6 +109,12 @@ const movieSlice = createSlice({
             .addCase(addNewMovie.fulfilled, (state, action) => {
                 state.isCreatingNewMovie = false,
                     state.isMovieCreated = true
+            })
+            .addCase(getTotalMovieCount.fulfilled, (state, action)=>{
+                state.totalMovies=action.payload
+            })
+            .addCase(getTotalCinemaCount.fulfilled, (state, action)=>{
+                state.totalCinemas=action.payload
             })
     }
 })
