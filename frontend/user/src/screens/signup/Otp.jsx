@@ -22,22 +22,20 @@ const Otp = ({ navigation, route }) => {
 
   const verified = async () => {
     if (authState.token) {
-
-      await AsyncStorage.setItem('token', authState.token);
-      dispatch(getProfile());
-
       navigation.dispatch(CommonActions.reset({
         index: 0,
         routes: [
           { name: 'Home' },
         ],
       }));
+      await AsyncStorage.setItem('token', authState.token);
+      dispatch(getProfile());
     }
   };
 
   useEffect(() => {
     verified();
-  }, [authState])
+  }, [authState.token])
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
