@@ -15,6 +15,7 @@ const cinemaRoute = require('./src/routes/Cinema');
 const ticketRoute = require('./src/routes/Ticket');
 const favouriteRoute = require('./src/routes/Favourite');
 const uploadRoute = require('./src/routes/Upload');
+const locationRoute = require('./src/routes/Location');
 const adminRoute = require('./src/routes/Admin');
 require('./src/database/Connect');
 
@@ -26,6 +27,7 @@ app.use('/ticket', ticketRoute);
 app.use('/upload', uploadRoute);
 app.use('/favourite', favouriteRoute)
 app.use('/admin', adminRoute);
+app.use('/location', locationRoute);
 
 PORT=process.env.PORT
 app.listen(PORT, () => {
