@@ -5,6 +5,7 @@ import { useEffect, useRef } from "react";
 import { requestForegroundPermissionsAsync, getCurrentPositionAsync } from 'expo-location';
 import { register, getAddress } from '../../redux/features/Register/RegisterSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import SwipeButton from "../SwipeButton";
 
 const Register = () => {
     const addressRef = useRef(null);
@@ -46,11 +47,13 @@ const Register = () => {
                     <View style={styles.inputHalf}>
                         <Ionicons name="location-outline" size={23} color="black" />
                         <TextInput placeholder={'Pincode'}
-                            style={[GlobalStyles.input, GlobalStyles.normalText, { color: 'black', borderWidth: 0, paddingHorizontal: 8, flex: 1 }]} />
+                            style={[GlobalStyles.input, GlobalStyles.normalText, { color: 'black', borderWidth: 0, paddingHorizontal: 8, flex: 1 }]} 
+                            value={registerState?.address?.zipcode?registerState?.address?.zipcode:''}
+                            />
                     </View>
                 </View>
                 <View style={styles.fullWidth}>
-                    <TouchableOpacity activeOpacity={1} style={{ backgroundColor: '#E0E0E0', borderRadius: 7, minHeight: 80, maxHeight: 140 }} onPress={() => addressRef.current.focus()}>
+                    <TouchableOpacity activeOpacity={1} style={{ backgroundColor: '#E0E0E0', borderRadius: 7, width:'100%', minHeight: 80, maxHeight: 140 }} onPress={() => addressRef.current.focus()}>
                         <View style={styles.inputFull}>
                             <Feather name="map" size={20} color="black" />
                             <TextInput
@@ -63,6 +66,9 @@ const Register = () => {
                             />
                         </View>
                     </TouchableOpacity>
+
+                    {/* only provide numeric value to width */}
+                    <SwipeButton style={{width:330}}/> 
                 </View>
             </View>
         </View>
@@ -89,7 +95,8 @@ const styles = StyleSheet.create({
     },
     fullWidth: {
         width: '100%',
-        gao: 10
+        alignItems:'center',
+        gap: 10
     },
     inputHalf: {
         backgroundColor: '#E0E0E0',

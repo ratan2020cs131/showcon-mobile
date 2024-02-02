@@ -1,10 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import RegisterApi from './RegisterApi';
 
 export const getAddress = createAsyncThunk(
     'register/getLocation',
     async (coordinates, thunkAPI) => {
         try {
-            console.log(coordinates);
+            const res = await RegisterApi.getAddress(coordinates);
+            return res;
         } catch (err) {
             return thunkAPI.rejectWithValue(err.message);
         }
