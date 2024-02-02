@@ -11,7 +11,6 @@ const Register = () => {
     const addressRef = useRef(null);
     const dispatch = useDispatch();
     const registerState = useSelector(register);
-
     const getLocation = async () => {
         try {
             const { status } = await requestForegroundPermissionsAsync();
@@ -21,7 +20,7 @@ const Register = () => {
             }
             // Get current location
             const location = await getCurrentPositionAsync({});
-            console.log(`Location: ${JSON.stringify(location)}`);
+            console.log(`Location: ${registerState}`);
             dispatch(getAddress({
                 latitude: location.coords.latitude,
                 longitude: location.coords.longitude
@@ -48,7 +47,7 @@ const Register = () => {
                         <Ionicons name="location-outline" size={23} color="black" />
                         <TextInput placeholder={'Pincode'}
                             style={[GlobalStyles.input, GlobalStyles.normalText, { color: 'black', borderWidth: 0, paddingHorizontal: 8, flex: 1 }]} 
-                            value={registerState?.address?.zipcode?registerState?.address?.zipcode:''}
+                            value={registerState?.address?registerState?.address?.zipcode:''}
                             />
                     </View>
                 </View>
@@ -63,6 +62,7 @@ const Register = () => {
                                 multiline={true}
                                 numberOfLines={2}
                                 style={{ alignItems: 'flex-start', minHeight: 45, paddingLeft: 10, fontFamily: "Montserrat-Regular", width: '90%', fontSize: 16 }}
+                                value={registerState?.address ? (registerState?.address?.city+", "+registerState?.address?.state):""}
                             />
                         </View>
                     </TouchableOpacity>
