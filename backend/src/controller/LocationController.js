@@ -2,7 +2,7 @@ const axios = require("axios");
 
 const getAddress = async (req, res) => {
     try {
-        const { latitude, longitude } = req.body
+        const { latitude, longitude } = req.query;
         if (!latitude || !longitude) {
             throw new Error("Coordinates not provided");
             return
