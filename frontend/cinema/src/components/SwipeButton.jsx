@@ -5,19 +5,20 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import { useCallback, useState } from "react";
 import Animated, { useSharedValue, useAnimatedStyle, withSpring, interpolate, Extrapolate } from 'react-native-reanimated';
+import ModalLoading from "./ModalLoading";
+import SuccessAnimation from './SuccessAnimation';
 
-const SwipeButton = ({ style }) => {
-  const [loading, setLoading] = useState(false);
+const SwipeButton = ({ style, submit, success, loading, successTitle }) => {
+
   const handleSubmit = useCallback((e) => {
     if (X.value > 100) {
       X.value = withSpring(style.width);
       console.log("hi");
-      setLoading(true)
     } else {
       X.value = withSpring(0)
     }
-  },[X])
-  
+  }, [X])
+
 
   const X = useSharedValue(0);
 
@@ -43,26 +44,31 @@ const SwipeButton = ({ style }) => {
 
   return (
     <>
-      {loading ?
-        <ActivityIndicator size={"large"} color="#F55139" /> :
+      {success ?
+        <SuccessAnimation modal={true} title={successTitle} /> :
         <>
-          <View
-            style={[GlobalStyles.button, styles.button, { width: style.width }]}>
-            <GestureDetector gesture={panGesture}>
-              <Animated.View
-                style={[{ width: style.width + 80, position: 'absolute', zIndex: 10, height: '100%', left: -style.width - 40 }, animatedStyle]}>
-                <LinearGradient
-                  colors={['#fdd4ce', '#faaa9e', '#F55139', '#F55139']}
-                  start={{ x: 0, y: 0.5 }}
-                  end={{ x: 1, y: 0.5 }}
-                  style={{ flex: 1, height: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
-                >
-                  <Feather name="chevrons-right" size={28} color="black" style={{ position: 'absolute', right: 5 }} />
-                </LinearGradient>
-              </Animated.View>
-            </GestureDetector>
-            <Animated.Text style={[GlobalStyles.semiBoldText, { fontSize: 17 }, textAnimation]}>Swipe to Submit</Animated.Text>
-          </View>
+          {loading ?
+            <ModalLoading visible={loading} /> :
+            <>
+              <View
+                style={[GlobalStyles.button, styles.button, { width: style.width }]}>
+                <GestureDetector gesture={panGesture}>
+                  <Animated.View
+                    style={[{ width: style.width + 80, position: 'absolute', zIndex: 10, height: '100%', left: -style.width - 40 }, animatedStyle]}>
+                    <LinearGradient
+                      colors={['#fdd4ce', '#faaa9e', '#F55139', '#F55139']}
+                      start={{ x: 0, y: 0.5 }}
+                      end={{ x: 1, y: 0.5 }}
+                      style={{ flex: 1, height: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
+                    >
+                      <Feather name="chevrons-right" size={28} color="black" style={{ position: 'absolute', right: 5 }} />
+                    </LinearGradient>
+                  </Animated.View>
+                </GestureDetector>
+                <Animated.Text style={[GlobalStyles.semiBoldText, { fontSize: 17 }, textAnimation]}>Swipe to Submit</Animated.Text>
+              </View>
+            </>
+          }
         </>
       }
     </>

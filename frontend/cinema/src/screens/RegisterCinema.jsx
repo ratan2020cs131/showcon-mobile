@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, ScrollView } from "react-native"
 import Register from '../components/register-cinema/Register';
 import ScreenWrapper from './ScreenWrapper';
 
-const RegisterCinema = () => {
+const RegisterCinema = ({navigation}) => {
     return (
         <View style={styles.conatiner}>
             <ScreenWrapper title="Register cinema" />
@@ -11,7 +11,7 @@ const RegisterCinema = () => {
                 nestedScrollEnabled={true}
                 contentContainerStyle={{ alignItems: 'flex-start', justifyContent: 'center', flexDirection: 'row', width: '100%', minHeight: '100%' }}
             >
-                <Register />
+                <Register navigation={navigation}/>
             </ScrollView>
         </View>
     )

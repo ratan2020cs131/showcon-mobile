@@ -2,6 +2,7 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import ProfileScreen from '../screens/ProfileScreen';
 import RegisterCinema from '../screens/RegisterCinema';
+import SeatingScreen from '../screens/SeatingScreen';
 const Stack = createStackNavigator();
 
 const ProfileRoutes = () => {
@@ -16,6 +17,11 @@ const ProfileRoutes = () => {
         {
             path: "RegisterCinema",
             component: RegisterCinema,
+            option: { headerShown: false }
+        },
+        {
+            path: "SeatingScreen",
+            component: SeatingScreen,
             option: { headerShown: false }
         },
     ];
