@@ -21,8 +21,7 @@ const Screens = () => {
                 contentContainerStyle={{ justifyContent: 'center' }}
                 style={{ width: '100%', flexDirection: 'row', zIndex: -1 }}
             >
-                {registerState.cinema.screen.length > 0 &&
-                    registerState.cinema.screen.map((item, i) => (
+                {registerState.cinema.screen.map((item, i) => (
                         <ListItem key={i} screen={item} />
                     ))}
                 {/* {[1, 2, 3, 4, 5].map((i) => (
@@ -44,7 +43,7 @@ const ListItem = ({ screen }) => {
         let updatedScreens = [...registerState.cinema.screen];
         updatedScreens = updatedScreens.filter((item) => item.screen !== screen.screen)
         updatedScreens = updatedScreens.map((item, index) => { return { ...item, screen: String.fromCharCode(65 + index) } })
-        // console.log('updatedScreens: ', updatedScreens);
+        console.log('updatedScreens: ', updatedScreens);
         dispatch(setCinema({ key: 'screen', value: updatedScreens }));
     }
 
@@ -55,7 +54,7 @@ const ListItem = ({ screen }) => {
         });
         setSeatCount(seat);
         setShowCount(screen.slots.length);
-    }, [])
+    }, [registerState.cinema.screen])
 
     return (
         <View style={styles.screen}>

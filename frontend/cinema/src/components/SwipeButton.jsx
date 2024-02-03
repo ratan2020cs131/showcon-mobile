@@ -23,11 +23,13 @@ const SwipeButton = ({ style, submit, success, loading, successTitle, error }) =
       if (X.value >= 0) {
         X.value = e.translationX;
       }
-    })
-    .onEnd((e) => {
+    });
+
+    panGesture.onEnd((e) => {
       try {
         if (X.value > 100) {
           X.value = withSpring(style.width);
+          handleSubmit();
         } else {
           X.value = withSpring(0);
         }
@@ -36,15 +38,15 @@ const SwipeButton = ({ style, submit, success, loading, successTitle, error }) =
       }
     });
 
-  panGesture.onFinalize(() => {
-    try {
-      console.log("hi");
-      handleSubmit();
-    }
-    catch (err) {
-      console.log("swipable finalize err: ", err.message);
-    }
-  })
+  // panGesture.onFinalize(() => {
+  //   try {
+  //     console.log("hi");
+  //     handleSubmit();
+  //   }
+  //   catch (err) {
+  //     console.log("swipable finalize err: ", err.message);
+  //   }
+  // })
 
 
   const animatedStyle = useAnimatedStyle(() => ({
