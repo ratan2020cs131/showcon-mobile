@@ -21,9 +21,10 @@ const Screens = () => {
                 contentContainerStyle={{ justifyContent: 'center' }}
                 style={{ width: '100%', flexDirection: 'row', zIndex: -1 }}
             >
-                {registerState.cinema?.screen?.map((item, i) => (
-                    <ListItem key={i} screen={item} />
-                ))}
+                {registerState.cinema.screen.length > 0 &&
+                    registerState.cinema.screen.map((item, i) => (
+                        <ListItem key={i} screen={item} />
+                    ))}
                 {/* {[1, 2, 3, 4, 5].map((i) => (
                     <ListItem key={i} />
                 ))} */}
@@ -38,15 +39,18 @@ const ListItem = ({ screen }) => {
     const dispatch = useDispatch();
     const [seatCount, setSeatCount] = useState(0)
     const [showCount, setShowCount] = useState(0)
+
     const handleRemove = () => {
         let updatedScreens = [...registerState.cinema.screen];
         updatedScreens = updatedScreens.filter((item) => item.screen !== screen.screen)
+        updatedScreens = updatedScreens.map((item, index) => { return { ...item, screen: String.fromCharCode(65 + index) } })
+        // console.log('updatedScreens: ', updatedScreens);
         dispatch(setCinema({ key: 'screen', value: updatedScreens }));
     }
 
     useEffect(() => {
         let seat = 0;
-        screen.seatmap.forEach(item => {
+        screen?.seatmap?.forEach(item => {
             seat += item.seats.length;
         });
         setSeatCount(seat);
@@ -75,7 +79,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignContent: 'center',
         marginTop: 5,
-        flexDirection:'row',
+        flexDirection: 'row',
     },
     screen: {
         paddingHorizontal: 15,

@@ -13,15 +13,28 @@ export const getAddress = createAsyncThunk(
     }
 )
 
+export const registerCinema = createAsyncThunk(
+    'register/registerCinema',
+    async (data, thunkAPI) => {
+        try {
+            const res = await RegisterApi.registerCinema(data);
+            return res;
+        } catch (err) {
+            return thunkAPI.rejectWithValue(err.message);
+        }
+    }
+)
+
 const state = {
     isGettingAdd: true,
     cinema: {
         title: '',
         address: null,
-        zipcode: '',
         type: [],
         screen: []
-    }
+    },
+    isRegistered:false,
+    isRegistering:false
 }
 
 const registerSlice = createSlice({
@@ -37,7 +50,7 @@ const registerSlice = createSlice({
             } else {
                 state.cinema[property] = value;
             }
-        }
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -49,6 +62,16 @@ const registerSlice = createSlice({
                 state.isGettingAdd = false;
                 state.cinema.address = action.payload
             })
+            .addCase(registerCinema.pending, (state, action) => {
+                state.isRegistering = true;
+                state.isRegistered = false
+            })
+            .addCase(registerCinema.fulfilled, (state, action) => {
+                state.isRegistering = false;
+                state.isRegistered = true
+            })
+            
+            
     }
 })
 

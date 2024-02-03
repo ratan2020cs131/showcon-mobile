@@ -3,9 +3,7 @@ import BASE_URL from '../../../utils/baseUrl';
 
 const getAddress = async(coordinates)=>{
     try{
-        console.log(coordinates);
         const res = await axios.get(`${BASE_URL}/location/address?latitude=${coordinates.latitude}&longitude=${coordinates.longitude}`);
-
         console.log("get address api res: ", res.data);
         return res.data;
     }catch(err){
@@ -13,6 +11,16 @@ const getAddress = async(coordinates)=>{
     }
 }
 
+const registerCinema = async(data)=>{
+    try{
+        console.log("Register cinema api: ",data);
+        return;
+    }catch(err){
+        console.log("Register cinema api error: ", err.message);
+    }
+}
+
 export default {
-    getAddress
+    getAddress,
+    registerCinema
 }

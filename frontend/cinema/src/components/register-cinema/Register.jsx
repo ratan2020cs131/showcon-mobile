@@ -1,20 +1,25 @@
-import { StyleSheet, TouchableOpacity, Text, View, TextInput } from "react-native";
+import { StyleSheet, TouchableOpacity, Text, View, TextInput, KeyboardAvoidingView, useWindowDimensions } from "react-native";
 import { MaterialIcons, Ionicons, Feather, MaterialCommunityIcons } from '@expo/vector-icons'
 import GlobalStyles from "../../GlobalStyles";
 import { useEffect, useRef, useState } from "react";
 import { requestForegroundPermissionsAsync, getCurrentPositionAsync } from 'expo-location';
-import { register, getAddress, setCinema } from '../../redux/features/Register/RegisterSlice';
+import { register, getAddress, setCinema, registerCinema } from '../../redux/features/Register/RegisterSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import Shimmer from '../Shimmer';
 import SwipeButton from "../SwipeButton";
 import FeatureDropdown from '../Dropdown';
 import Screens from "../seating/Screens";
+import ModalAlert from '../ModalAlert';
 
 const Register = ({ navigation }) => {
+    const windowHeight = useWindowDimensions().height;
     const addressRef = useRef(null);
     const dispatch = useDispatch();
+    const [modal, setModal] = useState(false);
+    const [alert, setAlert] = useState(null);
+    const onClose = () => { setModal(false); setAlert(null) }
     const registerState = useSelector(register);
-    const [type,setType]=useState()
+    const [type, setType] = useState()
     const getLocation = async () => {
         try {
             const { status } = await requestForegroundPermissionsAsync();
@@ -46,11 +51,21 @@ const Register = ({ navigation }) => {
         dispatch(setCinema({ key: 'type', value: type }));
     }, [type])
 
+    const onSubmit = () => {
+        if (registerState.cinema.title === '') { setAlert('Provide a title to your cinema'); setModal(true) }
+        else if (!registerState.cinema.address) { setAlert('Please wait for your location to get detected'); setModal(true) }
+        else if (registerState.cinema.screen.length === 0) { setAlert('Please add atleast one screen'); setModal(true) }
+        else { dispatch(registerCinema(registerState.cinema)) }
+    }
+
+    useEffect(() => {
+        registerState.isRegistered && navigation.navigate('ProfileScreen')
+    }, [registerState.isRegistered])
+
 
     return (
-        <View style={styles.conatiner}>
+        <KeyboardAvoidingView style={[styles.conatiner,{minHeight:0.62*windowHeight}]}>
             <View style={styles.form}>
-
                 <View style={styles.fullWidth}>
                     <View style={styles.inputFull}>
                         <MaterialIcons name="drive-file-rename-outline" size={25} color="black" />
@@ -110,17 +125,19 @@ const Register = ({ navigation }) => {
                         </TouchableOpacity>
                     </View>
 
-                    <Screens/>
+                    <Screens />
 
-                    {/* only provide numeric value to width */}
-                    <SwipeButton style={{width:330}} 
-                    success={false} loading={false} 
-                    submit
-                    successTitle="Request Submitted for registration"
-                    /> 
                 </View>
             </View>
-        </View>
+            {/* only provide numeric value to width */}
+            <SwipeButton style={{ width: 330 }}
+                        error={alert === null}
+                        success={registerState.isRegistered} loading={registerState.isRegistering}
+                        submit={onSubmit}
+                        successTitle="Request Submitted for registration"
+                    />
+            {modal && <ModalAlert close={onClose} visible={modal} alert={alert} />}
+        </KeyboardAvoidingView>
     )
 }
 export default Register;
@@ -130,12 +147,15 @@ const styles = StyleSheet.create({
         flex: 1,
         width: "100%",
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent:'space-between'
     },
     form: {
+        position: 'relative',
         width: 390,
         padding: 30,
-        gap: 10
+        gap: 10,
+        alignItems: 'center',
+        justifyContent: 'space-between',
     },
     halfWidth: {
         flexDirection: 'row',

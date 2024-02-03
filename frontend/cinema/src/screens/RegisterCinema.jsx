@@ -9,7 +9,8 @@ const RegisterCinema = ({navigation}) => {
             <ScrollView
                 showsVerticalScrollIndicator={false}
                 nestedScrollEnabled={true}
-                contentContainerStyle={{ alignItems: 'flex-start', justifyContent: 'center', flexDirection: 'row', width: '100%', minHeight: '100%' }}
+                style={{height:'auto'}}
+                contentContainerStyle={{ alignItems: 'center', justifyContent: 'flex-start', flexDirection: 'column', width: '100%'}}
             >
                 <Register navigation={navigation}/>
             </ScrollView>

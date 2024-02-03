@@ -30,7 +30,7 @@ const SeatingScreen = ({ navigation }) => {
             setAlert("Please add time slots for this screen")
             setModal(true)
         } else {
-            // console.log(screen);
+            console.log("seating screen: ",screen);
             dispatch(setCinema({ key: 'screen', value: [...registerState.cinema.screen, screen] }))
             navigation.goBack();
         }
@@ -43,14 +43,14 @@ const SeatingScreen = ({ navigation }) => {
             <ScrollView
                 showsVerticalScrollIndicator={false}
                 nestedScrollEnabled={true}
-                style={{ width: '100%' }}
-                contentContainerStyle={{ alignItems: 'center', justifyContent: 'space-between', flexDirection: 'column', minHeight: '85%' }}
+                style={{width:'100%'}}
+                contentContainerStyle={{ alignItems: 'center', justifyContent: 'space-between', flexDirection: 'column'}}
             >
                 <View style={{ width: '100%' }}>
                     <Seating set={handleScreen} />
                     <TimeSlots set={handleScreen} />
                 </View>
-                <TouchableOpacity style={[GlobalStyles.button]} onPress={handleAddScreen}>
+                <TouchableOpacity style={[GlobalStyles.button,{width:'100%',marginBottom:20, alignSelf:'flex-end'}]} onPress={handleAddScreen}>
                     <Text style={[GlobalStyles.boldText, { color: '#1E1F22' }]}>ADD SCREEN</Text>
                 </TouchableOpacity>
             </ScrollView>
@@ -66,6 +66,7 @@ const styles = StyleSheet.create({
         flex: 1,
         width: "100%",
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        paddingHorizontal:20
     }
 })
