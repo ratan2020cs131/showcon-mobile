@@ -14,21 +14,44 @@ export const getAddress = createAsyncThunk(
 )
 
 const state = {
-    address: null
+    isGettingAdd: true,
+    cinema: {
+        title: '',
+        address: null,
+        zipcode: '',
+        type: [],
+        screen: []
+    }
 }
 
 const registerSlice = createSlice({
     name: "register",
     initialState: state,
-    reducers: {},
+    reducers: {
+        setCinema: (state, action) => {
+            const { key, value } = action.payload;
+            const [property, index] = key.split('[');
+            if (index) {
+                const numericIndex = parseInt(index.replace(']', ''), 10);
+                state.cinema[property][numericIndex] = value;
+            } else {
+                state.cinema[property] = value;
+            }
+        }
+    },
     extraReducers: (builder) => {
         builder
+            .addCase(getAddress.pending, (state, action) => {
+                state.isGettingAdd = true;
+                state.cinema.address = null
+            })
             .addCase(getAddress.fulfilled, (state, action) => {
-                state.address = action.payload
+                state.isGettingAdd = false;
+                state.cinema.address = action.payload
             })
     }
 })
 
-export const { } = registerSlice.actions;
+export const { setCinema } = registerSlice.actions;
 export const register = (state) => state.register;
 export default registerSlice.reducer;

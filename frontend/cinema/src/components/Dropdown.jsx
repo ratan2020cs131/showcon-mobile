@@ -18,11 +18,11 @@ const DropDown = ({ title, list, set, get }) => {
         const filteredArray = list.filter(item => regexPattern.test(item));
         setSearchResult(filteredArray)
     }, [search])
+    useEffect(() => set(selected), [selected])
 
     useEffect(() => {
         // if (open) input.current.focus();
     }, [open])
-    useEffect(() => set(selected), [selected])
 
 
     return (
@@ -34,7 +34,7 @@ const DropDown = ({ title, list, set, get }) => {
                         placeholder={open ? 'Search' : title}
                         style={[GlobalStyles.input, GlobalStyles.normalText, { color: 'black', borderWidth: 0, paddingHorizontal: 8, flex: 1, fontSize: 17 }]}
                         onChangeText={(value) => handleSearch(value)} /> :
-                    <View style={{ paddingLeft: 5, flexDirection: 'row', width: '77%', overflow: 'scroll' }}>
+                    <View style={{ paddingLeft: 5, flexDirection: 'row', width: '65%', overflow: 'scroll' }}>
                         {selected.length > 0 ?
                             <>
                                 {selected.map((item, index) => (<Text key={item} style={[GlobalStyles.normalText, { fontSize: 16 }]}>{selected.length - 1 === index ? item : item + ", "}</Text>))}
