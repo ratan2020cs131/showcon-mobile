@@ -22,7 +22,7 @@ const SeatingScreen = ({ navigation }) => {
     useEffect(() => setScreen({ ...screen, ['screen']: String.fromCharCode(registerState.cinema.screen.length + 65) }), [])
 
     const handleAddScreen = () => {
-        if (screen.map?.length === 0) {
+        if (screen.seatmap?.length === 0) {
             setAlert("Please create seats mapping")
             setModal(true)
         }
