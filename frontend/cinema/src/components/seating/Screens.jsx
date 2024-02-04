@@ -79,6 +79,7 @@ const styles = StyleSheet.create({
         alignContent: 'center',
         marginTop: 5,
         flexDirection: 'row',
+        zIndex:-1
     },
     screen: {
         paddingHorizontal: 15,

@@ -25,7 +25,21 @@ export const registerCinema = createAsyncThunk(
     }
 )
 
+export const getCinema = createAsyncThunk(
+    'register/getCinema',
+    async (data, thunkAPI) => {
+        try {
+            const res = await RegisterApi.getCinema();
+            return res;
+        } catch (err) {
+            return thunkAPI.rejectWithValue(err.message);
+        }
+    }
+)
+
 const state = {
+    gettingstatus: true,
+    status: undefined,
     isGettingAdd: true,
     cinema: {
         title: '',
@@ -33,8 +47,9 @@ const state = {
         type: [],
         screen: []
     },
-    isRegistered:false,
-    isRegistering:false
+    registered: null,
+    isRegistered: false,
+    isRegistering: false
 }
 
 const registerSlice = createSlice({
@@ -51,6 +66,16 @@ const registerSlice = createSlice({
                 state.cinema[property] = value;
             }
         },
+        resetNewCinema: (state, action) => {
+            state.cinema.title = '';
+            state.cinema.address = null;
+            state.cinema.type = [];
+            state.cinema.screen = []
+        },
+        resetCinema: (state, action) => {
+            state.registered = null;
+            state.isRegistered = false
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -70,11 +95,20 @@ const registerSlice = createSlice({
                 state.isRegistering = false;
                 state.isRegistered = true
             })
-            
-            
+            .addCase(getCinema.pending, (state, action) => {
+                state.gettingstatus = true;
+                state.status = undefined
+            })
+            .addCase(getCinema.fulfilled, (state, action) => {
+                state.gettingstatus = false;
+                state.status = action.payload.isApproved;
+                state.registered = action.payload;
+            })
+
+
     }
 })
 
-export const { setCinema } = registerSlice.actions;
+export const { setCinema, resetCinema, resetNewCinema } = registerSlice.actions;
 export const register = (state) => state.register;
 export default registerSlice.reducer;

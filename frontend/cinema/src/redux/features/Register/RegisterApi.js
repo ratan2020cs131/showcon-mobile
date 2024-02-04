@@ -14,13 +14,26 @@ const getAddress = async(coordinates)=>{
 const registerCinema = async(data)=>{
     try{
         console.log("Register cinema api: ",data);
-        return;
+        const res = await axios.post(`${BASE_URL}/cinema/register`, data)
+        return res.data;
     }catch(err){
         console.log("Register cinema api error: ", err.message);
     }
 }
 
+const getCinema = async(data)=>{
+    try{
+        console.log("Get cinema api: ",data);
+        const res = await axios.get(`${BASE_URL}/cinema/`)
+        console.log("get cinema api res: ",res.data);
+        return res.data;
+    }catch(err){
+        console.log("Get cinema api error: ", err.message);
+    }
+}
+
 export default {
     getAddress,
-    registerCinema
+    registerCinema,
+    getCinema
 }

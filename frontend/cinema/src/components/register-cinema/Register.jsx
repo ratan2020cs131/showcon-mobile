@@ -3,7 +3,7 @@ import { MaterialIcons, Ionicons, Feather, MaterialCommunityIcons } from '@expo/
 import GlobalStyles from "../../GlobalStyles";
 import { useEffect, useRef, useState } from "react";
 import { requestForegroundPermissionsAsync, getCurrentPositionAsync } from 'expo-location';
-import { register, getAddress, setCinema, registerCinema } from '../../redux/features/Register/RegisterSlice';
+import { register, getAddress, setCinema, registerCinema, resetNewCinema } from '../../redux/features/Register/RegisterSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import Shimmer from '../Shimmer';
 import SwipeButton from "../SwipeButton";
@@ -59,7 +59,7 @@ const Register = ({ navigation }) => {
     }
 
     useEffect(() => {
-        registerState.isRegistered && navigation.navigate('ProfileScreen')
+        registerState.isRegistered && (navigation.navigate('ProfileScreen'),dispatch(resetNewCinema()))
     }, [registerState.isRegistered])
 
 
