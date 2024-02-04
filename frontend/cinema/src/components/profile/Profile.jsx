@@ -33,7 +33,7 @@ const Profile = ({ navigation }) => {
                     <Shimmer style={{ width: '100%', height: 55, borderRadius: 7 }} /> :
                     <>
                         {registerState.status === false &&
-                            <View style={[styles.section, { backgroundColor: '#f8d568' }]}>
+                            <View style={[styles.section, { backgroundColor: '#f8d568',elevation:10,marginTop:20 }]}>
                                 <View style={styles.item}>
                                     <AntDesign name="warning" size={22} color="#000" style={{ alignSelf: 'flex-start', marginTop: 5 }} />
                                     <View>
@@ -95,11 +95,11 @@ const Profile = ({ navigation }) => {
                 </View>
 
                 <TouchableOpacity
-                    style={[GlobalStyles.buttonOutlined, { width: '60%', borderWidth: 2, flexDirection: 'row', gap: 10 }]}
+                    style={[GlobalStyles.button, { width: '100%', flexDirection: 'row', gap: 10, marginTop:30 }]}
                     onPress={logoutHandler}
                 >
-                    <Text style={[GlobalStyles.boldText, { color: '#F55139' }]}>LOGOUT</Text>
-                    <MaterialIcons name="logout" size={20} color="#f55139" />
+                    <Text style={[GlobalStyles.boldText, { color: '#000' }]}>LOGOUT</Text>
+                    <MaterialIcons name="logout" size={20} color="#000" />
                 </TouchableOpacity>
             </View>
         </View>
@@ -109,7 +109,7 @@ export default Profile;
 
 const styles = StyleSheet.create({
     conatiner: {
-        // flex: 1,
+        flex: 1,
         minHeight: '80%',
         width: "100%",
         alignItems: 'center',
