@@ -9,5 +9,7 @@ route.get('/movies-count', AuthMiddleWare, AdminController.getTotalMovieCount)
 route.get('/cinemas-count', AuthMiddleWare, AdminController.getTotalCinema)
 route.post('/movie', AuthMiddleWare, AdminController.addMovie);
 route.get('/latest-movies', AuthMiddleWare, AdminController.getLatestMovies)
+route.get('/unapprove-cinema', AuthMiddleWare, AdminController.getUnapproveCinema)
+route.put('/approve-cinema', AuthMiddleWare, AdminController.approveCinema)
 
 module.exports = route;

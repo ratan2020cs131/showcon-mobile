@@ -10,6 +10,7 @@ const AuthMiddleWare = async (req, res, next) => {
     if (user) {
       req.user = user;
       req.token = token;
+      req.Id=decodedToken._id
     }
     else {
       throw ("User not found");

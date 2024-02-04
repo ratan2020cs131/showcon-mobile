@@ -5,8 +5,8 @@ const Cinema = require('../database/models/Cinema')
 //ADD NEW ACTOR
 const addCast = async (req, res) => {
     try {
-        if(req.user.role!=='admin'){
-            res.send({message:'Non-admin access denied'});
+        if (req.user.role !== 'admin') {
+            res.send({ message: 'Non-admin access denied' });
             throw new Error("Non-admin access denied")
         }
         const { name, image } = req.body;
@@ -26,8 +26,8 @@ const addCast = async (req, res) => {
 //GET ALL ACTORS
 const getAllActors = async (req, res) => {
     try {
-        if(req.user.role!=='admin'){
-            res.send({message:'Non-admin access denied'});
+        if (req.user.role !== 'admin') {
+            res.send({ message: 'Non-admin access denied' });
             throw new Error("Non-admin access denied")
         }
         const actors = await Actor.find();
@@ -44,8 +44,8 @@ const getAllActors = async (req, res) => {
 
 const addMovie = async (req, res) => {
     try {
-        if(req.user.role!=='admin'){
-            res.send({message:'Non-admin access denied'});
+        if (req.user.role !== 'admin') {
+            res.send({ message: 'Non-admin access denied' });
             throw new Error("Non-admin access denied")
         }
         const { title, genre, primaryPoster, secondaryPoster, duration, description, casts, release } = req.body;
@@ -65,8 +65,8 @@ const addMovie = async (req, res) => {
 
 const getLatestMovies = async (req, res) => {
     try {
-        if(req.user.role!=='admin'){
-            res.send({message:'Non-admin access denied'});
+        if (req.user.role !== 'admin') {
+            res.send({ message: 'Non-admin access denied' });
             throw new Error("Non-admin access denied")
         }
         if (req.query.limit > 100) {
@@ -84,14 +84,14 @@ const getLatestMovies = async (req, res) => {
 
 const getTotalMovieCount = async (req, res) => {
     try {
-        if(req.user.role!=='admin'){
-            res.send({message:'Non-admin access denied'});
+        if (req.user.role !== 'admin') {
+            res.send({ message: 'Non-admin access denied' });
             throw new Error("Non-admin access denied")
         }
         const count = await Movie.countDocuments({});
-        if(count){
-            res.send({count:count})
-        }else{
+        if (count) {
+            res.send({ count: count })
+        } else {
             throw new Error("Error in fetching data from mongoDB");
         }
     } catch (err) {
@@ -102,20 +102,52 @@ const getTotalMovieCount = async (req, res) => {
 
 const getTotalCinema = async (req, res) => {
     try {
-        if(req.user.role!=='admin'){
-            res.send({message:'Non-admin access denied'});
+        if (req.user.role !== 'admin') {
+            res.send({ message: 'Non-admin access denied' });
             throw new Error("Non-admin access denied")
         }
         const count = await Cinema.countDocuments({});
-        if(count){
-            res.send({count:count})
-        }else{
+        if (count) {
+            res.send({ count: count })
+        } else {
             throw new Error("Error in fetching data from mongoDB");
         }
     } catch (err) {
         console.log("Get total cinema count error: ", err.message);
     }
 }
+
+
+const getUnapproveCinema = async (req, res) => {
+    try {
+        const result = await Cinema.find({ isApproved: false }).populate("owner", "fname lname phone email");
+        if (result) {
+            res.send(result);
+        } else {
+            throw new Error('Error in connecting to mongodb')
+        }
+    } catch (err) {
+        console.log("Get unapproved cinema error: ", err.message);
+    }
+}
+
+const approveCinema = async (req, res) => {
+    try {
+        const { id, action } = req.body;
+        if (id === undefined || action === undefined) throw new Error("Please provide Id and proper Action")
+        const result = await Cinema.findOneAndUpdate(
+            { _id: id },
+            { $set: { isApproved: action } },
+            { new: true }
+        )
+        if (result) res.send(result);
+        else throw new Error("Can't update the cinema");
+    } catch (err) {
+        console.log("Approved cinema error: ", err.message);
+        res.status(500).send({ message: err.message })
+    }
+}
+
 
 
 module.exports = {
@@ -125,4 +157,6 @@ module.exports = {
     getLatestMovies,
     getTotalMovieCount,
     getTotalCinema,
+    getUnapproveCinema,
+    approveCinema
 }
