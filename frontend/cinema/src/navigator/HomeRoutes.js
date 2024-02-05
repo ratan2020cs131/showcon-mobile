@@ -2,6 +2,7 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from '../screens/HomeScreen';
 import Scanner from '../screens/Scanner';
+import AddShow from '../screens/AddShow';
 const Stack = createStackNavigator();
 
 const ProfileRoutes = () => {
@@ -16,6 +17,11 @@ const ProfileRoutes = () => {
         {
             path: "Scanner",
             component: Scanner,
+            option: { headerShown: false }
+        },
+        {
+            path: "AddShow",
+            component: AddShow,
             option: { headerShown: false }
         }
     ];

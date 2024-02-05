@@ -24,7 +24,7 @@ const Profile = ({ navigation }) => {
         dispatch(logout());
     }
 
-    useEffect(()=>{dispatch(getCinema())},[registerState.isRegistering])
+    useEffect(() => { dispatch(getCinema()) }, [registerState.isRegistering])
 
     return (
         <View style={styles.conatiner}>
@@ -33,7 +33,7 @@ const Profile = ({ navigation }) => {
                     <Shimmer style={{ width: '100%', height: 55, borderRadius: 7 }} /> :
                     <>
                         {registerState.status === false &&
-                            <View style={[styles.section, { backgroundColor: '#f8d568',elevation:10,marginTop:20 }]}>
+                            <View style={[styles.section, { backgroundColor: '#f8d568', elevation: 10, marginTop: 20 }]}>
                                 <View style={styles.item}>
                                     <AntDesign name="warning" size={22} color="#000" style={{ alignSelf: 'flex-start', marginTop: 5 }} />
                                     <View>
@@ -63,23 +63,33 @@ const Profile = ({ navigation }) => {
                 }
 
 
-                {registerState.registered?._id &&registerState.registered?.isApproved&&
-                    <View style={styles.section}>
-                        <Text style={[GlobalStyles.boldText, { fontSize: 20, marginLeft: 7 }]}>Cinema Info</Text>
-                        <View style={styles.item}>
-                            <MaterialCommunityIcons name="movie" size={24} color="black" />
-                            <Text style={[GlobalStyles.normalText, { fontSize: 16 }]}>{authState.user.fname + " " + authState.user.lname}</Text>
-                        </View>
-                        <View style={styles.item}>
-                            <FontAwesome name="map" size={20} color="black" />
-                            <Text style={[GlobalStyles.normalText, { fontSize: 16 }]}>
-                            {registerState.registered?.address?.city + ", " + registerState.registered?.address?.state}
-                            </Text>
-                        </View>
-                    </View>
+                {registerState.registered?._id && registerState.registered?.isApproved &&
+                    <>
+                        {
+                            registerState.gettingstatus ?
+                                <Shimmer style={{ width: '100%', height: 100, borderRadius: 7 }} /> :
+                                <View style={styles.section}>
+                                    <Text style={[GlobalStyles.boldText, { fontSize: 20, marginLeft: 7 }]}>Cinema Info</Text>
+                                    <View style={styles.item}>
+                                        <MaterialCommunityIcons name="movie" size={24} color="black" />
+                                        <Text style={[GlobalStyles.normalText, { fontSize: 16 }]}>{registerState.registered?.title}</Text>
+                                    </View>
+                                    <View style={[styles.item, { marginLeft: 3 }]}>
+                                        <FontAwesome name="map" size={20} color="black" />
+                                        <Text style={[GlobalStyles.normalText, { fontSize: 16 }]}>
+                                            {registerState.registered?.address?.city + ", " + registerState.registered?.address?.state}
+                                        </Text>
+                                    </View>
+                                    <View style={styles.item}>
+                                        <MaterialCommunityIcons name="sofa-single" size={26} color="black" />
+                                        <Text style={[GlobalStyles.normalText, { fontSize: 16 }]}>Screens: {registerState.registered?.screen.length}</Text>
+                                    </View>
+                                </View>
+                        }
+                    </>
                 }
 
-                <View style={styles.section}>
+                <View style={[styles.section, { gap: 5 }]}>
                     <View style={styles.item}>
                         <FontAwesome name="user-o" size={20} color="black" />
                         <Text style={[GlobalStyles.normalText, { fontSize: 16 }]}>{authState.user.fname + " " + authState.user.lname}</Text>
@@ -89,13 +99,13 @@ const Profile = ({ navigation }) => {
                         <Text style={[GlobalStyles.normalText, { fontSize: 16 }]}>{authState.user.email}</Text>
                     </View>
                     <View style={styles.item}>
-                        <Feather name='phone' size={20} color={"black"} />
+                        <Feather name='phone' size={18} color={"black"} />
                         <Text style={[GlobalStyles.normalText, { fontSize: 16 }]}>{authState.user.phone}</Text>
                     </View>
                 </View>
 
                 <TouchableOpacity
-                    style={[GlobalStyles.button, { width: '100%', flexDirection: 'row', gap: 10, marginTop:30 }]}
+                    style={[GlobalStyles.button, { width: '100%', flexDirection: 'row', gap: 10, marginTop: 30 }]}
                     onPress={logoutHandler}
                 >
                     <Text style={[GlobalStyles.boldText, { color: '#000' }]}>LOGOUT</Text>
@@ -121,7 +131,7 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         backgroundColor: '#e0e0e0',
         padding: 15,
-        gap: 5,
+        gap: 0,
         elevation: 15,
     },
     item: {
@@ -130,6 +140,6 @@ const styles = StyleSheet.create({
         // borderBottomWidth: 1,
         // borderBottomColor: '#c0c0c0',
         alignItems: 'center',
-        padding: 5,
+        padding: 0,
     }
 })

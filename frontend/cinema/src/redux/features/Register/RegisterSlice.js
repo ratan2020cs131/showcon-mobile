@@ -27,7 +27,7 @@ export const registerCinema = createAsyncThunk(
 
 export const getCinema = createAsyncThunk(
     'register/getCinema',
-    async (data, thunkAPI) => {
+    async (thunkAPI) => {
         try {
             const res = await RegisterApi.getCinema();
             return res;

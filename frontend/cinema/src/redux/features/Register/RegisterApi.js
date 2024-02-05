@@ -23,7 +23,6 @@ const registerCinema = async(data)=>{
 
 const getCinema = async(data)=>{
     try{
-        console.log("Get cinema api: ",data);
         const res = await axios.get(`${BASE_URL}/cinema/`)
         console.log("get cinema api res: ",res.data);
         return res.data;
