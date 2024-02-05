@@ -1,17 +1,23 @@
-import {View, Text, StyleSheet} from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import Home from '../components/home/Home';
+import ScreenWrapper from './ScreenWrapper'
 
-const HomeScreem = ()=>{
-    return(
+const HomeScreem = ({ navigation }) => {
+    return (
         <View style={styles.container}>
-            <Home/>
+            <ScreenWrapper title="Dashboard" />
+            <ScrollView 
+            showsVerticalScrollIndicator={false} nestedScrollEnabled={true} 
+            contentContainerStyle={{ justifyContent: 'center' }}>
+                <Home navigation={navigation} />
+            </ScrollView>
         </View>
     )
 }
 export default HomeScreem;
 
 const styles = StyleSheet.create({
-    container:{
-        flex:1,
+    container: {
+        flex: 1,
     }
 })
