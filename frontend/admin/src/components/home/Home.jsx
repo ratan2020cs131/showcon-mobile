@@ -1,22 +1,16 @@
 import React, { useEffect } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import TotalCinemas from './SquareCard';
-import { getTotalMovieCount, movie } from '../../redux/features/movie/MovieSlice';
-import { getTotalCinemaCount, cinema, getNewCinema } from '../../redux/features/cinema/CinemaSlice';
-import { useSelector, useDispatch } from 'react-redux';
+import { movie } from '../../redux/features/movie/MovieSlice';
+import { cinema } from '../../redux/features/cinema/CinemaSlice';
+import { useSelector } from 'react-redux';
 import Shimmer from '../Shimmer'
 import RectandleCard from './RectangleCard';
 import Chart from './Chart';
 
 const Home = ({ navigation }) => {
-  const dispatch = useDispatch();
   const movieState = useSelector(movie);
   const cinemaState = useSelector(cinema);
-  useEffect(() => {
-    dispatch(getTotalMovieCount())
-    dispatch(getTotalCinemaCount())
-    dispatch(getNewCinema())
-  }, [])
 
 
   return (
