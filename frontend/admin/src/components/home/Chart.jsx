@@ -6,7 +6,7 @@ const Chart = ({ navigation }) => {
         labels: ["10", "15", "20", "25", "30"],
         datasets: [
             {
-                data: [20, 45, 28, 43, 50]
+                data: [2000, 4500, 2800, 4300, 5000]
             }
         ]
     };
@@ -17,11 +17,11 @@ const Chart = ({ navigation }) => {
                 showsVerticalScrollIndicator={false} nestedScrollEnabled={true}
                 contentContainerStyle={{ justifyContent: 'center' }}>
                 <BarChart
-                    // style={graphStyle}
+                    style={{}}
                     data={data}
                     width={320}
                     height={200}
-                    yAxisLabel="$"
+                    yAxisLabel="₹"
                     chartConfig={{
                         backgroundColor: "#1E1F22",
                         backgroundGradientFrom: "#1E1F22",
