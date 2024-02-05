@@ -25,15 +25,33 @@ export const getNewCinema = createAsyncThunk(
     }
 )
 
+export const approveCinema = createAsyncThunk(
+    'cinema/approveCinema',
+    async (data, thunkApi)=>{
+        try{
+            const res = await CinemaApi.approveCinema(data);
+            return res;
+        }catch(err){
+            return thunkApi.rejectWithValue(err.message);
+        }
+    }
+)
+
 const states = {
     newCinemas: null,
     totalCinemas:null,
+    isApproving:false,
+    aprrovingId:null
 }
 
 const CinemaSlice = createSlice({
     name: 'cinema',
     initialState: states,
-    reducers: {},
+    reducers: {
+        setApprove:(state,action)=>{
+            state.aprrovingId=action.payload.id;
+        }
+    },
     extraReducers: (builder) => {
         builder
         .addCase(getNewCinema.pending, (state, action)=>{
@@ -48,10 +66,16 @@ const CinemaSlice = createSlice({
         .addCase(getTotalCinemaCount.fulfilled, (state, action)=>{
             state.totalCinemas=action.payload
         })
-
+        .addCase(approveCinema.pending, (state, action)=>{
+            state.isApproving=true
+        })
+        .addCase(approveCinema.fulfilled, (state, action)=>{
+            state.isApproving=false;
+            state.newCinemas=state.newCinemas.filter((item)=>item._id!==state.aprrovingId);
+        })
     }
 })
 
-export const { } = CinemaSlice.actions;
+export const { setApprove } = CinemaSlice.actions;
 export const cinema = (state) => state.cinema;
 export default CinemaSlice.reducer;

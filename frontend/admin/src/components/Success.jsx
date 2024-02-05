@@ -33,7 +33,7 @@ const SuccessAnimation = ({ modal, title }) => {
                     visible={visible}
                 >
                     <>
-                        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.3)' }}>
+                        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.7)' }}>
                             <View style={{ backgroundColor: '#fff', width: 85, height: 85, borderRadius: 100, alignItems: 'center', justifyContent: 'center' }}>
                                 <Animated.View
                                     style={{
@@ -68,8 +68,8 @@ const SuccessAnimation = ({ modal, title }) => {
                                     </View>
                                 </Animated.View>
                             </View>
+                            <Text style={[GlobalStyles.semiBoldText, { color: '#fff', position: 'relative', top: 20, fontSize: 20 }]} numberOfLines={1}>{title}</Text>
                         </View>
-                        <Text style={[GlobalStyles.semiBoldText, { color: '#fff', position: 'relative', top: 20, fontSize: 20 }]} numberOfLines={1}>{title}</Text>
                     </>
                 </Modal >
                 :

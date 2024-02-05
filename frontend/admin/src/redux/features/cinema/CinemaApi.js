@@ -21,8 +21,20 @@ const getNewCinema = async () => {
     }
 }
 
+const approveCinema = async (data) => {
+    try {
+        console.log("approve cinema api: ", data);
+        const res = await axios.put(`${BASE_URL}/admin/approve-cinema`, data);
+        console.log("approve cinema res: ", res.data);
+        return res.data;
+    } catch (err) {
+        console.log("Approve cinema error: ", err.message);
+    }
+}
+
 
 export default {
     getTotalCinemaCount,
-    getNewCinema
+    getNewCinema,
+    approveCinema
 }
