@@ -1,15 +1,37 @@
-import { View, Text, StyleSheet } from 'react-native';
-// import { BarChart, Grid } from 'react-native-svg-charts'
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { BarChart } from "react-native-chart-kit";
 
 const Chart = ({ navigation }) => {
-    const fill = 'rgb(134, 65, 244)'
-    const data = [50, 10, 40, 95, -4, -24, null, 85, undefined, 0, 35, 53, -53, 24, 50, -20, -80]
+    const data = {
+        labels: ["10", "15", "20", "25", "30"],
+        datasets: [
+            {
+                data: [20, 45, 28, 43, 50]
+            }
+        ]
+    };
 
     return (
         <View style={styles.container}>
-            {/* <BarChart style={{ height: 200 }} data={data} svg={{ fill }} contentInset={{ top: 30, bottom: 30 }}>
-                <Grid />
-            </BarChart> */}
+            <ScrollView
+                showsVerticalScrollIndicator={false} nestedScrollEnabled={true}
+                contentContainerStyle={{ justifyContent: 'center' }}>
+                <BarChart
+                    // style={graphStyle}
+                    data={data}
+                    width={320}
+                    height={200}
+                    yAxisLabel="$"
+                    chartConfig={{
+                        backgroundColor: "#1E1F22",
+                        backgroundGradientFrom: "#1E1F22",
+                        backgroundGradientTo: "#F55139",
+                        color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                        labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                    }}
+                    verticalLabelRotation={30}
+                />
+            </ScrollView>
         </View>
     )
 }
@@ -17,10 +39,11 @@ export default Chart;
 
 const styles = StyleSheet.create({
     container: {
-        width: 310,
-        height: 150,
+        width: 320,
+        height: 200,
         borderRadius: 7,
         backgroundColor: '#e0e0e0',
-        elevation: 10
+        elevation: 10,
+        overflow: 'hidden'
     },
 })
