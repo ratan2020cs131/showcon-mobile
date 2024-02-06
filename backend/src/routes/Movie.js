@@ -1,9 +1,10 @@
 const express = require('express');
 const route = express.Router();
 const { AuthMiddleWare } = require('../middleware/AuthMiddleware.js')
-const { getAll } = require('../controller/MovieController.js');
+const MovieController = require('../controller/MovieController.js');
 
 
-route.get('/:id', getAll);
+// route.get('/:id', getAll);
+route.get('/search', MovieController.searchMovie);
 
 module.exports = route;
