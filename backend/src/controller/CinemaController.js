@@ -32,14 +32,13 @@ const registerCinema = async (req, res) => {
         req.body.screen.forEach((item) => {
             item.seatmap = arrangeSeats(item.seatmap)
         })
-        console.log("arranged map: ", JSON.stringify(req.body.screen));
-        // const cinema = new Cinema(req.body);
-        // const result = await cinema.save();
-        // if (result) {
-        //     res.send(result)
-        // } else {
-        //     throw new Error("Error in connecting with mongoDB")
-        // }
+        const cinema = new Cinema(req.body);
+        const result = await cinema.save();
+        if (result) {
+            res.send(result)
+        } else {
+            throw new Error("Error in connecting with mongoDB")
+        }
     } catch (err) {
         console.log("Register cinema error: ", err.message);
         res.send({ message: err.message })
