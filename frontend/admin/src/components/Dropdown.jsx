@@ -40,7 +40,7 @@ const DropDown = ({ title, list, set, get }) => {
                     <View style={{ paddingLeft: 5, flexDirection: 'row', width: '77%', overflow: 'scroll' }}>
                         {selected.length > 0 ?
                             <>
-                                {selected.map((item, index) => (<Text key={item} style={[GlobalStyles.normalText, { fontSize: 16 }]}>{selected.length - 1 === index ? item : item + ", "}</Text>))}
+                                {get.map((item, index) => (<Text key={index} style={[GlobalStyles.normalText, { fontSize: 16 }]}>{selected.length - 1 === index ? item : item + ", "}</Text>))}
                             </> :
                             <Text style={[GlobalStyles.normalText, {color: '#707070', fontSize: 16 }]}>{title}</Text>
                         }

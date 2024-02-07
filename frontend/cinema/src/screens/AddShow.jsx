@@ -1,17 +1,18 @@
 import { StyleSheet, Text, View, ScrollView } from "react-native"
 import Profile from "../components/profile/Profile";
 import ScreenWrapper from './ScreenWrapper';
+import Add from "../components/show/Add";
 
-const AddShow = ({navigation}) => {
+const AddShow = ({ navigation }) => {
     return (
         <View style={styles.conatiner}>
             <ScreenWrapper title="Profile" />
             <ScrollView
                 showsVerticalScrollIndicator={false}
                 nestedScrollEnabled={true}
-                contentContainerStyle={{ alignItems: 'flex-start', justifyContent:'center', flexDirection: 'row', width: '100%', minHeight:'100%' }}
+                contentContainerStyle={{ alignItems: 'flex-start', justifyContent: 'center', flexDirection: 'row', width: '100%', minHeight: '100%' }}
             >
-                <Text>Add Show</Text>
+                <Add />
             </ScrollView>
         </View>
     )
