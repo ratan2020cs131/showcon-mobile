@@ -8,7 +8,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useEffect, useState } from 'react';
 import formatDate from '../../utils/formatDate';
 
-const Add = () => {
+const Search = ({ navigation }) => {
     const dispatch = useDispatch();
     const showState = useSelector(show);
     const [param, setParam] = useState('');
@@ -60,11 +60,11 @@ const Add = () => {
                         {!showState.searchResult?.length > 0 ?
                             <View style={{ alignItems: 'center' }}>
                                 <MaterialCommunityIcons name="movie-search" size={104} color="#c0c0c0" />
-                                <Text style={[GlobalStyles.boldText, { fontSize: 16, color:'#c0c0c0' }]}>Search the movie</Text>
+                                <Text style={[GlobalStyles.boldText, { fontSize: 16, color: '#c0c0c0' }]}>Search the movie</Text>
                             </View> :
                             <>
                                 {showState.searchResult?.map((item, index) => (
-                                    <MovieCard data={item} key={index} />
+                                    <MovieCard data={item} key={index} navigation={navigation} />
                                 ))}
                             </>
                         }
@@ -74,13 +74,15 @@ const Add = () => {
         </View>
     )
 }
-export default Add;
+export default Search;
 
 
-const MovieCard = ({ data }) => {
+const MovieCard = ({ data, navigation }) => {
 
     return (
-        <TouchableOpacity activeOpacity={0.4} style={{ gap: 15, elevation: 10, width: '100%', padding: 8, flexDirection: 'row', backgroundColor: '#fff', borderRadius: 7, alignItems: 'flex-start' }}>
+        <TouchableOpacity activeOpacity={0.4} style={{ gap: 15, elevation: 10, width: '100%', padding: 8, flexDirection: 'row', backgroundColor: '#fff', borderRadius: 7, alignItems: 'flex-start' }}
+            onPress={() => navigation.navigate("AddShow", { movie: data })}
+        >
             <View style={{ width: 75, height: 110, borderRadius: 5, overflow: 'hidden' }}>
                 <Image alt={"poster"} source={{ uri: data.primaryPoster }} style={GlobalStyles.image} />
             </View>

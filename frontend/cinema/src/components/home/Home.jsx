@@ -34,7 +34,7 @@ const HomeScreen = ({ navigation }) => {
                 }
                 <TouchableOpacity activeOpacity={0.4} 
                 style={{ paddingVertical: 15, gap: 10, alignItems: 'center', justifyContent: 'center', width: 110, height: 110, backgroundColor: "#e0e0e0", borderRadius: 7 }}
-                onPress={()=>{navigation.navigate("AddShow")}}
+                onPress={()=>{navigation.navigate("SearchMovie")}}
                 >
                     <MaterialCommunityIcons name="movie-open-plus" size={34} color="black" />
                     <Text style={GlobalStyles.semiBoldText}>Add Show</Text>

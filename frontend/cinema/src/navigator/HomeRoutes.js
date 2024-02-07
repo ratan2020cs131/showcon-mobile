@@ -2,6 +2,7 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from '../screens/HomeScreen';
 import Scanner from '../screens/Scanner';
+import SearchMovie from '../screens/SearchMovie';
 import AddShow from '../screens/AddShow';
 const Stack = createStackNavigator();
 
@@ -17,6 +18,11 @@ const ProfileRoutes = () => {
         {
             path: "Scanner",
             component: Scanner,
+            option: { headerShown: false }
+        },
+        {
+            path: "SearchMovie",
+            component: SearchMovie,
             option: { headerShown: false }
         },
         {

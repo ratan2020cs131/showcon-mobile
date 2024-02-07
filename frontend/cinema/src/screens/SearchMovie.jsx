@@ -1,21 +1,22 @@
-import { StyleSheet, Text, View, ScrollView } from "react-native"
+import { StyleSheet, Text, View, ScrollView } from "react-native";
 import ScreenWrapper from './ScreenWrapper';
+import Search from "../components/show/Search";
 
-const AddShow = ({ navigation }) => {
+const SearchMovie = ({ navigation }) => {
     return (
         <View style={styles.conatiner}>
-            <ScreenWrapper title="Add a Show" />
+            <ScreenWrapper title="Search Movie" />
             <ScrollView
                 showsVerticalScrollIndicator={false}
                 nestedScrollEnabled={true}
                 contentContainerStyle={{ alignItems: 'flex-start', justifyContent: 'center', flexDirection: 'row', width: '100%', minHeight: '100%' }}
             >
-                <Text>Hello</Text>
+                <Search navigation={navigation}/>
             </ScrollView>
         </View>
     )
 }
-export default AddShow;
+export default SearchMovie;
 
 
 const styles = StyleSheet.create({
