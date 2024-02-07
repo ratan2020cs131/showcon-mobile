@@ -14,6 +14,7 @@ const arrangeSeats = (seatsArray) => {
     for (const row of seatsArray) {
         const { row: rowName, seats } = row;
         const arrangedRow = Array.from({ length: maxSeatNumber }).fill(-1);
+        seats.sort((a, b) => a - b);
         // Fill in the seats for the current row
         for (let i = 0; i < seats.length; i++) {
             arrangedRow[seats[i] - 1] = i + 1;
@@ -28,15 +29,17 @@ const arrangeSeats = (seatsArray) => {
 const registerCinema = async (req, res) => {
     try {
         req.body.owner = req.Id;
-        req.body.screen = req.body.screen.map((item) => arrangeSeats(item.seatmap))
+        req.body.screen.forEach((item) => {
+            item.seatmap = arrangeSeats(item.seatmap)
+        })
         console.log("arranged map: ", JSON.stringify(req.body.screen));
-        const cinema = new Cinema(req.body);
-        const result = await cinema.save();
-        if (result) {
-            res.send(result)
-        } else {
-            throw new Error("Error in connecting with mongoDB")
-        }
+        // const cinema = new Cinema(req.body);
+        // const result = await cinema.save();
+        // if (result) {
+        //     res.send(result)
+        // } else {
+        //     throw new Error("Error in connecting with mongoDB")
+        // }
     } catch (err) {
         console.log("Register cinema error: ", err.message);
         res.send({ message: err.message })
