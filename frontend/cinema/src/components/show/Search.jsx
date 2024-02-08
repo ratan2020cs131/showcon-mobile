@@ -14,13 +14,13 @@ const Search = ({ navigation }) => {
     const [param, setParam] = useState('');
 
     const searchHandler = () => {
-        dispatch(searchMovie(param))
+        if (param !== '') dispatch(searchMovie(param))
     }
     useEffect(searchHandler, [param]);
 
     return (
         <View style={styles.container}>
-            <View style={{ flexDirection: 'row', width: '100%', alignItems: 'center', position: 'relative' }}>
+            <View style={{ flexDirection: 'row', width: '100%', alignItems: 'center', position: 'relative', }}>
                 <TextInput
                     style={[GlobalStyles.input, { color: '#1E1F22', paddingLeft: 40, width: '100%', borderColor: '#1E1F22', borderWidth: 2 }]}
                     placeholder='Search Movie'
@@ -35,37 +35,40 @@ const Search = ({ navigation }) => {
             </View>
 
             <View style={{ width: '100%' }}>
-                {showState.searchingMovie ?
-                    <View style={{ gap: 15 }}>
-                        <View style={{ gap: 15, elevation: 10, width: '100%', padding: 8, flexDirection: 'row', backgroundColor: '#fff', borderRadius: 7, alignItems: 'flex-start' }}>
-                            <Shimmer style={{ width: 70, height: 100, borderRadius: 5 }} />
-                            <View style={{ paddingVertical: 2, gap: 6 }}>
-                                <Shimmer style={{ width: 160, height: 15, borderRadius: 3 }} />
-                                <Shimmer style={{ width: 190, height: 15, borderRadius: 3 }} />
-                                <Shimmer style={{ width: 140, height: 52, borderRadius: 3 }} />
-                            </View>
-                        </View>
-                        <View style={{ gap: 15, elevation: 10, width: '100%', padding: 8, flexDirection: 'row', backgroundColor: '#fff', borderRadius: 7, alignItems: 'flex-start' }}>
-                            <Shimmer style={{ width: 70, height: 100, borderRadius: 5 }} />
-                            <View style={{ paddingVertical: 2, gap: 6 }}>
-                                <Shimmer style={{ width: 160, height: 15, borderRadius: 3 }} />
-                                <Shimmer style={{ width: 190, height: 15, borderRadius: 3 }} />
-                                <Shimmer style={{ width: 140, height: 52, borderRadius: 3 }} />
-                            </View>
-                        </View>
+                {param === '' ?
+                    <View style={{ alignItems: 'center' }}>
+                        <MaterialCommunityIcons name="movie-search" size={104} color="#c0c0c0" />
+                        <Text style={[GlobalStyles.boldText, { fontSize: 16, color: '#c0c0c0' }]}>Search the movie</Text>
                     </View>
-                    // <Shimmer style={{width:'100%', height:110}}/>
                     :
                     <View style={{ gap: 15 }}>
-                        {!showState.searchResult?.length > 0 ?
-                            <View style={{ alignItems: 'center' }}>
-                                <MaterialCommunityIcons name="movie-search" size={104} color="#c0c0c0" />
-                                <Text style={[GlobalStyles.boldText, { fontSize: 16, color: '#c0c0c0' }]}>Search the movie</Text>
-                            </View> :
-                            <>
-                                {showState.searchResult?.map((item, index) => (
-                                    <MovieCard data={item} key={index} navigation={navigation} />
-                                ))}
+                        {showState.searchingMovie ?
+                            <View style={{ gap: 15 }}>
+                                {
+                                    Array(3).fill().map((i, index) => (
+                                        <View key={index} style={{ gap: 15, elevation: 10, width: '100%', padding: 8, flexDirection: 'row', backgroundColor: '#fff', borderRadius: 7, alignItems: 'flex-start' }}>
+                                            <Shimmer style={{ width: 70, height: 100, borderRadius: 5 }} />
+                                            <View style={{ paddingVertical: 2, gap: 6 }}>
+                                                <Shimmer style={{ width: 160, height: 15, borderRadius: 3 }} />
+                                                <Shimmer style={{ width: 190, height: 15, borderRadius: 3 }} />
+                                                <Shimmer style={{ width: 140, height: 52, borderRadius: 3 }} />
+                                            </View>
+                                        </View>
+                                    ))}
+                            </View>
+                            // <Shimmer style={{width:'100%', height:110}}/>
+                            :
+                            <>{showState.searchResult?.length > 0 ?
+                                <>
+                                    {showState.searchResult?.map((item, index) => (
+                                        <MovieCard data={item} key={index} navigation={navigation} />
+                                    ))}
+                                </> :
+                                <View style={{ alignItems: 'center' }}>
+                                    <MaterialCommunityIcons name="movie-open-remove" size={104} color="#c0c0c0" />
+                                    <Text style={[GlobalStyles.boldText, { fontSize: 16, color: '#c0c0c0' }]}>No results found!</Text>
+                                </View>
+                            }
                             </>
                         }
                     </View>

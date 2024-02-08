@@ -1,22 +1,24 @@
-import { StyleSheet, Text, View, ScrollView } from "react-native"
-import ScreenWrapper from './ScreenWrapper';
-import AddShow from "../components/show/AddShow";
+import { StyleSheet, Text, View, ScrollView } from "react-native";
+import GlobalStyles from "../../GlobalStyles";
+import Screens from './Screens';
 
-const AddShowScreen = ({ navigation, route}) => {
+const AddShow = ({ navigation, route }) => {
     return (
         <View style={styles.conatiner}>
-            <ScreenWrapper title="Add a Show" />
             <ScrollView
                 showsVerticalScrollIndicator={false}
                 nestedScrollEnabled={true}
                 contentContainerStyle={{ alignItems: 'flex-start', justifyContent: 'center', flexDirection: 'row', width: '100%', minHeight: '100%' }}
             >
-                <AddShow route={route}/>
+                <View style={{flex:1, padding:20}}>
+                    <Text style={[GlobalStyles.boldText,{fontSize:18}]}>{route.params.movie.title}</Text>
+                    <Screens/>
+                </View>
             </ScrollView>
         </View>
     )
 }
-export default AddShowScreen;
+export default AddShow;
 
 
 const styles = StyleSheet.create({
