@@ -1,15 +1,16 @@
 import { View, SafeAreaView, StyleSheet, Text, useWindowDimensions } from "react-native";
 import GlobalStyles from "../GlobalStyles";
 
-const TopBar = ({ title }) => {
+const TopBar = ({ title, sub }) => {
   const windowWidth = useWindowDimensions().width;
 
   return (
     <SafeAreaView>
       <View
-        style={[styles.container, {width:windowWidth}]}
+        style={[styles.container, { width: windowWidth }]}
       >
         {title && <Text style={[GlobalStyles.semiBoldText, styles.title]}>{title}</Text>}
+        {sub && <Text style={[GlobalStyles.semiBoldText, styles.sub]}>{sub}</Text>}
       </View>
     </SafeAreaView>
   );
@@ -27,5 +28,9 @@ const styles = StyleSheet.create({
   title: {
     color: '#F55139',
     fontSize: 20
+  },
+  sub: {
+    color: '#F55139',
+    fontSize: 13
   }
 })

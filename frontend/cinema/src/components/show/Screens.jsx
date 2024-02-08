@@ -16,7 +16,7 @@ const Screens = () => {
 
     return (
         <View style={styles.conatiner}>
-            <View style={{ alignItems: 'center', padding: 10, width: 180, height: 440, borderRightColor: '#c0c0c0', borderRightWidth: 1 }}>
+            <View style={{ gap: 2, alignItems: 'center', padding: 10, width: 180, height: 300, borderRightColor: '#c0c0c0', borderRightWidth: 1 }}>
                 {registerState.registered?.screen.length > 0 &&
                     <Text style={[GlobalStyles.boldText, { zIndex: -1, fontSize: 13 }]}>SCREENS</Text>
                 }
@@ -31,7 +31,10 @@ const Screens = () => {
                 </ScrollView>
             </View>
 
-            <View style={{ paddingTop: 30 }}>
+            <View style={{ marginTop: 2, paddingTop: 10, alignItems: 'center', gap: 10 }}>
+                {registerState.registered?.screen.length > 0 &&
+                    <Text style={[GlobalStyles.boldText, { fontSize: 13 }]}>SLOTS</Text>
+                }
                 <ScrollView
                     showsHorizontalScrollIndicator={false}
                     contentContainerStyle={{ alignItems: 'center', gap: 10 }}
@@ -94,7 +97,13 @@ const Slots = ({ time, set, get }) => {
             style={{ width: 100, justifyContent: 'space-around', flexDirection: 'row', alignItems: 'center', gap: 8, borderRadius: 5, borderColor: time ? '#1E90FF' : '#c0c0c0', backgroundColor: time ? selected ? '#1E90FF' : '#1E90FF30' : '#e0e0e0', borderWidth: 2, alignSelf: 'flex-start', padding: 7 }}
             onPress={handleSet}
         >
-            <Text style={[GlobalStyles.normalText, { fontSize: 16 }]}>{time ? time.split(' ')[0] : '00:00'}</Text>
+            <Text style={[GlobalStyles.normalText, { fontSize: 16 }]}>
+                {time ? (() => {
+                    let [hour, min] = time.split(' ')[0].split(':')
+                    hour = hour.padStart(2, '0');
+                    return `${hour}:${min}`
+                })() : '00:00'}
+            </Text>
             <Text style={[GlobalStyles.normalText, { fontSize: 16 }]}>{time ? time.split(' ')[1] : 'XX'}</Text>
         </TouchableOpacity>
     )
