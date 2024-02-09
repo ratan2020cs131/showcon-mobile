@@ -21,6 +21,7 @@ const TimeSlots = ({set}) => {
     };
     useEffect(() => {
         const formattedTime = selectedTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+        console.log("time slot: ",formattedTime);
         if (!showTime.includes(formattedTime)) setShowTime((prev) => [...prev, formattedTime]);
     }, [selectedTime])
     useEffect(()=>{set('slots',showTime.slice(1))},[showTime])

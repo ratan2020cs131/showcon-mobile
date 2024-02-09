@@ -16,35 +16,25 @@ const Screens = () => {
 
     return (
         <View style={styles.conatiner}>
-            <View style={{ gap: 2, alignItems: 'center', padding: 10, width: 180, height: 300, borderRightColor: '#c0c0c0', borderRightWidth: 1 }}>
-                {registerState.registered?.screen.length > 0 &&
-                    <Text style={[GlobalStyles.boldText, { zIndex: -1, fontSize: 13 }]}>SCREENS</Text>
-                }
-                <ScrollView
-                    showsHorizontalScrollIndicator={false}
-                    contentContainerStyle={{ alignItems: 'center', gap: 10 }}
-                    style={{ width: '100%', zIndex: -1, }}
-                >
+            <View style={{ flexDirection: 'row', width: '100%', paddingVertical: 20, gap: 2, justifyContent: 'space-around' }}>
+                <View style={{ alignItems: 'center', paddingTop: 10, width: '50%', borderRightColor: '#c0c0c0', borderRightWidth: 1 }}>
+                    {registerState.registered?.screen.length > 0 &&
+                        <Text style={[GlobalStyles.boldText, { zIndex: -1, fontSize: 13 }]}>SCREENS</Text>
+                    }
                     {registerState.registered?.screen.map((item, i) => (
                         <ListItem key={i} screen={item} set={handleScreen} get={selectScreen} />
                     ))}
-                </ScrollView>
-            </View>
+                </View>
 
-            <View style={{ marginTop: 2, paddingTop: 10, alignItems: 'center', gap: 10 }}>
-                {registerState.registered?.screen.length > 0 &&
-                    <Text style={[GlobalStyles.boldText, { fontSize: 13 }]}>SLOTS</Text>
-                }
-                <ScrollView
-                    showsHorizontalScrollIndicator={false}
-                    contentContainerStyle={{ alignItems: 'center', gap: 10 }}
-                    style={{ width: '100%', zIndex: -1, }}
-                >
+                <View style={{ marginTop: 2, width: '50%', paddingTop: 10, alignItems: 'center', gap: 10 }}>
+                    {registerState.registered?.screen.length > 0 &&
+                        <Text style={[GlobalStyles.boldText, { fontSize: 13 }]}>SLOTS</Text>
+                    }
                     {selectScreen ?
                         selectScreen?.slots.map((i, index) => <Slots time={i} key={index} set={setSlot} get={slot} />) :
                         Array(4).fill().map((i, index) => <Slots key={index} />)
                     }
-                </ScrollView>
+                </View>
             </View>
         </View>
     )
@@ -71,13 +61,13 @@ const ListItem = ({ screen, set, get }) => {
     }
 
     return (
-        <TouchableOpacity activeOpacity={0.5} style={[styles.screen, { backgroundColor: selected ? '#a0a0a0' : '#e0e0e0' }]} onPress={handleSet}>
+        <TouchableOpacity activeOpacity={0.5} style={[styles.screen, {marginVertical:4, backgroundColor: selected ? '#a0a0a0' : '#e0e0e0', borderWidth: 1, borderColor: '#1E1F22' }]} onPress={handleSet}>
             {selected &&
                 <Image source={Check} style={{ position: 'absolute', zIndex: 1, height: 50, width: 70 }} />
             }
             <Text style={[GlobalStyles.boldText, { fontSize: 18, marginBottom: -5 }]}>{screen.screen}</Text>
-            <Text style={[GlobalStyles.normalText]}>{seatCount} Seats</Text>
-            <Text style={[GlobalStyles.normalText]}>{showCount} shows/day</Text>
+            <Text style={[GlobalStyles.semiBoldText]}>{seatCount} Seats</Text>
+            <Text style={[GlobalStyles.semiBoldText]}>{showCount} shows/day</Text>
         </TouchableOpacity>
     )
 }
@@ -94,17 +84,17 @@ const Slots = ({ time, set, get }) => {
 
     return (
         <TouchableOpacity activeOpacity={time ? 0.3 : 1}
-            style={{ width: 100, justifyContent: 'space-around', flexDirection: 'row', alignItems: 'center', gap: 8, borderRadius: 5, borderColor: time ? '#1E90FF' : '#c0c0c0', backgroundColor: time ? selected ? '#1E90FF' : '#1E90FF30' : '#e0e0e0', borderWidth: 2, alignSelf: 'flex-start', padding: 7 }}
-            onPress={handleSet}
+            style={[styles.slot, { borderColor: time ? '#1E90FF' : '#c0c0c0', backgroundColor: time ? selected ? '#1E90FF' : '#1E90FF30' : '#e0e0e0' }]}
+            onPress={time && handleSet}
         >
-            <Text style={[GlobalStyles.normalText, { fontSize: 16 }]}>
+            <Text style={[GlobalStyles.normalText, { color: time ? '#000' : '#a0a0a0', fontSize: 16 }]}>
                 {time ? (() => {
                     let [hour, min] = time.split(' ')[0].split(':')
                     hour = hour.padStart(2, '0');
                     return `${hour}:${min}`
                 })() : '00:00'}
             </Text>
-            <Text style={[GlobalStyles.normalText, { fontSize: 16 }]}>{time ? time.split(' ')[1] : 'XX'}</Text>
+            <Text style={[GlobalStyles.normalText, { color: time ? '#000' : '#a0a0a0', fontSize: 16 }]}>{time ? time.split(' ')[1] : 'XX'}</Text>
         </TouchableOpacity>
     )
 }
@@ -128,5 +118,15 @@ const styles = StyleSheet.create({
         overflow: 'visible',
         marginVertical: 5,
         marginRight: 10
+    },
+    slot: {
+        width: 100,
+        justifyContent: 'space-around',
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 8,
+        borderWidth: 2,
+        padding: 7,
+        borderRadius: 5,
     }
 })

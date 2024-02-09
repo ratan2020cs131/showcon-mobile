@@ -129,6 +129,7 @@ const Register = ({ navigation }) => {
 
                 </View>
             </View>
+            
             {/* only provide numeric value to width */}
             <SwipeButton style={{ width: 330 }}
                         error={alert === null}
