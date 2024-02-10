@@ -1,14 +1,15 @@
-import { View, Text, StyleSheet, TextInput, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TextInput, Image, TouchableOpacity,Keyboard } from 'react-native';
 import GlobalStyles from '../../GlobalStyles';
 import { AntDesign, Fontisto } from '@expo/vector-icons';
 import Shimmer from '../Shimmer';
 import { show, searchMovie } from '../../redux/features/Show/ShowSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import formatDate from '../../utils/formatDate';
 
 const Search = ({ navigation }) => {
+    const searchRef = useRef(null)
     const dispatch = useDispatch();
     const showState = useSelector(show);
     const [param, setParam] = useState('');
@@ -22,6 +23,7 @@ const Search = ({ navigation }) => {
         <View style={styles.container}>
             <View style={{ flexDirection: 'row', width: '100%', alignItems: 'center', position: 'relative', }}>
                 <TextInput
+                    ref={searchRef}
                     style={[GlobalStyles.input, { color: '#1E1F22', paddingLeft: 40, width: '100%', borderColor: '#1E1F22', borderWidth: 2 }]}
                     placeholder='Search Movie'
                     maxLength={10}
@@ -29,7 +31,10 @@ const Search = ({ navigation }) => {
                     value={param}
                 />
                 <AntDesign name="search1" size={24} color="black" style={{ position: 'absolute', left: 10 }} />
-                <TouchableOpacity style={{ position: 'absolute', right: 10 }} onPress={() => setParam('')}>
+                <TouchableOpacity style={{ position: 'absolute', right: 10 }} onPress={() => {
+                    setParam('');
+                    searchRef.current.focus();
+                }}>
                     <MaterialCommunityIcons name="window-close" size={24} color="black" />
                 </TouchableOpacity>
             </View>
