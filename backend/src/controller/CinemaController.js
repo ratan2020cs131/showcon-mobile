@@ -61,7 +61,31 @@ const getCinema = async (req, res) => {
     }
 }
 
+
+const createShow = async (req, res) => {
+    try {
+        const { movie, slots, dates } = req.body;
+        if (!movie) { throw new Error("Provide a valid movieId"); }
+        else if (!slots?.length > 0) { throw new Error("Provide atleast one slot"); }
+        else if (!dates?.length > 0) { throw new Error("Provide atleast one date"); }
+        const result = await Cinema.findOneAndUpdate(
+            { 'screen.slots._id': { $in: slots } }, // Find the cinema with slots matching the provided IDs
+            { $set: { 'screen.$[].slots.$[slot].booking': { movie, dates } } }, // Update the booking field for the matched slot
+            { arrayFilters: [{ 'slot._id': { $in: slots } }], multi: true, new: true } // Filter to update only the matching slot
+        );
+        if (result) {
+            res.send({ message: "Show created", result });
+        } else {
+            throw new Error("Error in saving data to mongoDB");
+        }
+    } catch (err) {
+        console.log("Create show error: ", err.message);
+        res.send({ message: err.message })
+    }
+}
+
 module.exports = {
     registerCinema,
-    getCinema
+    getCinema,
+    createShow
 }
