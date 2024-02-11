@@ -35,9 +35,9 @@ const DropDown = ({ title, list, set, get }) => {
                         style={[GlobalStyles.input, GlobalStyles.normalText, { color: 'black', borderWidth: 0, paddingHorizontal: 8, flex: 1, fontSize: 17 }]}
                         onChangeText={(value) => handleSearch(value)} /> :
                     <View style={{ paddingLeft: 5, flexDirection: 'row', width: '65%', overflow: 'scroll' }}>
-                        {get.length > 0 ?
+                        {get?.length > 0 ?
                             <>
-                                {get.map((item, index) => (<Text key={index} style={[GlobalStyles.normalText, { fontSize: 16 }]}>{selected.length - 1 === index ? item : item + ", "}</Text>))}
+                                {get?.map((item, index) => (<Text key={index} style={[GlobalStyles.normalText, { fontSize: 16 }]}>{selected?.length - 1 === index ? item : item + ", "}</Text>))}
                             </> :
                             <Text style={[GlobalStyles.normalText, {color: '#707070', fontSize: 16 }]}>{title}</Text>
                         }
@@ -48,7 +48,7 @@ const DropDown = ({ title, list, set, get }) => {
             {
                 open &&
                 <View style={{left:-7, width: '103%', maxHeight: 130, paddingVertical: 10, alignItems: 'center', position: 'absolute', top: 45, backgroundColor: '#fcfcfc', borderBottomEndRadius: 7, borderBottomStartRadius: 7, elevation: 3, paddingHorizontal: 5, zIndex: 10, gap: 10 }}>
-                    {searchResult.length > 0 ?
+                    {searchResult?.length > 0 ?
                         <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnabled={true} style={{ width: '100%' }}>
                             {searchResult.map((item, index) => (
                                 <ListItem key={index} text={item} setSelected={setSelected} get={get} />

@@ -19,7 +19,7 @@ const Register = ({ navigation }) => {
     const [alert, setAlert] = useState(null);
     const onClose = () => { setModal(false); setAlert(null) }
     const registerState = useSelector(register);
-    const [type, setType] = useState()
+    const [type, setType] = useState('')
     const getLocation = async () => {
         try {
             const { status } = await requestForegroundPermissionsAsync();
@@ -54,17 +54,17 @@ const Register = ({ navigation }) => {
     const onSubmit = () => {
         if (registerState.cinema.title === '') { setAlert('Provide a title to your cinema'); setModal(true) }
         else if (!registerState.cinema.address) { setAlert('Please wait for your location to get detected'); setModal(true) }
-        else if (registerState.cinema.screen.length === 0) { setAlert('Please add atleast one screen'); setModal(true) }
+        else if (registerState.cinema.screen?.length === 0) { setAlert('Please add atleast one screen'); setModal(true) }
         else { dispatch(registerCinema(registerState.cinema)) }
     }
 
     useEffect(() => {
-        registerState.isRegistered && (navigation.navigate('ProfileScreen'),dispatch(resetNewCinema()))
+        registerState.isRegistered && (navigation.navigate('ProfileScreen'), dispatch(resetNewCinema()))
     }, [registerState.isRegistered])
 
 
     return (
-        <KeyboardAvoidingView style={[styles.conatiner,{minHeight:0.62*windowHeight}]}>
+        <KeyboardAvoidingView style={[styles.conatiner, { minHeight: 0.62 * windowHeight }]}>
             <View style={styles.form}>
                 <View style={styles.fullWidth}>
                     <View style={styles.inputFull}>
@@ -129,14 +129,14 @@ const Register = ({ navigation }) => {
 
                 </View>
             </View>
-            
+
             {/* only provide numeric value to width */}
             <SwipeButton style={{ width: 330 }}
-                        error={alert === null}
-                        success={registerState.isRegistered} loading={registerState.isRegistering}
-                        submit={onSubmit}
-                        successTitle="Request Submitted for registration"
-                    />
+                error={alert === null}
+                success={registerState.isRegistered} loading={registerState.isRegistering}
+                submit={onSubmit}
+                successTitle="Request Submitted for registration"
+            />
             {modal && <ModalAlert close={onClose} visible={modal} alert={alert} />}
         </KeyboardAvoidingView>
     )
@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
         flex: 1,
         width: "100%",
         alignItems: 'center',
-        justifyContent:'space-between'
+        justifyContent: 'space-between'
     },
     form: {
         position: 'relative',

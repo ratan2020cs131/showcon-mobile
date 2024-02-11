@@ -4,7 +4,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { Octicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import GlobalStyles from "../../GlobalStyles";
 
-const TimeSlots = ({set}) => {
+const TimeSlots = ({ set }) => {
     const [showPicker, setShowPicker] = useState(false);
     const [selectedTime, setSelectedTime] = useState(new Date());
     const [showTime, setShowTime] = useState([])
@@ -21,10 +21,12 @@ const TimeSlots = ({set}) => {
     };
     useEffect(() => {
         const formattedTime = selectedTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
-        console.log("time slot: ",formattedTime);
-        if (!showTime.includes(formattedTime)) setShowTime((prev) => [...prev, formattedTime]);
+        console.log("time slot: ", formattedTime);
+        if (!showTime.includes(formattedTime)) setShowTime((prev) => [...prev, { time: formattedTime }]);
     }, [selectedTime])
-    useEffect(()=>{set('slots',showTime.slice(1))},[showTime])
+    useEffect(() => {
+        set('slots', showTime.slice(1))
+    }, [showTime])
 
     return (
         <View style={styles.conatiner}>
@@ -48,9 +50,9 @@ const TimeSlots = ({set}) => {
                 />
             }
 
-            <View style={{ width: '100%', gap: 13, paddingHorizontal: 20, paddingVertical: 20, flexDirection: 'row', justifyContent: 'flex-start', flexWrap: "wrap" }}>
+            <View style={{width:'100%', justifyContent: 'flex-start', gap: 13, paddingHorizontal: 20, paddingVertical: 20, flexDirection: 'row', flexWrap: "wrap" }}>
                 {showTime.slice(1).map((item, index) => (
-                    <Slots key={index} time={item} set={setShowTime} get={showTime} />
+                    <Slots key={index} time={item.time} set={setShowTime} get={showTime} />
                 ))}
             </View>
         </View>
@@ -62,12 +64,12 @@ export default TimeSlots;
 const Slots = ({ time, set, get }) => {
     const handleRemove = (item) => {
         let newArray = [...get];
-        newArray = newArray.filter((prev) => prev !== item);
+        newArray = newArray.filter((prev) => prev.time !== item);
         set(newArray)
     }
 
     return (
-        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, borderRadius: 5, borderColor: '#1E90FF', backgroundColor:'#1E90FF30', borderWidth: 2, alignSelf: 'flex-start', padding: 7 }}>
+        <View style={{ width: 120, flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center', gap: 8, borderRadius: 5, borderColor: '#1E90FF', backgroundColor: '#1E90FF30', borderWidth: 2, alignSelf: 'flex-start', padding: 7 }}>
             <Text style={[GlobalStyles.normalText, { fontSize: 16 }]}>{time}</Text>
             <TouchableOpacity onPress={() => handleRemove(time)}>
                 <MaterialCommunityIcons name="window-close" size={18} color="black" />

@@ -1,7 +1,8 @@
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image } from "react-native"
 import GlobalStyles from "../../GlobalStyles";
 import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons';
-import { register, setCinema } from '../../redux/features/Register/RegisterSlice';
+import { register } from '../../redux/features/Register/RegisterSlice';
+import { setNewShow, show } from '../../redux/features/Show/ShowSlice';
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect, useState } from "react";
 import Check from '../../../assets/images/check.png'
@@ -11,7 +12,12 @@ const Screens = () => {
     const handleScreen = (item) => setSelectScreen(item)
     const [slot, setSlot] = useState([]);
     const registerState = useSelector(register);
-    useEffect(() => console.log("hi: ", registerState.registered.screen), [])
+    const showState = useSelector(show);
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(setNewShow({ key: 'slots', value: slot }))
+        console.log(showState.newShow);
+    }, [slot])
 
 
     return (
@@ -31,7 +37,7 @@ const Screens = () => {
                         <Text style={[GlobalStyles.boldText, { fontSize: 13 }]}>SLOTS</Text>
                     }
                     {selectScreen ?
-                        selectScreen?.slots.map((i, index) => <Slots time={i} key={index} set={setSlot} get={slot} />) :
+                        selectScreen?.slots.map((i, index) => <Slots slot={i} key={index} set={setSlot} get={slot} />) :
                         Array(4).fill().map((i, index) => <Slots key={index} />)
                     }
                 </View>
@@ -61,10 +67,10 @@ const ListItem = ({ screen, set, get }) => {
     }
 
     return (
-        <TouchableOpacity activeOpacity={0.5} style={[styles.screen, {marginVertical:4, backgroundColor: selected ? '#a0a0a0' : '#e0e0e0', borderWidth: 1, borderColor: '#1E1F22' }]} onPress={handleSet}>
-            {selected &&
+        <TouchableOpacity activeOpacity={0.5} style={[styles.screen, { marginVertical: 4, backgroundColor: '#e0e0e0', width: selected ? 145 : 133, borderWidth: selected ? 3 : 1, borderColor: selected ? '#f55139' : '#1E1F22' }]} onPress={handleSet}>
+            {/* {selected &&
                 <Image source={Check} style={{ position: 'absolute', zIndex: 1, height: 50, width: 70 }} />
-            }
+            } */}
             <Text style={[GlobalStyles.boldText, { fontSize: 18, marginBottom: -5 }]}>{screen.screen}</Text>
             <Text style={[GlobalStyles.semiBoldText]}>{seatCount} Seats</Text>
             <Text style={[GlobalStyles.semiBoldText]}>{showCount} shows/day</Text>
@@ -73,12 +79,13 @@ const ListItem = ({ screen, set, get }) => {
 }
 
 
-const Slots = ({ time, set, get }) => {
-    const selected = get?.includes(time);
+const Slots = ({ slot, set, get }) => {
+    const selected = get?.includes(slot._id);
+    const time = slot?.time;
     const handleSet = () => {
         let slots = [...get];
-        if (slots?.includes(time)) slots = slots.filter((i) => i !== time);
-        else slots.push(time)
+        if (slots?.includes(slot._id)) slots = slots.filter((i) => i !== slot._id);
+        else slots.push(slot._id)
         set(slots)
     }
 
@@ -117,7 +124,8 @@ const styles = StyleSheet.create({
         position: 'relative',
         overflow: 'visible',
         marginVertical: 5,
-        marginRight: 10
+        marginRight: 10,
+        width: 133
     },
     slot: {
         width: 100,

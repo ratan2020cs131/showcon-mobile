@@ -16,17 +16,44 @@ export const searchMovie = createAsyncThunk(
     }
 )
 
+export const addShow = createAsyncThunk(
+    'show/addShow',
+    async (data, thunkAPI) => {
+        try {
+            const res = ShowApi.addShow(data);
+            if (!res) {
+                return thunkAPI.rejectWithValue(err);
+            }
+            return res;
+        } catch (err) {
+            return thunkAPI.rejectWithValue(err);
+        }
+    }
+)
+
 
 const state = {
     searchingMovie: false,
     searchResult: null,
+    newShow: {
+        movie: null,
+        price: '',
+        lang: [],
+        slots: [],
+        dates: []
+    }
 }
 
 
 const ShowSlice = createSlice({
     name: 'show',
     initialState: state,
-    reducers: {},
+    reducers: {
+        setNewShow: (state, action) => {
+            const { key, value } = action.payload;
+            state.newShow[key] = value;
+        }
+    },
     extraReducers: (builder) => {
         builder
             .addCase(searchMovie.pending, (state, action) => {
@@ -40,6 +67,6 @@ const ShowSlice = createSlice({
     }
 })
 
-export const { } = ShowSlice.actions;
+export const { setNewShow } = ShowSlice.actions;
 export const show = (state) => state.show;
 export default ShowSlice.reducer;

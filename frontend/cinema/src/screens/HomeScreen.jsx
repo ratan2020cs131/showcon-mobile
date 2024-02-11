@@ -33,12 +33,12 @@ const HomeScreen = ({ navigation }) => {
                 {registerState.gettingstatus ?
                     <View style={{ width: '100%', padding: 20, gap: 20 }}>
                         <View style={{ flexDirection: 'row', gap: 20 }}>
-                            <Shimmer style={{ width: "35%", height: 130, borderRadius: 7 }} />
-                            <Shimmer style={{ width: "58%", height: 130, borderRadius: 7 }} />
+                            <Shimmer style={{ width: "35%", height: 110, borderRadius: 7 }} />
+                            <Shimmer style={{ width: "58%", height: 110, borderRadius: 7 }} />
                         </View>
                         <View style={{ flexDirection: 'row', gap: 20 }}>
-                            <Shimmer style={{ width: "58%", height: 130, borderRadius: 7 }} />
-                            <Shimmer style={{ width: "35%", height: 130, borderRadius: 7 }} />
+                            <Shimmer style={{ width: "58%", height: 110, borderRadius: 7 }} />
+                            <Shimmer style={{ width: "35%", height: 110, borderRadius: 7 }} />
                         </View>
                     </View> :
                     <>

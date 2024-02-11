@@ -4,8 +4,40 @@ import Screens from './Screens';
 import { FontAwesome } from '@expo/vector-icons';
 import LanguageDropdown from '../Dropdown';
 import ShowDates from './Date';
+import { useSelector, useDispatch } from "react-redux";
+import { show, setNewShow, addShow } from "../../redux/features/Show/ShowSlice";
+import { useEffect, useState } from "react";
+import ModalAlert from '../ModalAlert';
 
 const AddShow = ({ navigation, movie }) => {
+    const dispatch = useDispatch();
+    const showState = useSelector(show);
+    const [modal, setModal] = useState(false);
+    const [alert, setAlert] = useState('');
+    const onCloseAlertModal = () => setModal(false);
+    useEffect(() => {
+        dispatch(setNewShow({ key: 'movie', value: movie._id }))
+    }, [])
+
+    const submitHandler = () => {
+        if (showState.newShow.slots.length === 0) {
+            setAlert("Select atleast one slot")
+            setModal(true)
+        }
+        else if (showState.newShow.price === '') {
+            setAlert("Please Enter Price")
+            setModal(true)
+        }
+        else if (showState.newShow.dates.length === 0) {
+            setAlert("Select alteast one date")
+            setModal(true)
+        }
+        else{
+            dispatch(addShow(showState.newShow))
+        }
+    }
+
+
     return (
         <View style={styles.conatiner}>
             <ScrollView
@@ -24,21 +56,23 @@ const AddShow = ({ navigation, movie }) => {
                                     style={[GlobalStyles.input, GlobalStyles.normalText, { color: '#1E1F22', fontSize: 17, backgroundColor: '#e0e0e0', borderWidth: 0, paddingHorizontal: 30 }]}
                                     placeholder="Price"
                                     keyboardType={"numeric"}
+                                    onChangeText={(value) => dispatch(setNewShow({ key: 'price', value }))}
                                 />
                             </View>
 
                             <View style={{ width: '55%', position: 'relative', justifyContent: 'center', alignSelf: 'flex-start' }}>
-                                <LanguageDropdown title="Select Lang" list={langList} set={() => { }} get={[]} />
+                                <LanguageDropdown title="Select Lang" list={langList} set={(value) => { dispatch(setNewShow({ key: 'lang', value })) }} get={showState.newShow.lang} />
                             </View>
                         </View>
 
-                        <ShowDates date={movie}/>
+                        <ShowDates date={movie} />
                     </View>
                 </View>
-                <TouchableOpacity style={[GlobalStyles.button, { marginBottom: 20 }]}>
+                <TouchableOpacity style={[GlobalStyles.button, { marginBottom: 20 }]} onPress={submitHandler}>
                     <Text style={GlobalStyles.boldText}>ADD SHOW</Text>
                 </TouchableOpacity>
             </ScrollView>
+            {modal && <ModalAlert close={onCloseAlertModal} visible={modal} alert={alert} />}
         </View>
     )
 }
