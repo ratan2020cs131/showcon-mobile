@@ -64,13 +64,15 @@ const getCinema = async (req, res) => {
 
 const createShow = async (req, res) => {
     try {
-        const { movie, slots, dates } = req.body;
+        const { movie, slots, dates, price, lang } = req.body;
         if (!movie) { throw new Error("Provide a valid movieId"); }
         else if (!slots?.length > 0) { throw new Error("Provide atleast one slot"); }
         else if (!dates?.length > 0) { throw new Error("Provide atleast one date"); }
+        else if (!price) { throw new Error("Provide price of ticket"); }
+
         const result = await Cinema.findOneAndUpdate(
             { 'screen.slots._id': { $in: slots } }, // Find the cinema with slots matching the provided IDs
-            { $set: { 'screen.$[].slots.$[slot].booking': { movie, dates } } }, // Update the booking field for the matched slot
+            { $set: { 'screen.$[].slots.$[slot].booking': { movie, dates, price, lang } } }, // Update the booking field for the matched slot
             { arrayFilters: [{ 'slot._id': { $in: slots } }], multi: true, new: true } // Filter to update only the matching slot
         );
         if (result) {

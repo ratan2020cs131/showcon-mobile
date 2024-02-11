@@ -30,6 +30,14 @@ const bookingSchema = new mongoose.Schema({
             message: 'Provide a valid movie Id'
         }
     },
+    price: {
+        type: Number,
+        required: true
+    },
+    lang: {
+        type: [String],
+        required: false
+    },
     dates: {
         type: [String],
         required: true,
@@ -72,7 +80,7 @@ const screenSchema = new mongoose.Schema({
             message: 'At least one slot per screen is required.'
         }
     }
-}, { _id: false });
+});
 
 const cinemaSchema = new mongoose.Schema({
     owner: {
