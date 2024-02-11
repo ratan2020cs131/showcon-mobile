@@ -5,9 +5,12 @@ import { FontAwesome } from '@expo/vector-icons';
 import LanguageDropdown from '../Dropdown';
 import ShowDates from './Date';
 import { useSelector, useDispatch } from "react-redux";
-import { show, setNewShow, addShow } from "../../redux/features/Show/ShowSlice";
+import { show, setNewShow, addShow, resetNewShow } from "../../redux/features/Show/ShowSlice";
 import { useEffect, useState } from "react";
 import ModalAlert from '../ModalAlert';
+import Success from '../SuccessAnimation';
+import { ActivityIndicator } from "react-native-paper";
+import { CommonActions } from '@react-navigation/native';
 
 const AddShow = ({ navigation, movie }) => {
     const dispatch = useDispatch();
@@ -32,10 +35,25 @@ const AddShow = ({ navigation, movie }) => {
             setAlert("Select alteast one date")
             setModal(true)
         }
-        else{
+        else {
             dispatch(addShow(showState.newShow))
         }
     }
+
+    useEffect(() => {
+        if (showState.showCreated) {
+            const timeout = setTimeout(() => {
+                dispatch(resetNewShow());
+                navigation.dispatch(CommonActions.reset({
+                    index: 0,
+                    routes: [
+                        { name: 'Home' },
+                    ],
+                }));
+            }, 2000)
+            return () => clearTimeout(timeout)
+        }
+    }, [showState.showCreated])
 
 
     return (
@@ -68,10 +86,14 @@ const AddShow = ({ navigation, movie }) => {
                         <ShowDates date={movie} />
                     </View>
                 </View>
-                <TouchableOpacity style={[GlobalStyles.button, { marginBottom: 20 }]} onPress={submitHandler}>
-                    <Text style={GlobalStyles.boldText}>ADD SHOW</Text>
-                </TouchableOpacity>
+                {showState.creatingshow ?
+                    <ActivityIndicator size={"large"} color="#f55139" style={{ marginBottom: 20 }} /> :
+                    <TouchableOpacity style={[GlobalStyles.button, { marginBottom: 20 }]} onPress={submitHandler}>
+                        <Text style={GlobalStyles.boldText}>ADD SHOW</Text>
+                    </TouchableOpacity>
+                }
             </ScrollView>
+            {showState.showCreated && <Success modal={true} title={"Show Created"} />}
             {modal && <ModalAlert close={onCloseAlertModal} visible={modal} alert={alert} />}
         </View>
     )

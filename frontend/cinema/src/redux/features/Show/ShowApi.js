@@ -15,10 +15,9 @@ const searchApi = async (param) => {
 const addShow = async (data) => {
     try {
         console.log("add show api: ", data);
-        // const res = await axios.get(`${BASE_URL}/movie/search?title=${param}`);
-        // console.log("search api res: ", res.data);
-        // return res.data;
-        return;
+        const res = await axios.post(`${BASE_URL}/cinema/create-show`, data);
+        console.log("search api res: ", res.data);
+        return res.data.result;
     } catch (err) {
         console.log("add show error: ", err.message);
     }

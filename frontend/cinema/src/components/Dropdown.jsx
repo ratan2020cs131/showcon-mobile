@@ -39,15 +39,15 @@ const DropDown = ({ title, list, set, get }) => {
                             <>
                                 {get?.map((item, index) => (<Text key={index} style={[GlobalStyles.normalText, { fontSize: 16 }]}>{selected?.length - 1 === index ? item : item + ", "}</Text>))}
                             </> :
-                            <Text style={[GlobalStyles.normalText, {color: '#707070', fontSize: 16 }]}>{title}</Text>
+                            <Text style={[GlobalStyles.normalText, { color: '#707070', fontSize: 16 }]}>{title}</Text>
                         }
                     </View>
                 }
-                <FontAwesome name={open ? "caret-up" : "caret-down"} size={22} color="black" style={{ width: 25, textAlign: 'right', height: '1005', position: 'absolute', right: 10 }} />
+                <FontAwesome name={open ? "caret-up" : "caret-down"} size={22} color="black" style={{ width: 35, textAlign: 'right', height: '100%', position: 'absolute', paddingRight: 10, right: 0, paddingTop: 10 }} />
             </TouchableOpacity>
             {
                 open &&
-                <View style={{left:-7, width: '103%', maxHeight: 130, paddingVertical: 10, alignItems: 'center', position: 'absolute', top: 45, backgroundColor: '#fcfcfc', borderBottomEndRadius: 7, borderBottomStartRadius: 7, elevation: 3, paddingHorizontal: 5, zIndex: 10, gap: 10 }}>
+                <View style={{ left: -7, width: '103%', maxHeight: 130, paddingVertical: 10, alignItems: 'center', position: 'absolute', top: 45, backgroundColor: '#fcfcfc', borderBottomEndRadius: 7, borderBottomStartRadius: 7, elevation: 3, paddingHorizontal: 5, zIndex: 10, gap: 10 }}>
                     {searchResult?.length > 0 ?
                         <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnabled={true} style={{ width: '100%' }}>
                             {searchResult.map((item, index) => (

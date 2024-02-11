@@ -35,12 +35,15 @@ const ShowDates = ({ date }) => {
     }, [selected])
 
     return (
-        <FlatList
-            data={datesArray}
-            renderItem={(item, index) => <DateCard data={item.item} get={selected} set={setSelected} />}
-            keyExtractor={(item) => item}
-            horizontal={true}
-        />
+        <View>
+            <FlatList
+                data={datesArray}
+                renderItem={(item, index) => <DateCard data={item.item} get={selected} set={setSelected} />}
+                keyExtractor={(item) => item}
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+            />
+        </View>
     )
 }
 export default ShowDates;

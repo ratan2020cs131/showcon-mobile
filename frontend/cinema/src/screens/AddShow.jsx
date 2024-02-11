@@ -7,7 +7,7 @@ const AddShowScreen = ({ navigation, route }) => {
     return (
         <KeyboardAvoidingView style={styles.conatiner}>
             <ScreenWrapper title="Add a Show" sub={route.params.movie.title} />
-            <AddShow movie={route.params.movie} />
+            <AddShow movie={route.params.movie} navigation={navigation} />
         </KeyboardAvoidingView >
     )
 }

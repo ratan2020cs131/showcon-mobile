@@ -34,7 +34,7 @@ const ProfileRoutes = () => {
 
 
     return (
-        <Stack.Navigator initialRouteName={"HomeScreen"}>
+        <Stack.Navigator initialRouteName={"Home"}>
             {
                 routes.map((item) => (
                     <Stack.Screen

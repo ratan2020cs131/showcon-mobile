@@ -9,7 +9,7 @@ import TicketModal from "../components/TicketModal";
 export default function App() {
   const [permission, requestPermission] = Camera.useCameraPermissions();
   const [scanned, setScanned] = useState(false);
-  const [data, setData]=useState();
+  const [data, setData] = useState();
   const translateY = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -35,7 +35,7 @@ export default function App() {
   if (!permission.granted) {
     // Camera permissions are not granted yet
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, { justifyContent: 'center' }]}>
         <Text style={[{ textAlign: "center" }, GlobalStyles.normalText]}> We need your permission to show the camera </Text>
         <TouchableOpacity
           style={[GlobalStyles.button]}
@@ -74,7 +74,7 @@ export default function App() {
           <Text style={[GlobalStyles.semiBoldText, { fontSize: 17 }]}>Scan Again</Text>
         </TouchableOpacity>
       }
-      {scanned&&<TicketModal data={data} visible={scanned} close={()=>setScanned(false)}/>}
+      {scanned && <TicketModal data={data} visible={scanned} close={() => setScanned(false)} />}
     </View>
   );
 }
