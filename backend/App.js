@@ -2,11 +2,11 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 dotenv.config({ path: './.env' });
-const app=express();
+const app = express();
 
 app.use(express.json({ limit: '8mb' }));
 app.use(express.urlencoded({ limit: '8mb', extended: true }));
-app.use(cors({origin: "*", credentials:"*"}));
+app.use(cors({ origin: "*", credentials: "*" }));
 
 
 const authRoutes = require('./src/routes/Auth');
@@ -17,6 +17,7 @@ const favouriteRoute = require('./src/routes/Favourite');
 const uploadRoute = require('./src/routes/Upload');
 const locationRoute = require('./src/routes/Location');
 const adminRoute = require('./src/routes/Admin');
+const userRoute = require('./src/routes/User');
 require('./src/database/Connect');
 
 
@@ -28,8 +29,9 @@ app.use('/upload', uploadRoute);
 app.use('/favourite', favouriteRoute)
 app.use('/admin', adminRoute);
 app.use('/location', locationRoute);
+app.use('/user', userRoute);
 
-PORT=process.env.PORT
+PORT = process.env.PORT
 app.listen(PORT, () => {
     console.log(`Server running on port: ${PORT}`);
 })
