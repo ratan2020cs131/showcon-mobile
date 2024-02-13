@@ -1,5 +1,5 @@
-const Cinema = require('../database/models/Cinema');
-const Movie = require('../database/models/Movie')
+import Cinema from '../database/models/Cinema.js';
+import Movie from '../database/models/Movie.js';
 
 const getCityMovies = async (req, res) => {
     try {
@@ -43,7 +43,7 @@ const getDateTimeMovie = async (req, res) => {
     }
 }
 
-module.exports = {
+export default {
     getCityMovies,
     getDateTimeMovie
 }

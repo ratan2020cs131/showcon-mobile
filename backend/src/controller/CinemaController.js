@@ -1,4 +1,4 @@
-const Cinema = require("../database/models/Cinema");
+import Cinema from "../database/models/Cinema.js";
 
 const arrangeSeats = (seatsArray) => {
     // Find the maximum seat number across all rows
@@ -86,7 +86,7 @@ const createShow = async (req, res) => {
     }
 }
 
-module.exports = {
+export default {
     registerCinema,
     getCinema,
     createShow

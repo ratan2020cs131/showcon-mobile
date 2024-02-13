@@ -1,4 +1,4 @@
-const mongo = require('mongoose');
+import mongo from 'mongoose';
 const DB_URL=process.env.DB_URL
 
 mongo.connect(DB_URL).

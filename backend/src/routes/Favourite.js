@@ -1,10 +1,10 @@
-const express = require('express');
+import express from 'express';
+import { AuthMiddleWare } from '../middleware/AuthMiddleware.js';
+import favController from '../controller/FavouriteController.js';
 const route = express.Router();
-const { AuthMiddleWare } = require('../middleware/AuthMiddleware.js')
-const {FavouriteController, getFavouriteController, DelFavouriteController} = require('../controller/FavouriteController.js')
 
-route.post("/", AuthMiddleWare, FavouriteController);
-route.delete("/", AuthMiddleWare, DelFavouriteController);
-route.get("/", AuthMiddleWare, getFavouriteController);
+route.post("/", AuthMiddleWare, favController.addFav);
+route.delete("/", AuthMiddleWare, favController.delFav);
+route.get("/", AuthMiddleWare, favController.getFav);
 
-module.exports = route;
+export default route;

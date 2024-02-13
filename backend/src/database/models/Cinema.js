@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose'
 
 const seatMapSchema = new mongoose.Schema({
     row: {
@@ -131,7 +131,7 @@ const cinemaSchema = new mongoose.Schema({
 
 const Cinema = mongoose.model('Cinema', cinemaSchema);
 
-module.exports = Cinema;
+export default Cinema;
 
 
 

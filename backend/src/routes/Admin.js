@@ -1,7 +1,7 @@
-const express = require('express');
+import express from 'express'
+import { AuthMiddleWare } from '../middleware/AuthMiddleware.js'
+import AdminController from '../controller/AdminController.js'
 const route = express.Router();
-const { AuthMiddleWare } = require('../middleware/AuthMiddleware');
-const AdminController = require('../controller/AdminController');
 
 route.get('/cast', AuthMiddleWare, AdminController.getAllActors);
 route.post('/cast', AuthMiddleWare, AdminController.addCast);
@@ -12,4 +12,4 @@ route.get('/latest-movies', AuthMiddleWare, AdminController.getLatestMovies)
 route.get('/unapprove-cinema', AuthMiddleWare, AdminController.getUnapproveCinema)
 route.put('/approve-cinema', AuthMiddleWare, AdminController.approveCinema)
 
-module.exports = route;
+export default route;

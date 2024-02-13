@@ -1,8 +1,8 @@
-const User = require("../database/models/User.js");
-const express = require("express");
-const jwt = require("jsonwebtoken");
+import User from "../database/models/User.js";
+import express from "express";
+import jwt from "jsonwebtoken";
 
-const AuthMiddleWare = async (req, res, next) => {
+export const AuthMiddleWare = async (req, res, next) => {
   try {
     const token = req.headers.authorization;
     const decodedToken = jwt.verify(token, process.env.SECRET_KEY);
@@ -20,5 +20,3 @@ const AuthMiddleWare = async (req, res, next) => {
     res.status(401).json({ message: 'Unauthorised' });
   }
 };
-
-module.exports = { AuthMiddleWare };

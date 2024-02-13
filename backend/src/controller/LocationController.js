@@ -1,4 +1,4 @@
-const axios = require("axios");
+import axios from "axios";
 
 const getAddress = async (req, res) => {
     try {
@@ -24,6 +24,6 @@ const getAddress = async (req, res) => {
     }
 }
 
-module.exports = {
+export default {
     getAddress
 }

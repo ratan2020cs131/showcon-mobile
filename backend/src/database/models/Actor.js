@@ -1,4 +1,4 @@
-const mongo = require('mongoose');
+import mongo from 'mongoose';
 
 const actor = new mongo.Schema({
     name:{
@@ -12,4 +12,4 @@ const actor = new mongo.Schema({
 })
 
 const Actor = mongo.model('actors', actor);
-module.exports=Actor;
+export default Actor;

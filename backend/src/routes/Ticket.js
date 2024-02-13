@@ -1,9 +1,9 @@
-const express = require('express');
+import express from 'express';
+import { AuthMiddleWare } from '../middleware/AuthMiddleware.js';
+import ticketController from '../controller/TicketController.js';
 const route = express.Router();
-const { AuthMiddleWare } = require('../middleware/AuthMiddleware.js')
-const { createTicket } = require('../controller/TicketController.js');
 
 
-route.post('/', AuthMiddleWare, createTicket);
+route.post('/', AuthMiddleWare, ticketController.createTicket);
 
-module.exports = route;
+export default route;

@@ -1,5 +1,5 @@
-const { mongoose } = require("mongoose");
-const User = require("../models/User");
+import mongoose from "mongoose";
+import User from "../models/User.js";
 
 const favourite = new mongoose.Schema({
   userId: {
@@ -13,4 +13,4 @@ const favourite = new mongoose.Schema({
 
 const Favourite = mongoose.model("favourite", favourite);
 
-module.exports = Favourite;
+export default Favourite;
