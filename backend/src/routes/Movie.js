@@ -1,10 +1,10 @@
-const express = require('express');
+import express from 'express'
+import { AuthMiddleWare } from '../middleware/AuthMiddleware.js';
+import MovieController from '../controller/MovieController.js';
 const route = express.Router();
-const { AuthMiddleWare } = require('../middleware/AuthMiddleware.js')
-const MovieController = require('../controller/MovieController.js');
 
 
 // route.get('/:id', getAll);
 route.get('/search', MovieController.searchMovie);
 
-module.exports = route;
+export default route;

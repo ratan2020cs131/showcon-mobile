@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose'
 
 const seatMapSchema = new mongoose.Schema({
     row: {
@@ -9,13 +9,57 @@ const seatMapSchema = new mongoose.Schema({
         type: [Number],
         required: true,
         validate: {
-            validator: (value)=>{
+            validator: (value) => {
                 return value.length > 0;
             },
             message: 'At least one seat per row is required.'
         }
     }
-},{_id:false});
+}, { _id: false });
+
+
+const bookingSchema = new mongoose.Schema({
+    movie: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'movies',
+        required: true,
+        validate: {
+            validator: (value) => {
+                return value.length > 0;
+            },
+            message: 'Provide a valid movie Id'
+        }
+    },
+    price: {
+        type: Number,
+        required: true
+    },
+    lang: {
+        type: [String],
+        required: false
+    },
+    dates: {
+        type: [String],
+        required: true,
+        validate: {
+            validator: (value) => {
+                return value.length > 0;
+            },
+            message: 'At least one date is required'
+        }
+    }
+}, { _id: false })
+
+
+const slotSchema = new mongoose.Schema({
+    time: {
+        type: String
+    },
+    booking: {
+        type: bookingSchema,
+        required: false
+    }
+})
 
 const screenSchema = new mongoose.Schema({
     screen: {
@@ -27,26 +71,26 @@ const screenSchema = new mongoose.Schema({
         required: true
     },
     slots: {
-        type: [String],
+        type: [slotSchema],
         required: true,
         validate: {
-            validator: (value)=>{
+            validator: (value) => {
                 return value.length > 0;
             },
             message: 'At least one slot per screen is required.'
         }
     }
-},{_id:false});
+});
 
 const cinemaSchema = new mongoose.Schema({
-    owner:{
+    owner: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user',
-        required:true,
+        required: true,
     },
-    isApproved:{
-        type:Boolean,
-        default:false
+    isApproved: {
+        type: Boolean,
+        default: false
     },
     title: {
         type: String,
@@ -77,7 +121,7 @@ const cinemaSchema = new mongoose.Schema({
     screen: {
         type: [screenSchema],
         validate: {
-            validator: (value)=>{
+            validator: (value) => {
                 return value.length > 0;
             },
             message: 'At least one screen is required.'
@@ -87,7 +131,7 @@ const cinemaSchema = new mongoose.Schema({
 
 const Cinema = mongoose.model('Cinema', cinemaSchema);
 
-module.exports = Cinema;
+export default Cinema;
 
 
 

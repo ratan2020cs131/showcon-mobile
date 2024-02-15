@@ -1,6 +1,6 @@
-const User = require("../database/models/User");
-const Ticket = require("../database/models/Ticket");
-const bcrypt = require("bcrypt");
+import User from "../database/models/User.js"
+import Ticket from '../database/models/Ticket.js'
+import bcrypt from "bcrypt"
 
 //CHECK WHETHER PHONE REGISTERED OR NOT
 const Signin = async (req, res) => {
@@ -141,7 +141,7 @@ const History = async (req, res) => {
 };
 
 
-const authController = {
+export default {
   Signin,
   Register,
   Verify,
@@ -150,5 +150,3 @@ const authController = {
   Logout,
   History,
 };
-
-module.exports = authController;

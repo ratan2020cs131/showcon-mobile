@@ -1,10 +1,10 @@
-const express = require('express');
+import express from 'express'
+import uploadController from '../controller/SupabaseBucket.js'
+// import uploadController from '../controller/UploadController'
+import Multer from '../middleware/Multer.js'
 const route = express.Router();
-const uploadController = require('../controller/SupabaseBucket');
-// const uploadController = require('../controller/UploadController');
-const Multer = require('../middleware/Multer');
 
 route.post('/image', Multer.upload, uploadController.imageUpload);
 route.delete('/image', uploadController.imageDelete);
 
-module.exports = route;
+export default route;

@@ -1,12 +1,13 @@
-const express = require('express');
+import express from 'express';
+import { AuthMiddleWare } from '../middleware/AuthMiddleware.js';
+// import { getCinema } from '../controller/MovieController.js';
+import CinemaController from '../controller/CinemaController.js';
 const route = express.Router();
-const { AuthMiddleWare } = require('../middleware/AuthMiddleware.js')
-const { getCinema } = require('../controller/MovieController.js');
-const CinemaController = require('../controller/CinemaController.js');
 
 
-route.get('/:id', getCinema);
+// route.get('/:id', getCinema);
 route.post('/register', AuthMiddleWare, CinemaController.registerCinema);
 route.get('/', AuthMiddleWare, CinemaController.getCinema);
+route.post('/create-show', AuthMiddleWare, CinemaController.createShow);
 
-module.exports = route;
+export default route;

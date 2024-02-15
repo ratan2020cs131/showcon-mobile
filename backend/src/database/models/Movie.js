@@ -1,5 +1,5 @@
-const mongo = require('mongoose');
-const jwt = require('jsonwebtoken');
+import mongo from 'mongoose';
+import jwt from 'jsonwebtoken';
 
 
 // const movie = new mongo.Schema({
@@ -83,7 +83,7 @@ const movie = new mongo.Schema({
 })
 
 const Movie = mongo.model('movies', movie);
-module.exports = Movie;
+export default Movie;
 
 
 // title: '',

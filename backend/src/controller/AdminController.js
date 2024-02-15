@@ -1,6 +1,6 @@
-const Actor = require('../database/models/Actor');
-const Movie = require('../database/models/Movie');
-const Cinema = require('../database/models/Cinema')
+import Actor from '../database/models/Actor.js'
+import Movie from '../database/models/Movie.js'
+import Cinema from '../database/models/Cinema.js'
 
 //ADD NEW ACTOR
 const addCast = async (req, res) => {
@@ -150,7 +150,7 @@ const approveCinema = async (req, res) => {
 
 
 
-module.exports = {
+export default {
     addCast,
     getAllActors,
     addMovie,

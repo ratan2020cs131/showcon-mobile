@@ -1,7 +1,7 @@
-const express = require('express');
+import express from 'express';
+import LocationController from "../controller/LocationController.js";
 const route = express.Router();
-const LocationController = require("../controller/LocationController");
 
 route.get('/address', LocationController.getAddress);
 
-module.exports = route;
+export default route;
