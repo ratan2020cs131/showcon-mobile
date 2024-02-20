@@ -28,7 +28,7 @@ const getDateTimeMovie = async (req, res) => {
             { $unwind: "$screen" }, // Deconstruct the 'screen' array
             { $unwind: "$screen.slots" }, // Deconstruct the 'slots' array
             { $match: { "screen.slots.booking.dates": date } }, // Match documents where 'dates' field matches the specified date
-            { $match: { "screen.slots.time": { $gte: from, $and, $lte: to } } }, // Match documents where 'dates' field matches the specified date
+            { $match: { "screen.slots.time": { $gte: from, $lte: to } } }, // Match documents where 'dates' field matches the specified date
             { $group: { _id: '$screen.slots.booking.movie', movies: { $addToSet: '$screen.slots.booking.movie' } } },
             { $project: { _id: 0, movies: 1 } }
         ]);
