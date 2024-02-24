@@ -76,6 +76,9 @@ const Otp = ({ navigation, route }) => {
     if (!loginWithPassword && password.length > 0) {
       dispatch(verify({ mobileNo, password }))
     }
+    else if (loginWithPassword && otp.join('').length === 4) {
+      dispatch(verify({ mobileNo, otp: parseInt(otp.join('')) }))
+    }
   }
 
   return (
