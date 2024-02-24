@@ -7,7 +7,7 @@ export const signin = createAsyncThunk(
         try {
             const res = await authApi.signin(credentials);
             if (res !== true && res !== false) {
-                return thunkAPI.rejectWithValue(error);
+                return thunkAPI.rejectWithValue();
             }
             return res;
         }
@@ -23,7 +23,7 @@ export const verify = createAsyncThunk(
         try {
             const res = await authApi.verify(credentials);
             if (!res) {
-                return thunkAPI.rejectWithValue(error);
+                return thunkAPI.rejectWithValue();
             }
             if (res.token) {
                 return res.token
@@ -43,7 +43,7 @@ export const register = createAsyncThunk(
         try {
             const res = await authApi.register(credentials);
             if (!res) {
-                return thunkAPI.rejectWithValue(error);
+                return thunkAPI.rejectWithValue();
             }
             console.log("token :", res);
             return res;
@@ -60,7 +60,7 @@ export const getProfile = createAsyncThunk(
         try {
             const res = await authApi.getProfile();
             if (!res) {
-                return thunkAPI.rejectWithValue(error);
+                return thunkAPI.rejectWithValue();
             }
             return res;
         }
@@ -76,7 +76,7 @@ export const update = createAsyncThunk(
         try {
             const res = await authApi.update(data);
             if (!res) {
-                return thunkAPI.rejectWithValue(error);
+                return thunkAPI.rejectWithValue();
             }
             return res;
         }
@@ -92,7 +92,7 @@ export const logout = createAsyncThunk(
         try {
             const res = await authApi.logout();
             if (!res) {
-                return thunkAPI.rejectWithValue(error);
+                return thunkAPI.rejectWithValue();
             }
             return res;
         }
@@ -127,8 +127,8 @@ const authSlice = createSlice({
                 state.token = null,
                 state.error = undefined
         },
-        resetUpdate:(state, action)=>{
-            state.isUpdated=false
+        resetUpdate: (state, action) => {
+            state.isUpdated = false
         }
     },
     extraReducers: (builder) => {
@@ -162,16 +162,16 @@ const authSlice = createSlice({
                     state.token = action.payload
             })
             .addCase(getProfile.pending, (state, action) => {
-                state.isLoading=true
+                state.isLoading = true
             })
             .addCase(getProfile.fulfilled, (state, action) => {
-                state.isLoading=false,
-                state.user = action.payload,
+                state.isLoading = false,
+                    state.user = action.payload,
                     state.isAuth = true
             })
             .addCase(getProfile.rejected, (state, action) => {
-                state.isLoading=false,
-                state.isAuth = false
+                state.isLoading = false,
+                    state.isAuth = false
             })
             .addCase(update.pending, (state, action) => {
                 state.isLoading = true,

@@ -5,8 +5,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const signin = async (credentials) => {
     try {
+        console.log("api ", credentials);
         const { mobileNo } = credentials;
-        const response = await axios.get(`${BASE_URL}auth/signin/${mobileNo}`, credentials);
+        const response = await axios.get(`${BASE_URL}auth/signin/${mobileNo}`);
+        console.log("verify number api res: ", response.data);
         return response.data.flag;
     }
     catch (err) {
@@ -17,6 +19,7 @@ const signin = async (credentials) => {
 const verify = async (credentials) => {
     try {
         const response = await axios.post(`${BASE_URL}auth/verify`, credentials);
+        console.log("pass/otp verification res: ", response.data);
         return response.data;
     }
     catch (err) {
