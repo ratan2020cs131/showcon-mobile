@@ -75,7 +75,8 @@ const Verify = async (req, res) => {
         const authorised = await bcrypt.compare(password, user.password);
         if (authorised) {
           const token = await user.generateToken();
-          res.status(200).send({ token });
+          if (user.role) res.status(200).send({ token, role: user.role });
+          else res.status(200).send({ token });
         } else {
           res.status(200).send({
             error: "Wrong Password",
