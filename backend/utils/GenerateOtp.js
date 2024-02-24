@@ -1,4 +1,4 @@
 export default () => {
-    let code = Math.ceil(Math.random() * 1000000);
+    let code = Math.ceil(Math.random() * 10000);
     return code;
 }
