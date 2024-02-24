@@ -32,6 +32,9 @@ const user = new mongo.Schema({
         type: String,
         required: false
     },
+    loginOtp: {
+        type: Number
+    },
     tokens: [
         {
             type: String,
