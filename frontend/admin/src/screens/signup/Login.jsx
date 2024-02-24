@@ -10,6 +10,7 @@ const Login = ({ navigation }) => {
   const authState = useSelector(auth)
   const [mobileNo, setMobileNo] = useState('');
   const [phoneError, setPhoneError] = useState(false);
+  const [validation, setValidation] = useState(null);
 
   useEffect(() => {
     let registered = authState.isRegistered;
@@ -17,12 +18,13 @@ const Login = ({ navigation }) => {
     else if (registered === true) {
       navigation.navigate("Otp", { mobileNo })
     } else if (registered === false) {
-      navigation.navigate("Register", { mobileNo })
+      setValidation('Wrong admin credentials')
     }
   }, [authState])
 
   const handleChange = (text) => {
     dispatch(resetStates());
+    setValidation(null)
     if (phoneError) { setPhoneError(false) }
     setMobileNo(text);
   }
@@ -52,6 +54,12 @@ const Login = ({ navigation }) => {
           phoneError &&
           <Text style={[GlobalStyles.boldText, GlobalStyles.pText, styles.error]}>
             Enter Complete Number
+          </Text>
+        }
+        {
+          validation &&
+          <Text style={[GlobalStyles.boldText, GlobalStyles.pText, styles.error]}>
+            {validation}
           </Text>
         }
         {authState.isLoading ?
