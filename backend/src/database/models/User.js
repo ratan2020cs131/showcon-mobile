@@ -1,6 +1,6 @@
-const mongo = require('mongoose');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+import mongo from 'mongoose';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 
 const user = new mongo.Schema({
@@ -24,9 +24,16 @@ const user = new mongo.Schema({
         type: String,
         require: true
     },
+    role: {
+        type: String,
+        require: false
+    },
     resetPass: {
         type: String,
         required: false
+    },
+    loginOtp: {
+        type: Number
     },
     tokens: [
         {
@@ -34,7 +41,7 @@ const user = new mongo.Schema({
             required: true
         }
     ],
-    history:[
+    history: [
         {
             type: String,
             required: false
@@ -66,4 +73,4 @@ user.methods.generateToken = async function () {
 
 const User = mongo.model('user', user);
 
-module.exports = User;
+export default User;

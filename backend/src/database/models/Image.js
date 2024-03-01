@@ -1,4 +1,4 @@
-const mongo = require('mongoose');
+import mongo from 'mongoose';
 
 const image = new mongo.Schema({
     filePath: {
@@ -13,4 +13,4 @@ const image = new mongo.Schema({
 
 const Image = mongo.model('images', image);
 
-module.exports = Image;
+export default Image;

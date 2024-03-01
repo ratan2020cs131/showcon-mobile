@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 import Loader from './src/components/Loader';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer } from '@react-navigation/native';
@@ -70,6 +70,7 @@ export default function App({ }) {
             </>
 
         }
+        {/* <Text>hi</Text> */}
       </NavigationContainer>
     </Provider>
   );

@@ -1,5 +1,7 @@
-const { createClient } = require('@supabase/supabase-js');
-const Image = require('../database/models/Image');
+import { createClient } from '@supabase/supabase-js'
+import Image from '../database/models/Image.js'
+import dotenv from 'dotenv'
+dotenv.config({ path: './.env' });
 
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABSE_API;
@@ -7,7 +9,7 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 
 const imageUpload = async (req, res) => {
     try {
-        if(!req.file) throw new Error("No file attached");
+        if (!req.file) throw new Error("No file attached");
 
         //check if image is less than 5 MB
         if (req.file.size > 5 * 1024 * 1024) {
@@ -44,14 +46,14 @@ const imageUpload = async (req, res) => {
         }
     } catch (err) {
         console.log("Image upload error: ", err.message);
-        res.status(500).send({message:err.message})
+        res.status(500).send({ message: err.message })
     }
 }
 
 const imageDelete = async (req, res) => {
     try {
         const url = req.body.url;
-        if(!url) throw new Error("Provide file URL");
+        if (!url) throw new Error("Provide file URL");
         const image = await Image.findOne({ url });
         if (image) {
             const filePath = image.filePath;
@@ -59,14 +61,14 @@ const imageDelete = async (req, res) => {
             const { data, error } = await supabase.storage
                 .from('showcon') // bucket name
                 .remove([filePath]);
-            
-            if(error){
+
+            if (error) {
                 console.log(error);
-                res.status(500).send({message: "Image deletion failed"})
+                res.status(500).send({ message: "Image deletion failed" })
             }
-            else{
+            else {
                 const deleted = await Image.findOneAndDelete(image);
-                res.send({message: `Successfully deleted file: ${data[0].name}`})
+                res.send({ message: `Successfully deleted file: ${data[0].name}` })
             }
         } else {
             res.send({ message: "Image already has been deleted" })
@@ -74,14 +76,12 @@ const imageDelete = async (req, res) => {
 
     } catch (err) {
         console.log("Image delete error: ", err.message);
-        res.status(500).send({message:err.message})
+        res.status(500).send({ message: err.message })
     }
 }
 
 
-const uploadController = {
+export default {
     imageUpload,
     imageDelete
 }
-
-module.exports = uploadController;

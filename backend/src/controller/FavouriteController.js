@@ -1,7 +1,7 @@
-const Favourite = require("../database/models/Favourite");
-const Movie = require("../database/models/Movie")
+import Favourite from "../database/models/Favourite.js"
+import Movie from "../database/models/Movie.js"
 
-const FavouriteController = async (req, res) => {
+const addFav = async (req, res) => {
     try {
         const userId = req.user._id;
         if (!userId) return res.status(400).json({ message: "User Not Found" })
@@ -30,7 +30,7 @@ const FavouriteController = async (req, res) => {
 
 
 //REMOVE FAVORITE
-const DelFavouriteController = async (req, res) => {
+const delFav = async (req, res) => {
     try {
         const userId = req.user._id;
         if (!userId) return res.status(400).json({ message: "User Not Found" })
@@ -54,7 +54,7 @@ const DelFavouriteController = async (req, res) => {
 
 
 //GET FAVORITE
-const getFavouriteController = async (req, res) => {
+const getFav = async (req, res) => {
     try {
         const userId = req.user._id;
         if (!userId) return res.status(404).json({ message: "User Not Found" })
@@ -70,4 +70,8 @@ const getFavouriteController = async (req, res) => {
     }
 }
 
-module.exports = { FavouriteController, getFavouriteController, DelFavouriteController };
+export default{
+    addFav,
+    delFav,
+    getFav
+}

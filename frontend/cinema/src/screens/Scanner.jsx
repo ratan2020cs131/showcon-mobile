@@ -2,10 +2,14 @@ import React, { useState, useEffect, useRef } from "react";
 import { Camera } from "expo-camera";
 import { Button, StyleSheet, Text, TouchableOpacity, View, Animated, Easing } from "react-native";
 import GlobalStyles from '../GlobalStyles';
+import ScreenWrapper from './ScreenWrapper';
+import TicketModal from "../components/TicketModal";
+
 
 export default function App() {
   const [permission, requestPermission] = Camera.useCameraPermissions();
   const [scanned, setScanned] = useState(false);
+  const [data, setData] = useState();
   const translateY = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -31,8 +35,8 @@ export default function App() {
   if (!permission.granted) {
     // Camera permissions are not granted yet
     return (
-      <View style={styles.container}>
-        <Text style={{ textAlign: "center" }}> We need your permission to show the camera </Text>
+      <View style={[styles.container, { justifyContent: 'center' }]}>
+        <Text style={[{ textAlign: "center" }, GlobalStyles.normalText]}> We need your permission to show the camera </Text>
         <TouchableOpacity
           style={[GlobalStyles.button]}
           onPress={requestPermission}>
@@ -47,25 +51,30 @@ export default function App() {
 
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
-    alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+    setData(data);
+    // alert(`Bar code with type ${type} and data ${data} has been scanned!`);
   };
 
   return (
     <View style={styles.container}>
+      <ScreenWrapper title="Verify the ticket" />
       <View style={styles.camera}>
-      <Camera
-        style={[GlobalStyles.image]}
-        onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-      >
-        <Animated.View style={[styles.line, { transform: [{ translateY }] }]} />
-      </Camera>
+        <Camera
+          style={[GlobalStyles.image]}
+          onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+        >
+          <Animated.View style={[styles.line, { transform: [{ translateY }] }]} />
+        </Camera>
       </View>
+      {scanned &&
         <TouchableOpacity
-          style={[GlobalStyles.button,{width:255}]}
+          style={[GlobalStyles.button, { width: 255 }]}
           onPress={() => setScanned(false)}
         >
-          <Text style={[GlobalStyles.semiBoldText,{fontSize:17}]}>Scan Again</Text>
+          <Text style={[GlobalStyles.semiBoldText, { fontSize: 17 }]}>Scan Again</Text>
         </TouchableOpacity>
+      }
+      {scanned && <TicketModal data={data} visible={scanned} close={() => setScanned(false)} />}
     </View>
   );
 }
@@ -73,9 +82,9 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    gap:20,
+    gap: 20,
     flex: 1,
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "center",
   },
   camera: {
@@ -83,8 +92,8 @@ const styles = StyleSheet.create({
     height: 250,
     justifyContent: "center",
     alignItems: "center",
-    borderRadius:10,
-    overflow:'hidden'
+    borderRadius: 10,
+    overflow: 'hidden'
   },
   button: {
     flex: 1,

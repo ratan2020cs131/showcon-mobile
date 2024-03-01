@@ -41,23 +41,10 @@ export const getTotalMovieCount = createAsyncThunk(
 )
 
 
-export const getTotalCinemaCount = createAsyncThunk(
-    'movie/getTotalCinemaCount',
-    async (thunkApi)=>{
-        try{
-            const res = await MovieApi.getTotalCinemaCount();
-            return res;
-        }catch(err){
-            return thunkApi.rejectWithValue(err.message);
-        }
-    }
-)
-
 const initialState = {
     isCreatingNewMovie: false,
     isMovieCreated: false,
     totalMovies:null,
-    totalCinemas:null,
     newMovie: {
         title: '',
         genre: [],
@@ -110,11 +97,11 @@ const movieSlice = createSlice({
                 state.isCreatingNewMovie = false,
                     state.isMovieCreated = true
             })
+            .addCase(getTotalMovieCount.pending, (state, action)=>{
+                state.totalMovies=null
+            })
             .addCase(getTotalMovieCount.fulfilled, (state, action)=>{
                 state.totalMovies=action.payload
-            })
-            .addCase(getTotalCinemaCount.fulfilled, (state, action)=>{
-                state.totalCinemas=action.payload
             })
     }
 })

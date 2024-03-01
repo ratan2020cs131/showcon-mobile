@@ -1,15 +1,36 @@
-const User = require("../database/models/User");
-const Ticket = require("../database/models/Ticket");
-const bcrypt = require("bcrypt");
+import User from "../database/models/User.js"
+import Ticket from '../database/models/Ticket.js'
+import bcrypt from "bcrypt";
+import GenerateOtp from '../../utils/GenerateOtp.js';
+import SendMail from '../../utils/SendMail.js';
+import dotenv from 'dotenv';
+dotenv.config({ path: './.env' });
 
 //CHECK WHETHER PHONE REGISTERED OR NOT
 const Signin = async (req, res) => {
   try {
     const { mobileNo } = req.params;
-    const phone = await User.findOne({ phone: mobileNo });
+    const result = await User.findOne({ phone: mobileNo });
+    if (result) {
+      const otp = GenerateOtp();
 
-    if (phone) {
-      res.send({ flag: true });
+      let mailParams = {
+        from: {
+          name: 'Showcon',
+          address: process.env.NODEMAILER_EMAIL
+        },
+        to: result.email,
+        subject: 'Showcon: Login OTP',
+        html: `<p><span style="font-family: 'trebuchet ms', geneva, sans-serif;">Hello ${result.fname},</span></p>
+        <p><span style="font-family: 'trebuchet ms', geneva, sans-serif;">Your login verification OTP is</span></p>
+        <div style="padding: 10px; background: #e0e0e0; border-radius: 5px; width: fit-content; font-family: 'trebuchet ms', geneva, sans-serif; text-align: left;"><span style="color: rgb(245, 81, 57);"><strong><span style="font-size: 14pt;"><em><span style="font-family: 'trebuchet ms', geneva, sans-serif;">${otp}</span></em></span></strong></span></div>
+        <p><span style="font-family: 'trebuchet ms', geneva, sans-serif;">Team,</span><br><span style="font-family: 'trebuchet ms', geneva, sans-serif;">Showcon</span></p>
+        <div style="height: 50px;"><span style="font-family: 'trebuchet ms', geneva, sans-serif;"><img style="height: 100%; object-fit: contain;" src="https://oytnhtpjquwilgjlplfm.supabase.co/storage/v1/object/public/showcon/showcon.png" alt="showcon"></span></div>`
+      };
+      const mail = await SendMail(mailParams);
+      result.loginOtp = otp;
+      await result.save();
+      res.send({ flag: true, otp, mail });
     } else {
       res.send({ flag: false });
     }
@@ -46,17 +67,34 @@ const Register = async (req, res) => {
 //VERIFY PASSWORD
 const Verify = async (req, res) => {
   try {
-    const { mobileNo, password } = req.body;
+    const { mobileNo, password, otp } = req.body;
     const user = await User.findOne({ phone: mobileNo });
     if (user) {
-      const authorised = await bcrypt.compare(password, user.password);
-      if (authorised) {
-        const token = await user.generateToken();
-        res.status(200).send({ token });
-      } else {
-        res.status(200).send({
-          error: "Wrong Password",
-        });
+      //if user logins with password
+      if (password) {
+        const authorised = await bcrypt.compare(password, user.password);
+        if (authorised) {
+          const token = await user.generateToken();
+          if (user.role) res.status(200).send({ token, role: user.role });
+          else res.status(200).send({ token });
+        } else {
+          res.status(200).send({
+            error: "Wrong Password",
+          });
+        }
+      }
+      //if user logins with otp
+      else if (otp) {
+        if (user.loginOtp === otp) {
+          const token = await user.generateToken();
+          user.loginOtp = null;
+          await user.save();
+          res.status(200).send({ token });
+        } else {
+          res.status(200).send({
+            error: "Wrong OTP",
+          });
+        }
       }
     } else {
       res.status(404).send({
@@ -141,7 +179,7 @@ const History = async (req, res) => {
 };
 
 
-const authController = {
+export default {
   Signin,
   Register,
   Verify,
@@ -150,5 +188,3 @@ const authController = {
   Logout,
   History,
 };
-
-module.exports = authController;

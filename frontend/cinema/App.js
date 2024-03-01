@@ -1,20 +1,24 @@
-import { useEffect, useState } from "react";
-import { View, Text } from "react-native";
-import { useFonts } from "expo-font";
+import { useEffect, useState } from 'react';
+import { View, Text } from 'react-native';
+import { useFonts } from 'expo-font';
 import * as SplashScreen from "expo-splash-screen";
-import MovieScreen from "./src/screens/MovieScreen";
-import Scanner from "./src/screens/Scanner";
+import { NavigationContainer } from '@react-navigation/native';
+import BottomRoutes from './src/navigator/BottomRoutes';
+import AuthRoutes from './src/navigator/AuthRoutes';
+import { Provider } from 'react-redux';
+import store from './src/redux/store';
+import TokenVerification from './src/components/TokenVerification';
 
-export default function App({}) {
+export default function App({ }) {
   const [isLogged, setIsLogged] = useState(undefined);
 
   const [fontsLoaded] = useFonts({
-    "Montserrat-Bold": require("./assets/fonts/Montserrat-Bold.ttf"),
-    "Montserrat-Regular": require("./assets/fonts/Montserrat-Regular.ttf"),
-    "Montserrat-SemiBold": require("./assets/fonts/Montserrat-SemiBold.ttf"),
-    "OpenSans-Bold": require("./assets/fonts/OpenSans-Bold.ttf"),
-    "OpenSans-Regular": require("./assets/fonts/OpenSans-Regular.ttf"),
-    "OpenSans-SemiBold": require("./assets/fonts/OpenSans-SemiBold.ttf"),
+    'Montserrat-Bold': require('./assets/fonts/Montserrat-Bold.ttf'),
+    'Montserrat-Regular': require('./assets/fonts/Montserrat-Regular.ttf'),
+    'Montserrat-SemiBold': require('./assets/fonts/Montserrat-SemiBold.ttf'),
+    'OpenSans-Bold': require('./assets/fonts/OpenSans-Bold.ttf'),
+    'OpenSans-Regular': require('./assets/fonts/OpenSans-Regular.ttf'),
+    'OpenSans-SemiBold': require('./assets/fonts/OpenSans-SemiBold.ttf'),
   });
 
   useEffect(() => {
@@ -27,6 +31,7 @@ export default function App({}) {
     }, 2000);
   }, []);
 
+
   if (!fontsLoaded) {
     return null;
   } else {
@@ -35,10 +40,20 @@ export default function App({}) {
     }, 1000);
   }
 
+
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      {/* <MovieScreen /> */}
-      <Scanner />
-    </View>
+    <Provider store={store}>
+      <NavigationContainer>
+        {isLogged === undefined ?
+          <TokenVerification setLog={setIsLogged} /> :
+          <>
+            {isLogged === true ?
+              <AuthRoutes isLogged={isLogged}/>:
+              <AuthRoutes />
+            }
+          </>
+        }
+      </NavigationContainer>
+    </Provider>
   );
 }

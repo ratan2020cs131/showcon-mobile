@@ -1,4 +1,4 @@
-const mongo = require('mongoose');
+import mongo from 'mongoose';
 
 const ticket = new mongo.Schema({
     movie: {
@@ -29,4 +29,4 @@ const ticket = new mongo.Schema({
 
 const Ticket = mongo.model('tickets', ticket);
 
-module.exports = Ticket;
+export default Ticket;

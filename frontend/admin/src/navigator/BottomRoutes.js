@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, View } from "react-native";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import HomeRoute from '../components/home/Home';
+import HomeRoutes from './HomeRoutes';
 import MovieRoutes from './MovieRoutes';
 import ProfileRoutes from './ProfileRoutes';
 import { useRoute } from '@react-navigation/native';
@@ -17,7 +17,7 @@ const BottomRoutes = () => {
         {
             path: "HomeScreen",
             name: "Home",
-            component: HomeRoute,
+            component: HomeRoutes,
             activeIcon:'home',
             inactiveIcon:'home-outline',
             params: null,
