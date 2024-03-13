@@ -78,7 +78,7 @@ const Verify = async (req, res) => {
           if (user.role) res.status(200).send({ token, role: user.role });
           else res.status(200).send({ token });
         } else {
-          res.status(200).send({
+          res.status(401).send({
             error: "Wrong Password",
           });
         }
@@ -89,9 +89,10 @@ const Verify = async (req, res) => {
           const token = await user.generateToken();
           user.loginOtp = null;
           await user.save();
-          res.status(200).send({ token });
+          if (user.role) res.status(200).send({ token, role: user.role });
+          else res.status(200).send({ token });
         } else {
-          res.status(200).send({
+          res.status(401).send({
             error: "Wrong OTP",
           });
         }

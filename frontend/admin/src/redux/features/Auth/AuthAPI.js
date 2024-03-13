@@ -16,10 +16,14 @@ const signin = async (mobileNo) => {
 const verify = async (credentials) => {
     try {
         const response = await axios.post(`${BASE_URL}/auth/verify`, credentials);
+        if (!response.data.role || response.data.role !== 'admin') {
+            throw new Error("Non-admin Access Denied")
+        }
         return response.data;
     }
     catch (err) {
         console.log("Verify Error: ", err)
+        return { error: err.message }
     }
 }
 

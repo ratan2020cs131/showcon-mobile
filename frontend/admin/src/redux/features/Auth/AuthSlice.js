@@ -8,7 +8,7 @@ export const signin = createAsyncThunk(
             const { mobileNo } = credentials;
             const res = await authApi.signin(mobileNo);
             if (res !== true && res !== false) {
-                return thunkAPI.rejectWithValue(error);
+                return thunkAPI.rejectWithValue('Error');
             }
             return res;
         }
@@ -24,7 +24,7 @@ export const verify = createAsyncThunk(
         try {
             const res = await authApi.verify(credentials);
             if (!res) {
-                return thunkAPI.rejectWithValue(error);
+                return thunkAPI.rejectWithValue('Login Error');
             }
             if (res.token) {
                 return res.token
