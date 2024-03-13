@@ -24,7 +24,7 @@ export const verify = createAsyncThunk(
         try {
             const res = await authApi.verify(credentials);
             if (!res) {
-                return thunkAPI.rejectWithValue(error);
+                return thunkAPI.rejectWithValue('Login Error');
             }
             if (res.token) {
                 return res.token

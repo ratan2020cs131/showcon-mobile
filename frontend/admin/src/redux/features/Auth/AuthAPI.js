@@ -35,16 +35,6 @@ const verify = async (credentials) => {
     }
 }
 
-const register = async (credentials) => {
-    try {
-        const response = await axios.post(`${BASE_URL}/auth/register`, credentials);
-        return response.data.token;
-    }
-    catch (err) {
-        console.log("Register Error: ", err)
-    }
-}
-
 const getProfile = async () => {
     try {
         const response = await axiosToken.get(`${BASE_URL}/auth/profile`);
