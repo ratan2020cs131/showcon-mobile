@@ -72,8 +72,8 @@ const ListItem = ({ screen, set, get }) => {
                 <Image source={Check} style={{ position: 'absolute', zIndex: 1, height: 50, width: 70 }} />
             } */}
             <Text style={[GlobalStyles.boldText, { fontSize: 18, marginBottom: -5 }]}>{screen.screen}</Text>
-            <Text style={[GlobalStyles.semiBoldText]}>{seatCount} Seats</Text>
-            <Text style={[GlobalStyles.semiBoldText]}>{showCount} shows/day</Text>
+            <Text style={[GlobalStyles.semiBoldText, {fontSize:12}]}>{seatCount} Seats</Text>
+            <Text style={[GlobalStyles.semiBoldText, {fontSize:12}]}>{showCount} shows/day</Text>
         </TouchableOpacity>
     )
 }

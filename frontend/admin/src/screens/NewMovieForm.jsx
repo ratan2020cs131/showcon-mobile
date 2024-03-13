@@ -9,36 +9,36 @@ import { useEffect, useState } from 'react';
 import GlobalStyles from '../GlobalStyles';
 import ErrorModal from '../components/ErrorModal';
 
-const NewMovie = () => {
+const NewMovie = ({ navigation }) => {
     const movieState = useSelector(movie);
     const dispatch = useDispatch();
     const [modal, setModal] = useState(false);
     const [error, setError] = useState();
-    const onClose = ()=>setModal(false);
-    const onCloseError = ()=> {
+    const onClose = () => setModal(false);
+    const onCloseError = () => {
         setError(null);
     }
 
-    const handleSubmit = ()=>{
-        if(!movieState.newMovie.primaryPoster) setError("Add primary poster")
-        else if(!movieState.newMovie.title) setError("Add title to proceed")
-        else if(!movieState.newMovie.duration[0]||!movieState.newMovie.duration[1]) setError("Add duration of movie")
-        else if(!movieState.newMovie.genre?.length>0) setError("Select atleast one genre")
-        else if(!movieState.newMovie.description) setError("Add description")
-        else if(!movieState.newMovie.casts.length>0) setError("Add casts to proceed")
-        else if(!movieState.newMovie.release) setError("Select the release date");
+    const handleSubmit = () => {
+        if (!movieState.newMovie.primaryPoster) setError("Add primary poster")
+        else if (!movieState.newMovie.title) setError("Add title to proceed")
+        else if (!movieState.newMovie.duration[0] || !movieState.newMovie.duration[1]) setError("Add duration of movie")
+        else if (!movieState.newMovie.genre?.length > 0) setError("Select atleast one genre")
+        else if (!movieState.newMovie.description) setError("Add description")
+        else if (!movieState.newMovie.casts.length > 0) setError("Add casts to proceed")
+        else if (!movieState.newMovie.release) setError("Select the release date");
         else setModal(true)
     }
 
-    const addMovie = ()=>{
+    const addMovie = () => {
         dispatch(addNewMovie(movieState.newMovie))
     }
 
-    useEffect(()=>{
-        if(movieState.isMovieCreated){
-            setTimeout(()=>dispatch(resetNewMovieState()), 3100);
+    useEffect(() => {
+        if (movieState.isMovieCreated) {
+            setTimeout(() => dispatch(resetNewMovieState()), 3100);
         }
-    },[movieState.isMovieCreated])
+    }, [movieState.isMovieCreated])
 
 
     return (
@@ -48,16 +48,21 @@ const NewMovie = () => {
                 <View style={styles.form}>
                     <PosterImages />
                     <NewMovieForm />
-                    <TouchableOpacity 
-                    style={[GlobalStyles.button, { marginTop: 30, width: '100%'}]}
-                    onPress={handleSubmit}
+                    <TouchableOpacity
+                        style={[GlobalStyles.button, { marginTop: 30, width: '100%' }]}
+                        onPress={handleSubmit}
                     >
                         <Text style={[GlobalStyles.boldText]}>ADD MOVIE</Text>
                     </TouchableOpacity>
                 </View>
             </ScrollView>
-            {modal&&<SubmitModal visible={modal} onClose={onClose} onSubmit={addMovie} onLoading={movieState.isCreatingNewMovie} onSuccess={movieState.isMovieCreated}/>}
-            {error&&<ErrorModal visible={error!==null} onClose={onCloseError} error={error}/>}
+            {modal && <SubmitModal visible={modal} onClose={onClose} onSubmit={addMovie}
+                onLoading={movieState.isCreatingNewMovie}
+                onSuccess={movieState.isMovieCreated}
+                navigation={navigation}
+                nav={'HomeScreen'}
+            />}
+            {error && <ErrorModal visible={error !== null} onClose={onCloseError} error={error} />}
         </View>
     )
 }
