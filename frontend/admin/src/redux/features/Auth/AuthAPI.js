@@ -69,7 +69,6 @@ const logout = async () => {
 export default {
     signin,
     verify,
-    register,
     getProfile,
     update,
     logout

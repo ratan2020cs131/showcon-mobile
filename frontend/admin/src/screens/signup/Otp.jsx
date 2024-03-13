@@ -38,14 +38,17 @@ const Otp = ({ navigation, route }) => {
   }, [authState.token])
 
   const toggleShowPassword = () => {
+    dispatch(resetError());
     setShowPassword(!showPassword);
   };
 
   const toggleLoginWithPassword = () => {
+    dispatch(resetError());
     setLoginWithPassword(!loginWithPassword);
   };
 
   const handleKeyPress = ({ nativeEvent }) => {
+    dispatch(resetError());
     if (nativeEvent.key === "Backspace" && count > 0) {
       const newOtp = [...otp];
       const lastIndex = count - 1;
@@ -74,7 +77,8 @@ const Otp = ({ navigation, route }) => {
 
   const handleSubmit = () => {
     if (!loginWithPassword && password.length > 0) {
-      dispatch(verify({ mobileNo, password }))
+      dispatch(resetError());
+      dispatch(verify({ mobileNo, password }));
     }
     else if (loginWithPassword && otp.join('').length === 4) {
       dispatch(verify({ mobileNo, otp: parseInt(otp.join('')) }))

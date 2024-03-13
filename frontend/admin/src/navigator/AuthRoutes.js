@@ -2,7 +2,6 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import Login from '../screens/signup/Login';
 import Otp from '../screens/signup/Otp';
-import Register from '../screens/signup/Register';
 import BottomRoute from './BottomRoutes';
 const Stack = createStackNavigator();
 
@@ -19,11 +18,6 @@ const AuthRoutes = ({isLogged}) => {
         {
             path: "Otp",
             component: Otp,
-            option: { headerShown: false }
-        },
-        {
-            path: "Register",
-            component: Register,
             option: { headerShown: false }
         },
         {
