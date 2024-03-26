@@ -61,7 +61,14 @@ const NewMovie = () => {
                     </TouchableOpacity>
                 </View>
             </ScrollView>
-            {modal && <SubmitModal visible={modal} onClose={onClose} onSubmit={addMovie} onLoading={movieState.isCreatingNewMovie} onSuccess={movieState.isMovieCreated} />}
+            {modal && 
+              <SubmitModal visible={modal} onClose={onClose} onSubmit={addMovie}
+                onLoading={movieState.isCreatingNewMovie}
+                onSuccess={movieState.isMovieCreated}
+                navigation={navigation}
+                nav={'HomeScreen'}
+            />
+            }
             {error && <ErrorModal visible={error !== null} onClose={onCloseError} error={error} />}
         </View>
     )

@@ -38,23 +38,6 @@ export const verify = createAsyncThunk(
     }
 )
 
-export const register = createAsyncThunk(
-    "auth/register",
-    async (credentials, thunkAPI) => {
-        try {
-            const res = await authApi.register(credentials);
-            if (!res) {
-                return thunkAPI.rejectWithValue(error);
-            }
-            console.log("token :", res);
-            return res;
-        }
-        catch (err) {
-            return thunkAPI.rejectWithValue(err.message);
-        }
-    }
-)
-
 export const getProfile = createAsyncThunk(
     "auth/profile",
     async (thunkAPI) => {
@@ -153,14 +136,6 @@ const authSlice = createSlice({
                 state.isLoading = false,
                     state.isVerified = false,
                     state.error = action.payload
-            })
-            .addCase(register.pending, (state, action) => {
-                state.isLoading = true
-            })
-            .addCase(register.fulfilled, (state, action) => {
-                state.isLoading = false,
-                    state.isVerified = true,
-                    state.token = action.payload
             })
             .addCase(getProfile.pending, (state, action) => {
                 state.isLoading = true

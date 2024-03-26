@@ -4,10 +4,13 @@ import GlobalStyles from "../../GlobalStyles";
 import SuccessAnimation from "../Success";
 import { useEffect } from "react";
 
-const SubmitModal = ({ visible, onClose, onSubmit, onLoading, onSuccess }) => {
+const SubmitModal = ({ visible, onClose, onSubmit, onLoading, onSuccess, navigation, nav }) => {
     useEffect(() => {
         if (onSuccess) {
-            setTimeout(onClose, 3000)
+            setTimeout(() => {
+                onClose();
+                navigation && navigation.navigate(nav)
+            }, 3000)
         }
     }, [onSuccess])
 

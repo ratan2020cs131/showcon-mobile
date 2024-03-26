@@ -16,24 +16,22 @@ const signin = async (mobileNo) => {
 const verify = async (credentials) => {
     try {
         const response = await axios.post(`${BASE_URL}/auth/verify`, credentials);
+        if (response.status === 401) {
+            throw new Error(response.data.error)
+        }
         if (!response.data.role || response.data.role !== 'admin') {
             throw new Error("Non-admin Access Denied")
         }
         return response.data;
     }
     catch (err) {
-        console.log("Verify Error: ", err)
-        return { error: err.message }
-    }
-}
-
-const register = async (credentials) => {
-    try {
-        const response = await axios.post(`${BASE_URL}/auth/register`, credentials);
-        return response.data.token;
-    }
-    catch (err) {
-        console.log("Register Error: ", err)
+        if (err.response && err.response.status === 401) {
+            console.log("Verify Error: ", err.response.data.error);
+            return { error: err.response.data.error };
+        } else {
+            console.log("Verify Error: ", err.message);
+            return { error: err.message };
+        }
     }
 }
 
@@ -71,7 +69,6 @@ const logout = async () => {
 export default {
     signin,
     verify,
-    register,
     getProfile,
     update,
     logout
