@@ -8,12 +8,13 @@ import { useEffect } from 'react';
 
 const HomeScreem = ({ navigation }) => {
     const dispatch = useDispatch();
+    const movieState = useSelector(state => state.movie);
     // const [refreshing, setRefreshing] = useState(false);
     useEffect(() => {
         dispatch(getTotalMovieCount())
         dispatch(getTotalCinemaCount())
         dispatch(getNewCinema())
-    }, []);
+    }, [movieState.isMovieCreated]);
 
     const apiHit = () => {
         // setRefreshing(true);

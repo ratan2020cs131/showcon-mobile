@@ -78,7 +78,7 @@ const movieSlice = createSlice({
                 title: '',
                 genre: [],
                 primaryPoster: null,
-                secondaryPoster: [1,2],
+                secondaryPoster: [],
                 duration: [],
                 description: '',
                 casts: [],
