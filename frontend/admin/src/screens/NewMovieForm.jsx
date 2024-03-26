@@ -8,8 +8,10 @@ import SubmitModal from '../components/movie/SubmitModal';
 import { useEffect, useState } from 'react';
 import GlobalStyles from '../GlobalStyles';
 import ErrorModal from '../components/ErrorModal';
+import { useNavigation } from '@react-navigation/native';
 
-const NewMovie = ({ navigation }) => {
+const NewMovie = () => {
+    const navigation = useNavigation();
     const movieState = useSelector(movie);
     const dispatch = useDispatch();
     const [modal, setModal] = useState(false);
@@ -36,7 +38,10 @@ const NewMovie = ({ navigation }) => {
 
     useEffect(() => {
         if (movieState.isMovieCreated) {
-            setTimeout(() => dispatch(resetNewMovieState()), 3100);
+            setTimeout(() => {
+                navigation.navigate("HomeScreen");
+                dispatch(resetNewMovieState())
+            }, 3100);
         }
     }, [movieState.isMovieCreated])
 
@@ -56,12 +61,14 @@ const NewMovie = ({ navigation }) => {
                     </TouchableOpacity>
                 </View>
             </ScrollView>
-            {modal && <SubmitModal visible={modal} onClose={onClose} onSubmit={addMovie}
+            {modal && 
+              <SubmitModal visible={modal} onClose={onClose} onSubmit={addMovie}
                 onLoading={movieState.isCreatingNewMovie}
                 onSuccess={movieState.isMovieCreated}
                 navigation={navigation}
                 nav={'HomeScreen'}
-            />}
+            />
+            }
             {error && <ErrorModal visible={error !== null} onClose={onCloseError} error={error} />}
         </View>
     )
