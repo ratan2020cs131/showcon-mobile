@@ -3,7 +3,6 @@ import GlobalStyles from "../../GlobalStyles";
 
 const Actor = ({ data }) => {
     const { name, image } = data;
-    console.log("actor: ", data);
     return (
         <View style={styles.cast}>
             <View style={styles.actor}>

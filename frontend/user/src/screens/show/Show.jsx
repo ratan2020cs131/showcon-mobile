@@ -12,7 +12,7 @@ const Show = ({ navigation, route }) => {
             showsVerticalScrollIndicator={false}
         >
             <View style={styles.container}>
-                <Poster title={data.title} image={data.primaryPoster}/>
+                <Poster id={data._id} title={data.title} image={data.primaryPoster}/>
                 {/* <Places title={data.title} cinema={data.cinema} navigation={navigation} /> */}
                 <Description data={data.description} />
                 <Cast data={data.casts}/>

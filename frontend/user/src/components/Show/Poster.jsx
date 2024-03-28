@@ -1,16 +1,37 @@
 import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import { Ionicons } from "@expo/vector-icons";
-import { useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { addWishlist, getWishlist, removeWishlist } from "../../Redux/Features/Wishlist/wishlistSlice";
 
-const Poster = ({ image, title }) => {
+const Poster = ({ id, image, title }) => {
+    const dispatch = useDispatch();
+    const wishlist = useSelector(state => state.wishlist);
     const [like, setLike] = useState(false);
-    handleLike = () => setLike(!like);
+    handleLike = () => {
+        if (like === false)
+            dispatch(addWishlist({ 'MovieID': id }))
+        else
+            dispatch(removeWishlist({ 'MovieID': id }))
+        setLike(!like)
+    };
+
+    useLayoutEffect(() => {
+        if (wishlist.wishlist.includes(id)) {
+            console.log("wishlist: ", wishlist.wishlist);
+            setLike(true);
+        }
+    }, [wishlist.wishlist])
+
+    useLayoutEffect(() => {
+        dispatch(getWishlist())
+    }, [])
 
     return (
         <View style={styles.itemContainer}>
             <View style={styles.imgcontainer}>
-                <Image source={{uri:image}} style={styles.image}></Image>
+                <Image source={{ uri: image }} style={styles.image}></Image>
             </View>
             <View style={styles.container}>
                 <Text style={[GlobalStyles.semiBoldText, styles.title]}>{title}</Text>
@@ -28,10 +49,10 @@ const Poster = ({ image, title }) => {
 export default Poster;
 
 const styles = StyleSheet.create({
-    itemContainer:{
-        width:"100%",
-        alignItems:'center',
-        marginBottom:30,
+    itemContainer: {
+        width: "100%",
+        alignItems: 'center',
+        marginBottom: 30,
     },
     imgcontainer: {
         width: 320,
