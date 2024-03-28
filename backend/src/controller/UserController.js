@@ -13,7 +13,7 @@ const getCityMovies = async (req, res) => {
             { $project: { _id: 0, movies: 1 } }
         ]);
         const uniqueMovieIds = result.map(item => item.movies).flat();
-        const movies = await Movie.find({ _id: { $in: uniqueMovieIds } });
+        const movies = await Movie.find({ _id: { $in: uniqueMovieIds } }).populate('casts');;
         res.json(movies);
     } catch (err) {
         console.log('get city movies error: ', err.message);
