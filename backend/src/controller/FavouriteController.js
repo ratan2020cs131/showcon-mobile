@@ -58,7 +58,7 @@ const getFav = async (req, res) => {
     try {
         const userId = req.user._id;
         if (!userId) return res.status(404).json({ message: "User Not Found" })
-        const fav = await Favourite.findOne({ userId })
+        const fav = await Favourite.findOne({ userId }).populate('list')
         if (fav) {
             res.status(200).send({ "movieId": fav.list });
         } else {
