@@ -5,14 +5,12 @@ import Movie from "./Movie.js";
 const favourite = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: User, // Assuming 'User' is the name of your User model
+    ref: User,
   },
-  list: {
-    type: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: Movie, // Assuming 'User' is the name of your User model
-    }], // Assuming tokens are strings; you can use another data type if needed
-  },
+  list: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: Movie,
+  }],
 });
 
 const Favourite = mongoose.model("favourite", favourite);

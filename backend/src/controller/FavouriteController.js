@@ -37,15 +37,13 @@ const delFav = async (req, res) => {
 
         const movieID = req.body.MovieID;
 
-        let favourite = await Favourite.findOne({ userId });
+        let favourite = await Favourite.findOneAndUpdate(
+            { userId: userId }, // Match documents with the given userId
+            { $pull: { list: movieID } }, // Remove the specified ObjectId from the list array
+            { new: true },
+        );
 
-        favourite.list = favourite.list.filter((item)=>{
-            return item!==movieID;
-        })
-
-        favourite = await favourite.save();
-
-        res.send({ "message": "Removed from favourite","movieId": favourite.list });
+        res.send({ "message": "Removed from favourite", "movieId": favourite.list });
 
     } catch (err) {
         console.log("Del Favorite Err: ", err);
@@ -70,7 +68,7 @@ const getFav = async (req, res) => {
     }
 }
 
-export default{
+export default {
     addFav,
     delFav,
     getFav
