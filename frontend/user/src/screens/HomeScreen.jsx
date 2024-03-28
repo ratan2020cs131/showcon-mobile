@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Dimensions, Modal, Pressable, View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Dimensions, Modal, Pressable, View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput, FlatList } from 'react-native';
 import { FontAwesome5, Feather } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import DateTimePicker from "@react-native-community/datetimepicker"
@@ -8,9 +8,18 @@ import GlobalStyles from '../GlobalStyles';
 import Popular from '../components/Home/Poupular';
 import Result from '../components/Home/Result';
 import { AntDesign } from '@expo/vector-icons';
+import { useDispatch, useSelector } from 'react-redux';
+import { getMovieByCity } from '../Redux/Features/Movie/movieSlice';
+import { getAddress } from '../Redux/Features/Auth/authSlice'
+import { requestForegroundPermissionsAsync, getCurrentPositionAsync } from 'expo-location';
+import Shimmer from '../components/Shimmer';
+import MovieCard from '../components/CardA/Card';
 
 const HomeScreen = ({ navigation }) => {
 
+    const dispatch = useDispatch();
+    const auth = useSelector(state => state.auth)
+    const movie = useSelector(state => state.movie)
     const windowWidth = Dimensions.get('window').width;
 
     const [date, setDate] = useState('Date');
@@ -35,6 +44,39 @@ const HomeScreen = ({ navigation }) => {
         }
         setShowTimePicker(false);
     };
+
+    const getLocation = async () => {
+        try {
+            const { status } = await requestForegroundPermissionsAsync();
+            if (status !== 'granted') {
+                throw new Error("Location permission denied")
+                return;
+            }
+            // Get current location
+            const location = await getCurrentPositionAsync({});
+            dispatch(getAddress({
+                latitude: location.coords.latitude,
+                longitude: location.coords.longitude
+            }))
+        } catch (error) {
+            console.log(`Error getting location: ${error.message}`);
+        }
+    }
+    useEffect(() => {
+        if (auth.address === null)
+            getLocation();
+    }, [auth.address])
+
+    useEffect(() => {
+        if (auth.address !== null) {
+            // dispatch(getMovieByCity(auth?.address?.zipcode))
+            dispatch(getMovieByCity(209800))
+        }
+    }, [auth.address])
+
+    useEffect(() => {
+        console.log("hi movies by city: ", movie.cityMovies);
+    }, [movie.cityMovies])
 
     // return (
     //     <ScreenWrapper title="Home">
@@ -147,7 +189,6 @@ const HomeScreen = ({ navigation }) => {
                 <ScrollView
                     nestedScrollEnabled={true}
                     style={{
-                        // backgroundColor:'red'
                         padding: 10,
                     }}
                     contentContainerStyle={{ gap: 10 }}
@@ -158,7 +199,7 @@ const HomeScreen = ({ navigation }) => {
                             style={[GlobalStyles.semiBoldText, { borderColor: '#a0a0a0', borderWidth: 2, height: 45, borderRadius: 7, paddingHorizontal: 15 }]} />
                         <AntDesign name="search1" size={25} color="#a0a0a0" style={{ position: 'absolute', right: 10 }} />
                     </View>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom:30 }}>
                         <View style={{ height: 45, borderColor: '#A0A0A0', borderWidth: 2, borderRadius: 7, width: '48%', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 5 }}>
                             {true ?
                                 <Text style={[GlobalStyles.semiBoldText]}>Pick a date & time</Text>
@@ -174,9 +215,25 @@ const HomeScreen = ({ navigation }) => {
 
                         </View>
                     </View>
-                    <View>
-                        <Text style={[GlobalStyles.boldText]}>Shows in your city</Text>
-                    </View>
+                    {auth.address === null || movie.gettingCityMovie ?
+                        <Shimmer style={{ width: '100%', height: 60, borderRadius: 7 }} />
+                        :
+                        <>
+                            {movie.cityMovies?.length > 0 ?
+                                <View>
+                                    <Text style={[GlobalStyles.boldText, {fontSize:15}]}>Shows in your city</Text>
+                                    <FlatList
+                                        data={movie.cityMovies}
+                                        renderItem={({item}) => <MovieCard data={item} wd={100} ht={140}/>}
+                                        keyExtractor={item => item._id}
+                                        horizontal={true}
+                                    />
+                                </View>
+                                :
+                                null
+                            }
+                        </>
+                    }
                 </ScrollView>
             </ScreenWrapper>
         </View>

@@ -1,26 +1,27 @@
 import { View, StyleSheet, Text, FlatList, Image } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 
-const Actor=({data})=>{
-    const {name, img}=data;
-    return(
+const Actor = ({ data }) => {
+    const { name, image } = data;
+    console.log("actor: ", data);
+    return (
         <View style={styles.cast}>
-        <View style={styles.actor}>
-            <Image source={{uri:img}} style={styles.image}/>
-        </View>
-        <Text style={[GlobalStyles.semiBoldText,{textAlign:'center'}]}>{name}</Text>
+            <View style={styles.actor}>
+                <Image source={{ uri: image }} style={styles.image} />
+            </View>
+            <Text style={[GlobalStyles.semiBoldText, { textAlign: 'center' }]}>{name}</Text>
         </View>
     )
 }
 
-const Cast = ({data}) => {
+const Cast = ({ data }) => {
     return (
         <View style={styles.container}>
             <Text style={[GlobalStyles.boldText, styles.headline]}>CAST</Text>
             <FlatList
                 horizontal={true}
                 data={data}
-                renderItem={({ item }) => <Actor key={item._id} data={item}/>}
+                renderItem={({ item }) => <Actor data={item} />}
                 keyExtractor={(item) => item._id}
                 showsHorizontalScrollIndicator={false}
             />
@@ -42,22 +43,22 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         marginTop: 30,
     },
-    cast:{
-        width:70,
-        marginHorizontal:10,
-        justifyContent:"center",
-        alignItems:"center"
+    cast: {
+        width: 70,
+        marginHorizontal: 10,
+        justifyContent: "flex-start",
+        alignItems: "center",
     },
-    actor:{
-        height:70,
-        width:70,
-        borderRadius:100,
+    actor: {
+        height: 70,
+        width: 70,
+        borderRadius: 100,
     },
-    image:{
-        width:"100%",
-        height:"100%",
-        resizeMode:"cover",
-        borderRadius:100
+    image: {
+        width: "100%",
+        height: "100%",
+        resizeMode: "cover",
+        borderRadius: 100
     }
 })
 

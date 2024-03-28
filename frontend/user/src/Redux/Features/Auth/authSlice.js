@@ -1,6 +1,18 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import authApi from './authAPI';
 
+export const getAddress = createAsyncThunk(
+    'register/getLocation',
+    async (coordinates, thunkAPI) => {
+        try {
+            const res = await authApi.getAddress(coordinates);
+            return res;
+        } catch (err) {
+            return thunkAPI.rejectWithValue(err.message);
+        }
+    }
+)
+
 export const signin = createAsyncThunk(
     "auth/signin",
     async (credentials, thunkAPI) => {
@@ -103,6 +115,7 @@ export const logout = createAsyncThunk(
 )
 
 const state = {
+    address: null,
     isLoading: false,
     isRegistered: undefined,
     isVerified: undefined,
@@ -144,49 +157,60 @@ const authSlice = createSlice({
                 state.isLoading = true
             })
             .addCase(verify.fulfilled, (state, action) => {
-                state.isLoading = false,
-                    state.isVerified = true,
-                    state.token = action.payload
+                state.isLoading = false;
+                state.isVerified = true;
+                state.token = action.payload
             })
             .addCase(verify.rejected, (state, action) => {
-                state.isLoading = false,
-                    state.isVerified = false,
-                    state.error = action.payload
+                state.isLoading = false;
+                state.isVerified = false;
+                state.error = action.payload
             })
             .addCase(register.pending, (state, action) => {
                 state.isLoading = true
             })
             .addCase(register.fulfilled, (state, action) => {
-                state.isLoading = false,
-                    state.isVerified = true,
-                    state.token = action.payload
+                state.isLoading = false;
+                state.isVerified = true;
+                state.token = action.payload
             })
             .addCase(getProfile.pending, (state, action) => {
                 state.isLoading = true
             })
             .addCase(getProfile.fulfilled, (state, action) => {
-                state.isLoading = false,
-                    state.user = action.payload,
-                    state.isAuth = true
+                state.isLoading = false;
+                state.user = action.payload;
+                state.isAuth = true
             })
             .addCase(getProfile.rejected, (state, action) => {
-                state.isLoading = false,
-                    state.isAuth = false
+                state.isLoading = false;
+                state.isAuth = false
             })
             .addCase(update.pending, (state, action) => {
-                state.isLoading = true,
-                    state.isUpdated = false,
-                    state.error = false
+                state.isLoading = true;
+                state.isUpdated = false;
+                state.error = false
             })
             .addCase(update.fulfilled, (state, action) => {
-                state.isLoading = false,
-                    state.isUpdated = true
+                state.isLoading = false;
+                state.isUpdated = true
             })
             .addCase(update.rejected, (state, action) => {
-                state.isLoading = false,
-                    state.error = true
+                state.isLoading = false;
+                state.error = true
             })
-
+            .addCase(getAddress.pending, (state, action) => {
+                state.isLoading = true;
+                state.address = null;
+            })
+            .addCase(getAddress.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.address = action.payload;
+            })
+            .addCase(getAddress.rejected, (state, action) => {
+                state.isLoading = false;
+                state.address = null;
+            })
     }
 });
 

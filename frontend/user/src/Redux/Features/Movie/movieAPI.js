@@ -19,9 +19,19 @@ const getCinema = async (id) => {
   }
 };
 
+const getMovieByCity = async (zipcode) => {
+  try {
+    const response = await axios.get(`${BASE_URL}user/get-city-movies?zipcode=${zipcode}`);
+    return response.data;
+  } catch (err) {
+    console.log("Get movie by city Error: ", err);
+  }
+};
+
 const movieAPI = {
   getMovies,
-  getCinema
+  getCinema,
+  getMovieByCity
 };
 
 export default movieAPI;

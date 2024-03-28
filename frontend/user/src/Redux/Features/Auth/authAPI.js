@@ -3,6 +3,16 @@ import axios from 'axios';
 import axiosToken from '../../../api/axiosToken';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+const getAddress = async (coordinates) => {
+    try {
+        const res = await axios.get(`${BASE_URL}location/address?latitude=${coordinates.latitude}&longitude=${coordinates.longitude}`);
+        console.log("get address api res: ", res.data);
+        return res.data;
+    } catch (err) {
+        console.log("Get address api error: ", err.message);
+    }
+}
+
 const signin = async (credentials) => {
     try {
         console.log("api ", credentials);
@@ -69,6 +79,7 @@ const logout = async () => {
 }
 
 const authApi = {
+    getAddress,
     signin,
     verify,
     register,

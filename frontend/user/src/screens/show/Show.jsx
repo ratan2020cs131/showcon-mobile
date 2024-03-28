@@ -12,10 +12,10 @@ const Show = ({ navigation, route }) => {
             showsVerticalScrollIndicator={false}
         >
             <View style={styles.container}>
-                <Poster title={data.title} image={data.banner}/>
-                <Places title={data.title} cinema={data.cinema} navigation={navigation} />
-                <Cast data={data.cast}/>
+                <Poster title={data.title} image={data.primaryPoster}/>
+                {/* <Places title={data.title} cinema={data.cinema} navigation={navigation} /> */}
                 <Description data={data.description} />
+                <Cast data={data.casts}/>
                 <Rating />
             </View>
         </ScrollView>
