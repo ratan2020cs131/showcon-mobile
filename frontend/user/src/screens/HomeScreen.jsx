@@ -14,6 +14,7 @@ import { getAddress } from '../Redux/Features/Auth/authSlice'
 import { requestForegroundPermissionsAsync, getCurrentPositionAsync } from 'expo-location';
 import Shimmer from '../components/Shimmer';
 import MovieCard from '../components/CardA/Card';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const HomeScreen = ({ navigation }) => {
 
@@ -28,6 +29,7 @@ const HomeScreen = ({ navigation }) => {
     const [showDatePicker, setShowDatePicker] = useState(false);
     const [showTimePicker, setShowTimePicker] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
+    const [pincode, setPincode] = useState('');
 
     const onChangeDate = (event, selectedDate) => {
         if (selectedDate) {
@@ -70,13 +72,14 @@ const HomeScreen = ({ navigation }) => {
     useEffect(() => {
         if (auth.address !== null) {
             // dispatch(getMovieByCity(auth?.address?.zipcode))
-            dispatch(getMovieByCity(209800))
+            dispatch(getMovieByCity(pincode.length ? pincode : auth.address.zipcode))
         }
-    }, [auth.address])
+    }, [auth.address, pincode])
 
     useEffect(() => {
         console.log("hi movies by city: ", movie.cityMovies);
     }, [movie.cityMovies])
+
 
     // return (
     //     <ScreenWrapper title="Home">
@@ -194,13 +197,13 @@ const HomeScreen = ({ navigation }) => {
                     contentContainerStyle={{ gap: 10 }}
                 >
                     <TouchableOpacity onPress={() => navigation.navigate("SearchScreen")} style={{ position: 'relative', justifyContent: 'center' }}>
-                        <Text style={[GlobalStyles.semiBoldText, { borderColor: '#a0a0a0', borderWidth: 2, lineHeight: 38, borderRadius: 7, paddingHorizontal: 15 }]}>Search Movies</Text>
+                        <Text style={[GlobalStyles.semiBoldText, { borderColor: '#a0a0a0', color: '#a0a0a0', borderWidth: 2, lineHeight: 38, borderRadius: 7, paddingHorizontal: 15 }]}>Search Movies</Text>
                         <AntDesign name="search1" size={25} color="#a0a0a0" style={{ position: 'absolute', right: 20 }} />
                     </TouchableOpacity>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 30 }}>
                         <View style={{ height: 45, borderColor: '#A0A0A0', borderWidth: 2, borderRadius: 7, width: '48%', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 5 }}>
-                            {false ?
-                                <Text style={[GlobalStyles.semiBoldText]}>Pick a date & time</Text>
+                            {true ?
+                                <Text style={[GlobalStyles.semiBoldText, {color:'#a0a0a0'}]}>Pick a date & time</Text>
                                 :
                                 <>
                                     <Text style={[GlobalStyles.semiBoldText, { lineHeight: 35, fontSize: 13, color: GlobalStyles.orange }]}>22 Feb</Text>
@@ -211,10 +214,14 @@ const HomeScreen = ({ navigation }) => {
                             }
                         </View>
                         <TextInput
+                            value={pincode}
+                            onChangeText={(text) => setPincode(text)}
                             placeholderTextColor="#a0a0a0"
+                            maxLength={6}
                             placeholder='Pincode'
                             color={GlobalStyles.orange}
-                            style={[GlobalStyles.semiBoldText, { height: 45, borderColor: '#A0A0A0', borderWidth: 2, borderRadius: 7, width: '48%', paddingHorizontal: 15 }]} />
+                            style={[GlobalStyles.semiBoldText, { height: 45, borderColor: '#A0A0A0', borderWidth: 2, borderRadius: 7, width: '48%', paddingHorizontal: 15 }]}
+                        />
                     </View>
                     {auth.address === null || movie.gettingCityMovie ?
                         <Shimmer style={{ width: '100%', height: 60, borderRadius: 7 }} />
@@ -231,7 +238,10 @@ const HomeScreen = ({ navigation }) => {
                                     />
                                 </View>
                                 :
-                                null
+                                <View style={{ alignItems: 'center' }}>
+                                    <MaterialCommunityIcons name="movie-open-off" size={54} color="#d0d0d0" />
+                                    <Text style={[GlobalStyles.semiBoldText, { color: '#d0d0d0' }]}>No shows found in your area</Text>
+                                </View>
                             }
                         </>
                     }
