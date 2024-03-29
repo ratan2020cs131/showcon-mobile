@@ -72,7 +72,7 @@ const HomeScreen = ({ navigation }) => {
     useEffect(() => {
         if (auth.address !== null) {
             // dispatch(getMovieByCity(auth?.address?.zipcode))
-            dispatch(getMovieByCity(pincode.length ? pincode : auth.address.zipcode))
+            dispatch(getMovieByCity(pincode.length === 6 ? pincode : auth.address.zipcode))
         }
     }, [auth.address, pincode])
 
@@ -203,7 +203,7 @@ const HomeScreen = ({ navigation }) => {
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 30 }}>
                         <View style={{ height: 45, borderColor: '#A0A0A0', borderWidth: 2, borderRadius: 7, width: '48%', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 5 }}>
                             {true ?
-                                <Text style={[GlobalStyles.semiBoldText, {color:'#a0a0a0'}]}>Pick a date & time</Text>
+                                <Text style={[GlobalStyles.semiBoldText, { color: '#a0a0a0' }]}>Pick a date & time</Text>
                                 :
                                 <>
                                     <Text style={[GlobalStyles.semiBoldText, { lineHeight: 35, fontSize: 13, color: GlobalStyles.orange }]}>22 Feb</Text>

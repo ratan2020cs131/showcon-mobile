@@ -18,6 +18,10 @@ const Search = ({ navigation }) => {
         if (param !== '') dispatch(searchMovie(param))
     }
     useEffect(searchHandler, [param]);
+    useEffect(() => {
+        if (searchRef.current)
+            searchRef.current.focus()
+    }, [searchRef])
 
     return (
         <View style={styles.container}>
