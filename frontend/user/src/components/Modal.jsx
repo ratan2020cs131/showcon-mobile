@@ -2,7 +2,7 @@ import { View, Modal, Text, Button, StyleSheet, TouchableOpacity } from 'react-n
 import GlobalStyles from '../GlobalStyles';
 import { Ionicons } from '@expo/vector-icons';
 
-const ModalView = ({ visible, onClose, title, button }) => {
+const ModalView = ({ visible, onClose, title, button, onConfirm }) => {
     return (
         <Modal
             animationType="fade"
@@ -15,10 +15,15 @@ const ModalView = ({ visible, onClose, title, button }) => {
                         <Ionicons name="close-outline" size={25} ></Ionicons>
                     </TouchableOpacity>
                     <Text style={[GlobalStyles.semiBoldText, styles.title]}>{title}</Text>
-                    {button&&
+                    {button &&
                         <View style={styles.btnContainer}>
-                            <TouchableOpacity style={[GlobalStyles.buttonOutlined, styles.btn]}>
-                                <Text style={[GlobalStyles.semiBoldText, {color:'#F55139'}]}>YES</Text>
+                            <TouchableOpacity style={[GlobalStyles.buttonOutlined, styles.btn]}
+                                onPress={() => {
+                                    onClose();
+                                    onConfirm && onConfirm();
+                                }}
+                            >
+                                <Text style={[GlobalStyles.semiBoldText, { color: '#F55139' }]}>YES</Text>
                             </TouchableOpacity>
                             <TouchableOpacity style={[GlobalStyles.button, styles.btn2]} onPress={onClose}>
                                 <Text style={[GlobalStyles.semiBoldText]}>NO</Text>
@@ -65,11 +70,11 @@ const styles = StyleSheet.create({
         gap: 70
     },
     btn: {
-        paddingHorizontal:20,
+        paddingHorizontal: 20,
     },
-    btn2:{
-        width:70,
-        paddingHorizontal:20,
+    btn2: {
+        width: 70,
+        paddingHorizontal: 20,
     }
 });
 

@@ -18,7 +18,7 @@ const Poster = ({ id, image, title }) => {
     };
 
     useLayoutEffect(() => {
-        if (wishlist.wishlist.includes(id)) {
+        if (wishlist.wishlist.some(item => item._id === id)) {
             console.log("wishlist: ", wishlist.wishlist);
             setLike(true);
         }
@@ -26,7 +26,7 @@ const Poster = ({ id, image, title }) => {
 
     useLayoutEffect(() => {
         dispatch(getWishlist())
-    }, [])
+    }, [wishlist.added, wishlist.removed])
 
     return (
         <View style={styles.itemContainer}>

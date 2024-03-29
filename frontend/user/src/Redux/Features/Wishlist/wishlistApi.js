@@ -23,6 +23,7 @@ const addWishlist = async (data) => {
 
 const removeWishlist = async (body) => {
     try {
+        console.log(body);
         const res = await axios.delete(`${BASE_URL}favourite/`, { data: body });
         console.log("remove wishlist res: ", res.data);
         return res.data;

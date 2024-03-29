@@ -1,4 +1,4 @@
-import { ImageBackground, View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { ImageBackground, View, Text, StyleSheet, ScrollView, TouchableOpacity, ActivityIndicator, FlatList } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import ScreenWrapper from './ScreenWrapper';
 import GlobalStyles from '../GlobalStyles';
@@ -7,40 +7,72 @@ import posterImg2 from '../../assets/images/poster2.png';
 import posterImg3 from '../../assets/images/poster4.png';
 import posterImg4 from '../../assets/images/poster5.png';
 import ModalView from "../components/Modal";
-import { useState } from 'react';
-import { movie } from '../Redux/Features/Movie/movieSlice';
-import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { getWishlist, removeWishlist } from '../Redux/Features/Wishlist/wishlistSlice';
+import { AntDesign } from '@expo/vector-icons';
 
 const WishlistScreen = ({ navigation }) => {
-    const movieState = useSelector(movie);
+    const dispatch = useDispatch();
+    const wishlist = useSelector(state => state.wishlist);
     const [modal, setModal] = useState(false);
+    const [delId, setDelId] = useState('')
     onClose = () => setModal(false)
+
+    useEffect(() => {
+        dispatch(getWishlist())
+    }, [wishlist.removed])
+
+    const handleRemoveWish = () => {
+        dispatch(removeWishlist({ "MovieID": delId }))
+    }
 
     return (
         <ScreenWrapper title="Whishlist">
-            <ScrollView style={styles.container} showsVerticalScrollIndicator={false} nestedScrollEnabled={true} >
-                <View style={{ width: '100%' }}>
-                    <View style={styles.likedcontainer}>
-                        {
-                            movieState.movies.map((item, index) => (
-                                <TouchableOpacity key={index} style={styles.item} onPress={() => navigation.navigate("ShowScreen", { data:item })}>
+            {/* <ScrollView style={styles.container} showsVerticalScrollIndicator={false} nestedScrollEnabled={true} > */}
+            <View style={{ width: '100%' }}>
+                <View style={styles.likedcontainer}>
+                    {wishlist.getting &&
+                        <ActivityIndicator size={"large"} color={GlobalStyles.orange} style={{ marginTop: 100 }} />
+                    }
+
+                    {wishlist.wishlist?.length > 0 &&
+                        <FlatList
+                            data={wishlist.wishlist}
+                            keyExtractor={(item) => item._id}
+                            numColumns={2}
+                            renderItem={({ item }) => (
+                                <TouchableOpacity key={item?._id} style={styles.item} onPress={() => navigation.navigate("ShowScreen", { data: item })}>
                                     <View style={styles.imageContainer}>
-                                        <ImageBackground style={styles.image} source={{uri:item.banner}} resizeMode='cover'>
-                                            <TouchableOpacity style={styles.iconContainer} onPress={() => setModal(true)}>
+                                        <ImageBackground style={styles.image} source={{ uri: item.primaryPoster }} resizeMode='cover'>
+                                            <TouchableOpacity style={styles.iconContainer} onPress={() => {
+                                                setModal(true)
+                                                setDelId(item?._id)
+                                            }}>
                                                 <Ionicons name="trash" style={styles.icon}></Ionicons>
                                             </TouchableOpacity>
-                                            {/* <View style={styles.titleContainer}>
-                                                <Text style={[GlobalStyles.semiBoldText, styles.titleText]}>{item.movieName}</Text>
-                                            </View> */}
+                                            <View style={styles.titleContainer}>
+                                                <Text style={[GlobalStyles.semiBoldText, styles.titleText]}>{item?.title}</Text>
+                                            </View>
                                         </ImageBackground>
                                     </View>
                                 </TouchableOpacity>
-                            ))
-                        }
-                    </View>
+                            )}
+                        />
+                    }
+
+
+
+                    {!wishlist.getting && wishlist.wishlist?.length === 0 &&
+                        <View style={{ alignItems: 'center', marginTop: 50 }}>
+                            <AntDesign name="heart" size={74} color="#d0d0d0" />
+                            <Text style={[GlobalStyles.boldText, { fontSize: 18, color: '#d0d0d0' }]}>Wishlist is empty</Text>
+                        </View>
+                    }
                 </View>
-            </ScrollView>
-            <ModalView button={true} visible={modal} onClose={onClose} title="Are you sure to remove this show from your wishlist" />
+            </View>
+            {/* </ScrollView> */}
+            <ModalView onConfirm={handleRemoveWish} button={true} visible={modal} onClose={onClose} title="Are you sure to remove this movie from your wishlist" />
         </ScreenWrapper>
     )
 }
@@ -129,3 +161,24 @@ const likedArray = [
     },
 
 ];
+
+
+// {wishlist.wishlist?.length > 0 &&
+//     wishlist.wishlist.map((item, index) => (
+//         <TouchableOpacity key={item?._id} style={styles.item} onPress={() => navigation.navigate("ShowScreen", { data: item })}>
+//             <View style={styles.imageContainer}>
+//                 <ImageBackground style={styles.image} source={{ uri: item.primaryPoster }} resizeMode='cover'>
+//                     <TouchableOpacity style={styles.iconContainer} onPress={() => {
+//                         setModal(true)
+//                         setDelId(item?._id)
+//                     }}>
+//                         <Ionicons name="trash" style={styles.icon}></Ionicons>
+//                     </TouchableOpacity>
+//                     {/* <View style={styles.titleContainer}>
+//                             <Text style={[GlobalStyles.semiBoldText, styles.titleText]}>{item.movieName}</Text>
+//                         </View> */}
+//                 </ImageBackground>
+//             </View>
+//         </TouchableOpacity>
+//     ))
+// }
