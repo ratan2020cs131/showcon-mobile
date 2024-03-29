@@ -19,9 +19,6 @@ const verify = async (credentials) => {
         if (response.status === 401) {
             throw new Error(response.data.error)
         }
-        if (!response.data.role || response.data.role !== 'admin') {
-            throw new Error("Non-admin Access Denied")
-        }
         return response.data;
     }
     catch (err) {
