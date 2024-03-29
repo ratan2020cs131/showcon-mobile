@@ -29,7 +29,7 @@ const Register = ({ navigation }) => {
             }
             // Get current location
             const location = await getCurrentPositionAsync({});
-            console.log(`Location: ${registerState}`);
+            console.log(`Location: ${location.coords.latitude}, ${location.coords.longitude}`);
             dispatch(getAddress({
                 latitude: location.coords.latitude,
                 longitude: location.coords.longitude
