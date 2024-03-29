@@ -39,11 +39,25 @@ const searchApi = async (param) => {
   }
 }
 
+const getCinemaBooking = async (data) => {
+  const { zipcode, movieId } = data;
+  try {
+    console.log("cinema booking api: ", movieId);
+    const res = await axios.get(`${BASE_URL}user/get-cinema-booking?zipcode=${zipcode}&movieId=${movieId}`);
+    console.log("cinema booking res: ", res.data);
+    return res.data;
+  } catch (err) {
+    console.log("Search movie error: ", err.message);
+  }
+}
+
+
 const movieAPI = {
   getMovies,
   getCinema,
   getMovieByCity,
-  searchApi
+  searchApi,
+  getCinemaBooking
 };
 
 export default movieAPI;

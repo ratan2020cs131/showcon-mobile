@@ -71,14 +71,9 @@ const HomeScreen = ({ navigation }) => {
 
     useEffect(() => {
         if (auth.address !== null) {
-            // dispatch(getMovieByCity(auth?.address?.zipcode))
             dispatch(getMovieByCity(pincode.length === 6 ? pincode : auth.address.zipcode))
         }
     }, [auth.address, pincode])
-
-    useEffect(() => {
-        console.log("hi movies by city: ", movie.cityMovies);
-    }, [movie.cityMovies])
 
 
     // return (
@@ -232,7 +227,7 @@ const HomeScreen = ({ navigation }) => {
                                     <Text style={[GlobalStyles.boldText, { fontSize: 15 }]}>Shows in your city</Text>
                                     <FlatList
                                         data={movie.cityMovies}
-                                        renderItem={({ item }) => <MovieCard data={item} wd={100} ht={140} />}
+                                        renderItem={({ item }) => <MovieCard data={item} wd={100} ht={140} pincode={pincode.length === 6 && pincode} />}
                                         keyExtractor={item => item._id}
                                         horizontal={true}
                                     />

@@ -5,34 +5,44 @@ import ModalView from "../Modal";
 import { useDispatch } from "react-redux";
 import { resetCinema } from "../../Redux/Features/Movie/movieSlice";
 
-const Place = ({id, data, navigation, title }) => {
-    const dispatch=useDispatch();
-    
-    const [box, setBox] = useState();
-    const [modal, setModal]=useState(false);
-    const [schedule, setSchedule]=useState();
+const Place = ({ id, data, navigation, title }) => {
+    const dispatch = useDispatch();
 
-    onClose=()=>setModal(false)
+    const formatDate = (dateString) => {
+        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        const parts = dateString.split('/');
+        const day = parts[0];
+        const monthIndex = parseInt(parts[1]) - 1;
+        const month = months[monthIndex];
+        const year = parts[2];
+
+        return `${day} ${month}`;
+    }
+    const [box, setBox] = useState();
+    const [modal, setModal] = useState(false);
+    const [schedule, setSchedule] = useState();
+
+    onClose = () => setModal(false)
 
     return (
         <View style={styles.container}>
             <View style={styles.title}>
-                <Text style={[GlobalStyles.semiBoldText, styles.heading]}>{data.name}</Text>
+                <Text style={[GlobalStyles.semiBoldText, styles.heading]}>{title}</Text>
                 <View style={styles.boxcontainer}>
                     {
-                        data.schedule.map((item, index) => (
-                            <TouchableOpacity style={[styles.box, index===box?styles.seletedBox:'']} key={index}
-                            onPress={()=>{
-                                if(box===index){
-                                    setBox(undefined)    
-                                }else{
-                                setBox(index)
-                                setSchedule(item.date.split(' ')[0]+" "+item.date.split(' ')[1]+" "+item.time);
-                            }
-                            }}
+                        data.screen.map((item, index) => (
+                            <TouchableOpacity style={[styles.box, index === box ? styles.seletedBox : '']} key={index}
+                                onPress={() => {
+                                    if (box === index) {
+                                        setBox(undefined)
+                                    } else {
+                                        setBox(index)
+                                        // setSchedule(item.date.split(' ')[0] + " " + item.date.split(' ')[1] + " " + item.time);
+                                    }
+                                }}
                             >
-                                <Text style={[GlobalStyles.semiBoldText, styles.date]}>{item.date.split(' ')[0]}</Text>
-                                <Text style={[styles.month, index===box?styles.selectedDate:'']}>{item.time.split(' ')[0]}</Text>
+                                <Text style={[GlobalStyles.semiBoldText, styles.month, index === box ? styles.selectedDate : '']}>{item?.slots?.time}</Text>
+                                <Text style={[GlobalStyles.semiBoldText, styles.date]}>{formatDate(item?.slots?.booking?.dates[0])}</Text>
                             </TouchableOpacity>
                         ))
                     }
@@ -40,16 +50,16 @@ const Place = ({id, data, navigation, title }) => {
             </View>
 
             <TouchableOpacity style={[GlobalStyles.buttonOutlined, styles.button]}
-            activeOpacity={0.2}
-            onPress={()=>{
-                dispatch(resetCinema());
-                box>=0?navigation.navigate("SeatScreen", {cinema:data.name, schedule, id, title}):setModal(true);
-            }}
+                activeOpacity={0.2}
+                onPress={() => {
+                    dispatch(resetCinema());
+                    box >= 0 ? navigation.navigate("SeatScreen", { cinema: data.name, schedule, id, title }) : setModal(true);
+                }}
             >
                 <Text style={[GlobalStyles.boldText, styles.btntext]}>BOOK</Text>
             </TouchableOpacity>
 
-            <ModalView visible={modal} onClose={onClose} title="Select a Date to book Ticket"/>
+            <ModalView visible={modal} onClose={onClose} title="Select a Date to book Ticket" />
         </View>
     )
 }
@@ -61,7 +71,7 @@ const styles = StyleSheet.create({
         maxWidth: 350,
         width: "97%",
         padding: 10,
-        borderRadius: 5,
+        borderRadius: 7,
         backgroundColor: "#fff",
         shadowColor: 'black',
         shadowOffset: { width: 0, height: 2 },
@@ -70,7 +80,7 @@ const styles = StyleSheet.create({
         elevation: 2,
         flexDirection: "row",
         alignItems: "center",
-        marginVertical:5,
+        marginVertical: 5,
     },
     title: {
         flex: 8
@@ -89,14 +99,15 @@ const styles = StyleSheet.create({
     boxcontainer: {
         flexDirection: "row",
         paddingVertical: 10,
-        gap:10
+        gap: 10,
+        flexWrap: 'wrap'
     },
-    selectedDate:{
-        color:'#000'
+    selectedDate: {
+        color: '#000'
     },
     box: {
         height: 40,
-        width: 45,
+        width: 65,
         borderColor: '#1E1F22',
         borderWidth: 1,
         borderRadius: 5,
@@ -104,10 +115,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         padding: 5,
     },
-    seletedBox:{
-        backgroundColor:'#F55139',
+    seletedBox: {
+        backgroundColor: '#F55139',
         height: 40,
-        width: 45,
+        width: 65,
         borderColor: '#F55139',
         borderWidth: 1,
         borderRadius: 5,
@@ -116,7 +127,7 @@ const styles = StyleSheet.create({
         padding: 5,
     },
     date: {
-        fontSize: 12,
+        fontSize: 10,
         lineHeight: 12,
     },
     month: {

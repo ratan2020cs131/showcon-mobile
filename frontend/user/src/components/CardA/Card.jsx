@@ -2,11 +2,11 @@ import { TouchableOpacity, View, ImageBackground, StyleSheet, Text } from "react
 import GlobalStyles from "../../GlobalStyles";
 import { useNavigation } from '@react-navigation/native';
 
-const Card = ({ data, title, wd, ht, m }) => {
+const Card = ({ data, title, wd, ht, m, pincode }) => {
     const navigation = useNavigation();
-    
+
     return (
-        <TouchableOpacity style={[styles.item, { margin: m ? m : 10, width: wd ? wd : 150, height: ht ? ht : 200 }]} onPress={() => navigation.navigate("ShowScreen", { data })}>
+        <TouchableOpacity style={[styles.item, { margin: m ? m : 10, width: wd ? wd : 150, height: ht ? ht : 200 }]} onPress={() => navigation.navigate("ShowScreen", { data, pincode: pincode && pincode })}>
             <View style={styles.imageContainer}>
                 <ImageBackground style={styles.image} source={{ uri: data?.primaryPoster }} resizeMode='cover'>
                     {!wd &&
@@ -17,7 +17,7 @@ const Card = ({ data, title, wd, ht, m }) => {
                 </ImageBackground>
             </View>
             {title && <Text style={[GlobalStyles.normalText, { color: '#1E1F22', paddingLeft: 10, fontSize: 13, textAlign: "left", marginVertical: 5, width: '100%' }]}>{title}</Text>}
-        </TouchableOpacity>
+        </TouchableOpacity >
     )
 }
 
