@@ -71,7 +71,7 @@ const HomeScreen = ({ navigation }) => {
 
     useEffect(() => {
         if (auth.address !== null) {
-            dispatch(getMovieByCity(pincode.length === 6 ? pincode : auth.address.zipcode))
+            dispatch(getMovieByCity(pincode.length === 6 ? pincode : auth.address?.zipcode))
         }
     }, [auth.address, pincode])
 

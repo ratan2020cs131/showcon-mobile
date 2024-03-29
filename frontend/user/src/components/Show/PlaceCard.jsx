@@ -21,6 +21,7 @@ const Place = ({ id, data, navigation, title }) => {
     const [box, setBox] = useState();
     const [modal, setModal] = useState(false);
     const [schedule, setSchedule] = useState();
+    const [seatmap, setSeatmap] = useState()
 
     onClose = () => setModal(false)
 
@@ -37,7 +38,8 @@ const Place = ({ id, data, navigation, title }) => {
                                         setBox(undefined)
                                     } else {
                                         setBox(index)
-                                        // setSchedule(item.date.split(' ')[0] + " " + item.date.split(' ')[1] + " " + item.time);
+                                        setSchedule(item?.slots?.time + " " + item?.slots?.booking?.dates[0]);
+                                        setSeatmap(item.seatmap);
                                     }
                                 }}
                             >
@@ -53,7 +55,7 @@ const Place = ({ id, data, navigation, title }) => {
                 activeOpacity={0.2}
                 onPress={() => {
                     dispatch(resetCinema());
-                    box >= 0 ? navigation.navigate("SeatScreen", { cinema: data.name, schedule, id, title }) : setModal(true);
+                    box >= 0 ? navigation.navigate("SeatScreen", { seatmap, screen: data.screen, schedule, id, title }) : setModal(true);
                 }}
             >
                 <Text style={[GlobalStyles.boldText, styles.btntext]}>BOOK</Text>

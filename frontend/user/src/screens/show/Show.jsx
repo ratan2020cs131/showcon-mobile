@@ -29,7 +29,7 @@ const Show = ({ navigation, route }) => {
 
     useEffect(() => {
         console.log("hi");
-        dispatch(getCinemaBooking({ zipcode: pincode ? pincode : authState.address.zipcode, movieId: data._id }))
+        dispatch(getCinemaBooking({ zipcode: pincode ? pincode : authState.address?.zipcode, movieId: data._id }))
     }, [authState.address])
 
     return (

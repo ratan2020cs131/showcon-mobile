@@ -18,30 +18,22 @@ const SeatScreen = ({ navigation, route }) => {
   const dispatch = useDispatch();
   const movieState = useSelector(movie);
 
-  const {title, id, cinema, schedule } = route.params;
+  const { seatmap, title, id, screen, schedule } = route.params;
   const [choose, setChoose] = useState([]);
   const [visible, setModal] = useState([]);
-  const onClose=()=>setModal(false)
+  const onClose = () => setModal(false)
 
-  useEffect(() => {
-    if (movieState.cinema === undefined) {
-        dispatch(getCinema(id));
+  const handleBook = () => {
+    if (choose.length > 0) {
+      navigation.navigate("PaymentScreen", { choose, title, schedule });
     } else {
-      
-    }
-  }, [movieState.cinema]);
-
-  const handleBook=()=>{
-    if(choose.length > 0){
-      navigation.navigate("PaymentScreen",{choose,cinema, title, schedule});
-    }else{
       setModal(true);
     }
   }
 
 
   return (
-    <ScreenWrapper title={cinema}>
+    <ScreenWrapper title={title}>
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ flexGrow: 1 }}
@@ -49,12 +41,12 @@ const SeatScreen = ({ navigation, route }) => {
         <View style={styles.container}>
           <View style={styles.header}>
             <Text style={[GlobalStyles.semiBoldText, styles.date]}>
-              {schedule.title} {schedule}
+              {schedule.split(' ')[0]}{" "}{schedule.split(' ')[1]}
             </Text>
           </View>
-          <View style={{ maxHeight: 350, alignItems:'center' }}>
+          <View style={{ maxHeight: 350, alignItems: 'center' }}>
             <View style={styles.screen}></View>
-            <Text style={[GlobalStyles.normalText,{ marginBottom: 30, paddingTop:10 }]}>Screen this Way</Text>
+            <Text style={[GlobalStyles.normalText, { marginBottom: 30, paddingTop: 10 }]}>Screen this Way</Text>
             <ScrollView
               horizontal
               showsHorizontalScrollIndicator={false}
@@ -62,22 +54,9 @@ const SeatScreen = ({ navigation, route }) => {
             >
               <View style={styles.seatmap}>
                 <View>
-                  {movieState.isLoading ? (
-                    <View
-                      style={{
-                        marginTop: 100,
-                        width: "auto",
-                        flexDirection: "row",
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <ActivityIndicator size="large" color="#F55139" />
-                    </View>
-                  ) : (
-                    <View>
-                      {movieState.cinema.seats&&
-                      movieState.cinema.seats.map((item, index) => (
+                  <View>
+                    {seatmap &&
+                      seatmap.map((item, index) => (
                         <Seats
                           key={index}
                           data={item}
@@ -85,8 +64,7 @@ const SeatScreen = ({ navigation, route }) => {
                           setChoose={setChoose}
                         />
                       ))}
-                    </View>
-                  )}
+                  </View>
                 </View>
               </View>
             </ScrollView>
@@ -119,15 +97,17 @@ const SeatScreen = ({ navigation, route }) => {
               </View>
             </View>
           )}
-          <TouchableOpacity
-            style={[GlobalStyles.button, { marginTop: "auto" }]}
-            onPress={handleBook}
-          >
-            <Text style={[GlobalStyles.boldText]}>BOOK NOW</Text>
-          </TouchableOpacity>
+          {choose.length > 0 &&
+            <TouchableOpacity
+              style={[GlobalStyles.button, { marginTop: "auto" }]}
+              onPress={handleBook}
+            >
+              <Text style={[GlobalStyles.boldText]}>Proceed</Text>
+            </TouchableOpacity>
+          }
         </View>
       </ScrollView>
-      <ModalView title="Select Atleast One Seat" visible={visible} onClose={onClose}/>
+      <ModalView title="Select Atleast One Seat" visible={visible} onClose={onClose} />
     </ScreenWrapper>
   );
 };

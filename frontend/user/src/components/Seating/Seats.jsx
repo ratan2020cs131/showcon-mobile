@@ -4,22 +4,18 @@ import SeatIcon from "./SeatIcon";
 
 
 const Seats = ({ data, setChoose, choose }) => {
-    const { row, seat } = data;
+    const { row, seats } = data;
     return (
         <View style={styles.container}>
             <View style={styles.row}>
                 <Text style={[styles.rowtext, GlobalStyles.semiBoldText]}>{row}</Text>
                 <View style={styles.seating}>
-                {
-                    seat.map((item, index) => (
-                        <View key={index}>
-                            {
-                                item >= 0 ? <SeatIcon data={item} row={row} choose={choose} setChoose={setChoose}/> :
-                                    <View style={styles.space}/>
-                            }
-                        </View>
-                    ))
-                }
+                    {
+                        seats.map((item, index) => {
+                            return item >= 0 ? <SeatIcon key={index} data={item} row={row} choose={choose} setChoose={setChoose} />
+                                : <View style={styles.space} key={index}/>
+                        })
+                    }
                 </View>
             </View>
         </View>
@@ -37,21 +33,19 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     rowtext: {
-        width: '7%',
+        width: 26,
         paddingRight: 10,
-        fontSize:15,
-        lineHeight:25
+        fontSize: 15,
+        lineHeight: 25
     },
     space: {
         width: 18,
         height: 18,
-        backgroundColor: '#fff',
         opacity: 0,
         borderRadius: 2,
     },
-    seating:{
-        flexDirection:'row',
-        gap:8,
-        width:'auto',
+    seating: {
+        flexDirection: 'row',
+        gap: 8
     }
 })
