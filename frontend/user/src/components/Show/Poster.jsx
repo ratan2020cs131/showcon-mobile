@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     itemContainer: {
         width: "100%",
         alignItems: 'center',
-        marginBottom: 30,
+        marginBottom: 10,
     },
     imgcontainer: {
         width: 320,

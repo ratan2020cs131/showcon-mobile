@@ -20,7 +20,7 @@ const Cast = ({ data }) => {
             <FlatList
                 horizontal={true}
                 data={data}
-                renderItem={({ item }) => <Actor data={item} />}
+                renderItem={({ item }) => <Actor key={item._id} data={item} />}
                 keyExtractor={(item) => item._id}
                 showsHorizontalScrollIndicator={false}
             />

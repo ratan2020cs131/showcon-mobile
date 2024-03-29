@@ -193,27 +193,28 @@ const HomeScreen = ({ navigation }) => {
                     }}
                     contentContainerStyle={{ gap: 10 }}
                 >
-                    <View style={{ position: 'relative', justifyContent: 'center' }}>
-                        <TextInput
-                            placeholder='Search Movies'
-                            style={[GlobalStyles.semiBoldText, { borderColor: '#a0a0a0', borderWidth: 2, height: 45, borderRadius: 7, paddingHorizontal: 15 }]} />
-                        <AntDesign name="search1" size={25} color="#a0a0a0" style={{ position: 'absolute', right: 10 }} />
-                    </View>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom:30 }}>
+                    <TouchableOpacity onPress={() => navigation.navigate("SearchScreen")} style={{ position: 'relative', justifyContent: 'center' }}>
+                        <Text style={[GlobalStyles.semiBoldText, { borderColor: '#a0a0a0', borderWidth: 2, lineHeight: 38, borderRadius: 7, paddingHorizontal: 15 }]}>Search Movies</Text>
+                        <AntDesign name="search1" size={25} color="#a0a0a0" style={{ position: 'absolute', right: 20 }} />
+                    </TouchableOpacity>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 30 }}>
                         <View style={{ height: 45, borderColor: '#A0A0A0', borderWidth: 2, borderRadius: 7, width: '48%', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 5 }}>
-                            {true ?
+                            {false ?
                                 <Text style={[GlobalStyles.semiBoldText]}>Pick a date & time</Text>
                                 :
                                 <>
-                                    <Text>22 Feb</Text>
-                                    <Text>10 AM</Text>
-                                    <Text>-</Text>
-                                    <Text>03 PM</Text>
-                                </>}
+                                    <Text style={[GlobalStyles.semiBoldText, { lineHeight: 35, fontSize: 13, color: GlobalStyles.orange }]}>22 Feb</Text>
+                                    <Text style={[GlobalStyles.semiBoldText, { lineHeight: 35, fontSize: 13, color: GlobalStyles.orange }]}>10 AM</Text>
+                                    <Text style={[GlobalStyles.semiBoldText, { lineHeight: 35, fontSize: 13, color: GlobalStyles.orange }]}>-</Text>
+                                    <Text style={[GlobalStyles.semiBoldText, { lineHeight: 35, fontSize: 13, color: GlobalStyles.orange }]}>03 PM</Text>
+                                </>
+                            }
                         </View>
-                        <View style={{ height: 45, borderColor: '#A0A0A0', borderWidth: 2, borderRadius: 7, width: '48%' }}>
-
-                        </View>
+                        <TextInput
+                            placeholderTextColor="#a0a0a0"
+                            placeholder='Pincode'
+                            color={GlobalStyles.orange}
+                            style={[GlobalStyles.semiBoldText, { height: 45, borderColor: '#A0A0A0', borderWidth: 2, borderRadius: 7, width: '48%', paddingHorizontal: 15 }]} />
                     </View>
                     {auth.address === null || movie.gettingCityMovie ?
                         <Shimmer style={{ width: '100%', height: 60, borderRadius: 7 }} />
@@ -221,10 +222,10 @@ const HomeScreen = ({ navigation }) => {
                         <>
                             {movie.cityMovies?.length > 0 ?
                                 <View>
-                                    <Text style={[GlobalStyles.boldText, {fontSize:15}]}>Shows in your city</Text>
+                                    <Text style={[GlobalStyles.boldText, { fontSize: 15 }]}>Shows in your city</Text>
                                     <FlatList
                                         data={movie.cityMovies}
-                                        renderItem={({item}) => <MovieCard data={item} wd={100} ht={140}/>}
+                                        renderItem={({ item }) => <MovieCard data={item} wd={100} ht={140} />}
                                         keyExtractor={item => item._id}
                                         horizontal={true}
                                     />

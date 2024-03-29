@@ -4,7 +4,7 @@ import GlobalStyles from "../../GlobalStyles";
 const Description = ({data}) => {
     return (
         <View style={styles.container}>
-            <Text style={[GlobalStyles.boldText, styles.headline]}>DESCRIPTION</Text>
+            {/* <Text style={[GlobalStyles.boldText, styles.headline]}>DESCRIPTION</Text> */}
             <Text style={[GlobalStyles.normalText,styles.text]}>
             {data}
             </Text>

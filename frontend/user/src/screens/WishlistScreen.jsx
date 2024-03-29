@@ -30,46 +30,42 @@ const WishlistScreen = ({ navigation }) => {
     return (
         <ScreenWrapper title="Whishlist">
             {/* <ScrollView style={styles.container} showsVerticalScrollIndicator={false} nestedScrollEnabled={true} > */}
-            <View style={{ width: '100%' }}>
-                <View style={styles.likedcontainer}>
-                    {wishlist.getting &&
-                        <ActivityIndicator size={"large"} color={GlobalStyles.orange} style={{ marginTop: 100 }} />
-                    }
+            <View style={styles.likedcontainer}>
+                {wishlist.getting &&
+                    <ActivityIndicator size={"large"} color={GlobalStyles.orange} style={{ marginTop: 100 }} />
+                }
 
-                    {wishlist.wishlist?.length > 0 &&
-                        <FlatList
-                            data={wishlist.wishlist}
-                            keyExtractor={(item) => item._id}
-                            numColumns={2}
-                            renderItem={({ item }) => (
-                                <TouchableOpacity key={item?._id} style={styles.item} onPress={() => navigation.navigate("ShowScreen", { data: item })}>
-                                    <View style={styles.imageContainer}>
-                                        <ImageBackground style={styles.image} source={{ uri: item.primaryPoster }} resizeMode='cover'>
-                                            <TouchableOpacity style={styles.iconContainer} onPress={() => {
-                                                setModal(true)
-                                                setDelId(item?._id)
-                                            }}>
-                                                <Ionicons name="trash" style={styles.icon}></Ionicons>
-                                            </TouchableOpacity>
-                                            <View style={styles.titleContainer}>
-                                                <Text style={[GlobalStyles.semiBoldText, styles.titleText]}>{item?.title}</Text>
-                                            </View>
-                                        </ImageBackground>
-                                    </View>
-                                </TouchableOpacity>
-                            )}
-                        />
-                    }
+                {wishlist.wishlist?.length > 0 &&
+                    <FlatList
+                        data={wishlist.wishlist}
+                        keyExtractor={(item) => item._id}
+                        numColumns={2}
+                        renderItem={({ item }) => (
+                            <TouchableOpacity key={item?._id} style={styles.item} onPress={() => navigation.navigate("ShowScreen", { data: item })}>
+                                <View style={styles.imageContainer}>
+                                    <ImageBackground style={styles.image} source={{ uri: item.primaryPoster }} resizeMode='cover'>
+                                        <TouchableOpacity style={styles.iconContainer} onPress={() => {
+                                            setModal(true)
+                                            setDelId(item?._id)
+                                        }}>
+                                            <Ionicons name="trash" style={styles.icon}></Ionicons>
+                                        </TouchableOpacity>
+                                        <View style={styles.titleContainer}>
+                                            <Text numberOfLines={1} style={[GlobalStyles.semiBoldText, styles.titleText]}>{item?.title}</Text>
+                                        </View>
+                                    </ImageBackground>
+                                </View>
+                            </TouchableOpacity>
+                        )}
+                    />
+                }
 
-
-
-                    {!wishlist.getting && wishlist.wishlist?.length === 0 &&
-                        <View style={{ alignItems: 'center', marginTop: 50 }}>
-                            <AntDesign name="heart" size={74} color="#d0d0d0" />
-                            <Text style={[GlobalStyles.boldText, { fontSize: 18, color: '#d0d0d0' }]}>Wishlist is empty</Text>
-                        </View>
-                    }
-                </View>
+                {!wishlist.getting && wishlist.wishlist?.length === 0 &&
+                    <View style={{ alignItems: 'center', marginTop: 50 }}>
+                        <AntDesign name="heart" size={74} color="#d0d0d0" />
+                        <Text style={[GlobalStyles.boldText, { fontSize: 18, color: '#d0d0d0' }]}>Wishlist is empty</Text>
+                    </View>
+                }
             </View>
             {/* </ScrollView> */}
             <ModalView onConfirm={handleRemoveWish} button={true} visible={modal} onClose={onClose} title="Are you sure to remove this movie from your wishlist" />
@@ -90,8 +86,6 @@ const styles = StyleSheet.create({
         height: 'auto',
         width: '100%',
         paddingHorizontal: 0,
-        flexWrap: 'wrap',
-        flexDirection: 'row',
         paddingBottom: 40
     },
     item: {
@@ -125,6 +119,7 @@ const styles = StyleSheet.create({
         color: 'white',
         textAlign: 'left',
         paddingLeft: 10,
+        width: '90%'
     },
     iconContainer: {
         alignItems: 'flex-end',

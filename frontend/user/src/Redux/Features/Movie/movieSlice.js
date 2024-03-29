@@ -1,6 +1,23 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import movieAPI from "./movieAPI";
 
+
+export const searchMovie = createAsyncThunk(
+  'movie/searchMovie',
+  async (param, thunkAPI) => {
+    try {
+      const res = movieAPI.searchApi(param);
+      if (!res) {
+        return thunkAPI.rejectWithValue();
+      }
+      return res;
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err);
+    }
+  }
+)
+
+
 export const getMovie = createAsyncThunk("movie/id", async (thunkAPI) => {
   try {
     const res = await movieAPI.getMovies();
@@ -47,8 +64,11 @@ const state = {
   movies: undefined,
   cinema: undefined,
   cityMovies: [],
-  gettingCityMovie: true
+  gettingCityMovie: true,
+  searchingMovie: false,
+  searchResult: []
 };
+
 
 const movieSlice = createSlice({
   name: "movie",
@@ -92,6 +112,18 @@ const movieSlice = createSlice({
       .addCase(getMovieByCity.rejected, (state, action) => {
         state.gettingCityMovie = false;
         state.cityMovies = [];
+      })
+      .addCase(searchMovie.pending, (state, action) => {
+        state.searchingMovie = true;
+        state.searchResult = [];
+      })
+      .addCase(searchMovie.fulfilled, (state, action) => {
+        state.searchingMovie = false;
+        state.searchResult = action.payload;
+      })
+      .addCase(searchMovie.rejected, (state, action) => {
+        state.searchingMovie = false;
+        state.searchResult = [];
       })
   },
 });
