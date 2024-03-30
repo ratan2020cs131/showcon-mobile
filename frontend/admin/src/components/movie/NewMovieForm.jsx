@@ -101,10 +101,10 @@ const NewMovieForm = () => {
                 <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', gap: 20 }}>
                     <View style={{ height: '100%', width: 70, justifyContent: 'flex-start', alignItems: 'center', marginTop: 2 }}>
                         <TouchableOpacity
-                            style={styles.releaseDate} 
+                            style={styles.releaseDate}
                             onPress={showDatepicker}
                         >
-                            {movieState.newMovie.release!==null ?
+                            {movieState.newMovie.release !== null ?
                                 <>{
                                     (() => {
                                         const inputDate = new Date(date);
@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
         height: 62,
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop:3
+        marginTop: 3
     }
 })
 

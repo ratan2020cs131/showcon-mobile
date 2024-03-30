@@ -15,7 +15,6 @@ const Place = ({ id, data, navigation, title }) => {
         const monthIndex = parseInt(parts[1]) - 1;
         const month = months[monthIndex];
         const year = parts[2];
-
         return `${day} ${month}`;
     }
     const [box, setBox] = useState();

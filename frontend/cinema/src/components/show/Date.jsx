@@ -16,27 +16,23 @@ const ShowDates = ({ date }) => {
         let releaseDate = new Date(yyyy, mm - 1, dd);
         let presentDate = new Date();
         let dateToBeTaken = releaseDate > presentDate ? releaseDate : presentDate;
-        let formattedDate = dateToBeTaken.toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' });
+        const dateOptions = { day: '2-digit', month: '2-digit', year: 'numeric' }
+        let formattedDate = dateToBeTaken.toLocaleDateString('en-GB', dateOptions);
+        console.log(formattedDate);
+        // return []
         let dateArray = [];
-        dateArray.push(formattedDate);
+        dateArray.push(formattedDate.toString());
 
         for (let i = 0; i < 6; i++) {
             // Increase the date by one day
             dateToBeTaken.setDate(dateToBeTaken.getDate() + 1);
             let newDate = new Date(dateToBeTaken.getFullYear(), dateToBeTaken.getMonth(), dateToBeTaken.getDate());
-            formattedDate = newDate.toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' });
-            dateArray.push(formattedDate);
+            const dateOptions = { day: '2-digit', month: '2-digit', year: 'numeric' }
+            formattedDate = newDate.toLocaleDateString('en-GB', dateOptions);
+            dateArray.push(formattedDate.toString());
         }
         return dateArray;
     }, [date.release])
-
-    // useEffect(() => {
-    //     let dateString = date.release;
-    //     let [dd, mm, yyyy] = dateString.split('/').map(Number)
-    //     let releaseDate = new Date(yyyy, mm - 1, dd);
-    //     let presentDate = new Date();
-    //     console.log("dates: ", releaseDate > presentDate);
-    // }, [])
 
 
     useEffect(() => {
@@ -65,18 +61,20 @@ const DateCard = ({ set, get, data }) => {
         setFormatted(formatDate(data))
     }, [])
 
-    const formatDate = () => {
-        let months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-        let [mm, dd, yy] = data.split(' ');
-        dd = dd.replace(',', '')
-        mm = months.indexOf(mm) + 1;
-        return dd + '/' + mm + '/' + yy
+    const formatDate = (dateString) => {
+        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        const parts = dateString.split('/');
+        const day = parts[0];
+        const monthIndex = parseInt(parts[1]) - 1;
+        const month = months[monthIndex];
+        const year = parts[2];
+        return `${day} ${month} ${year}`;
     }
 
     const handleSelect = () => {
         let updatedSelectedArray = [...get];
-        if (selected) { updatedSelectedArray = updatedSelectedArray.filter((item) => item !== formatted); setSelected(false) }
-        else { updatedSelectedArray.push(formatted); setSelected(true) }
+        if (selected) { updatedSelectedArray = updatedSelectedArray.filter((item) => item !== data); setSelected(false) }
+        else { updatedSelectedArray.push(data); setSelected(true) }
         set(updatedSelectedArray);
     }
 
@@ -86,8 +84,8 @@ const DateCard = ({ set, get, data }) => {
             onPress={handleSelect}
         >
             {selected && <Image source={Check} style={[GlobalStyles.image, { position: 'absolute', zIndex: 1 }]} />}
-            <Text style={[GlobalStyles.semiBoldText, { fontSize: 12, color: selected ? '#363636' : '#000' }]}>{data.split(',')[0].split(' ')[1] + " " + data.split(',')[0].split(' ')[0]}</Text>
-            <Text style={[GlobalStyles.boldText, { color: selected ? '#363636' : '#000' }]}>{data.split(',')[1]}</Text>
+            <Text style={[GlobalStyles.semiBoldText, { fontSize: 12, color: selected ? '#363636' : '#000' }]}>{formatted.split(' ')[0] + " " + formatted.split(' ')[1]}</Text>
+            <Text style={[GlobalStyles.boldText, { color: selected ? '#363636' : '#000' }]}>{formatted.split(' ')[2]}</Text>
         </TouchableOpacity>
     )
 }

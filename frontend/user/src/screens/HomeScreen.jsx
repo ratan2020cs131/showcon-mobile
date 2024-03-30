@@ -15,6 +15,7 @@ import { requestForegroundPermissionsAsync, getCurrentPositionAsync } from 'expo
 import Shimmer from '../components/Shimmer';
 import MovieCard from '../components/CardA/Card';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import FormatDate from '../utils/formatDate';
 
 const HomeScreen = ({ navigation }) => {
 
@@ -23,29 +24,51 @@ const HomeScreen = ({ navigation }) => {
     const movie = useSelector(state => state.movie)
     const windowWidth = Dimensions.get('window').width;
 
-    const [date, setDate] = useState('Date');
-    const [time, setTime] = useState('Time');
-    const [placeholder, setPlaceholder] = useState('Pickup Show Time')
+    const [movieByTime, setMovieByTime] = useState(false);
+    const [date, setDate] = useState(new Date());
     const [showDatePicker, setShowDatePicker] = useState(false);
-    const [showTimePicker, setShowTimePicker] = useState(false);
-    const [modalVisible, setModalVisible] = useState(false);
+    const [showInitTimePicker, setInitTimePicker] = useState(false);
+    const [showEndTimePicker, setEndTimePicker] = useState(false);
     const [pincode, setPincode] = useState('');
+    const [dateSetted, setDateSetted] = useState(null);
+    const [initialTime, setInitialTime] = useState(new Date())
+    const [endTime, setEndTime] = useState(new Date())
 
-    const onChangeDate = (event, selectedDate) => {
+    const onDateChange = (event, selectedDate) => {
         if (selectedDate) {
-            console.log(selectedDate.toDateString())
-            setDate(selectedDate.toDateString());
+            const currentDate = selectedDate;
+            const inputDate = new Date(currentDate);
+            setDate(currentDate);
+            const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+            const formattedDate = inputDate.toLocaleDateString('en-GB', options);
+            setDateSetted(formattedDate);
         }
-        setShowDatePicker(false);
+        setShowDatePicker(false)
+        setInitTimePicker(true);
     };
 
-    const onChangeTime = (event, selectedTime) => {
+    const onChangeInitTime = (event, selectedTime) => {
         if (selectedTime) {
-            console.log(selectedTime.toTimeString().split(' ')[0]);
-            setTime(selectedTime.toTimeString().split(' ')[0]);
+            setInitialTime(selectedTime)
         }
-        setShowTimePicker(false);
+        setInitTimePicker(false);
+        setEndTimePicker(true);
     };
+
+    const onChangeEndTime = (event, selectedTime) => {
+        if (selectedTime) {
+            setEndTime(selectedTime)
+        }
+        setEndTimePicker(false);
+        setMovieByTime(true);
+    };
+
+    const formatTime = (time) => {
+        const formattedTime = time.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+        const [hours, minutes] = formattedTime.split(':');
+        const formattedTimeString = `${hours.padStart(2, '0')} ${minutes.split(' ')[1]}`;
+        return formattedTimeString;
+    }
 
     const getLocation = async () => {
         try {
@@ -54,7 +77,6 @@ const HomeScreen = ({ navigation }) => {
                 throw new Error("Location permission denied")
                 return;
             }
-            // Get current location
             const location = await getCurrentPositionAsync({});
             dispatch(getAddress({
                 latitude: location.coords.latitude,
@@ -74,6 +96,17 @@ const HomeScreen = ({ navigation }) => {
             dispatch(getMovieByCity(pincode.length === 6 ? pincode : auth.address?.zipcode))
         }
     }, [auth.address, pincode])
+
+    useEffect(() => {
+        if (movieByTime) {
+            console.log({
+                date,
+                from: initialTime,
+                to: endTime,
+                zipcode: pincode.length === 6 ? pincode : auth.address?.zipcode
+            });
+        }
+    }, [movieByTime])
 
 
     // return (
@@ -117,7 +150,7 @@ const HomeScreen = ({ navigation }) => {
     //                                 <View style={styles.line} />
     //                                 <View style={styles.clockContainer}>
     //                                     <Pressable
-    //                                         onPress={() => setShowTimePicker(true)}
+    //                                         onPress={() => setInitTimePicker(true)}
     //                                         style={styles.iconTextWrapper}>
     //                                         <Feather name="clock" size={55} color="#F55139" />
     //                                         <Text
@@ -129,12 +162,12 @@ const HomeScreen = ({ navigation }) => {
     //                                             ]}>
     //                                             {time}
     //                                         </Text>
-    //                                         {showTimePicker && (
+    //                                         {showInitTimePicker && (
     //                                             <DateTimePicker
     //                                                 mode="time"
     //                                                 display="default"
     //                                                 value={new Date()}
-    //                                                 onChange={onChangeTime}
+    //                                                 onChange={onChangeInitTime}
     //                                             />
     //                                         )}
     //                                     </Pressable>
@@ -196,18 +229,57 @@ const HomeScreen = ({ navigation }) => {
                         <AntDesign name="search1" size={25} color="#a0a0a0" style={{ position: 'absolute', right: 20 }} />
                     </TouchableOpacity>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 30 }}>
-                        <View style={{ height: 45, borderColor: '#A0A0A0', borderWidth: 2, borderRadius: 7, width: '48%', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 5 }}>
-                            {true ?
-                                <Text style={[GlobalStyles.semiBoldText, { color: '#a0a0a0' }]}>Pick a date & time</Text>
-                                :
+                        <TouchableOpacity
+                            style={{ height: 45, borderColor: '#A0A0A0', borderWidth: 2, borderRadius: 7, width: '48%', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 5 }}
+                            onPress={() => {
+                                setShowDatePicker(true)
+                                setMovieByTime(false);
+                            }}
+                        >
+                            {dateSetted !== null ?
                                 <>
-                                    <Text style={[GlobalStyles.semiBoldText, { lineHeight: 35, fontSize: 13, color: GlobalStyles.orange }]}>22 Feb</Text>
-                                    <Text style={[GlobalStyles.semiBoldText, { lineHeight: 35, fontSize: 13, color: GlobalStyles.orange }]}>10 AM</Text>
+                                    <Text style={[GlobalStyles.semiBoldText, { lineHeight: 35, fontSize: 13, color: GlobalStyles.orange }]}>{
+                                        (() => {
+                                            let date = FormatDate(dateSetted).split('-')
+                                            date.pop();
+                                            return date.join(' ');
+                                        })()
+                                    }</Text>
+                                    <Text style={[GlobalStyles.semiBoldText, { lineHeight: 35, fontSize: 13, color: GlobalStyles.orange }]}>{formatTime(initialTime)}</Text>
                                     <Text style={[GlobalStyles.semiBoldText, { lineHeight: 35, fontSize: 13, color: GlobalStyles.orange }]}>-</Text>
-                                    <Text style={[GlobalStyles.semiBoldText, { lineHeight: 35, fontSize: 13, color: GlobalStyles.orange }]}>03 PM</Text>
-                                </>
+                                    <Text style={[GlobalStyles.semiBoldText, { lineHeight: 35, fontSize: 13, color: GlobalStyles.orange }]}>{formatTime(endTime)}</Text>
+                                </> :
+                                <Text style={[GlobalStyles.semiBoldText, { color: '#a0a0a0' }]}>Pick a date & time</Text>
                             }
-                        </View>
+                        </TouchableOpacity>
+                        {showDatePicker &&
+                            <DateTimePicker
+                                value={date}
+                                mode="date"
+                                is24Hour={true}
+                                title="Select Date"
+                                display="default"
+                                onChange={onDateChange}
+                            />
+                        }
+                        {showInitTimePicker &&
+                            <DateTimePicker
+                                value={initialTime}
+                                mode="time"
+                                is24Hour={false}
+                                display="default"
+                                onChange={onChangeInitTime}
+                            />
+                        }
+                        {showEndTimePicker &&
+                            <DateTimePicker
+                                value={endTime}
+                                mode="time"
+                                is24Hour={false}
+                                display="default"
+                                onChange={onChangeEndTime}
+                            />
+                        }
                         <TextInput
                             value={pincode}
                             onChangeText={(text) => setPincode(text)}
