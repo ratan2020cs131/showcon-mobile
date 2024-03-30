@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     },
     box: {
         height: 40,
-        width: 65,
+        width: 75,
         borderColor: '#1E1F22',
         borderWidth: 1,
         borderRadius: 5,
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
     seletedBox: {
         backgroundColor: '#F55139',
         height: 40,
-        width: 65,
+        width: 75,
         borderColor: '#F55139',
         borderWidth: 1,
         borderRadius: 5,

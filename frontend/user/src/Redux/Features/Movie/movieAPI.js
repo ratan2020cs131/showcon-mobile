@@ -21,6 +21,7 @@ const getCinema = async (id) => {
 
 const getMovieByCity = async (zipcode) => {
   try {
+    console.log("get movie by city body: ", zipcode);
     const response = await axios.get(`${BASE_URL}user/get-city-movies?zipcode=${zipcode}`);
     return response.data;
   } catch (err) {
