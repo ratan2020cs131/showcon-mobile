@@ -200,13 +200,8 @@ const getDateTimeMovie = async (req, res) => {
 
         res.send(result);
 
-        const uniqueMovieIds = result.map(item => item.movies).flat();
-        const movies = await Movie.find({ _id: { $in: uniqueMovieIds } }).populate('casts');
+        const movies = await Movie.result.populate('casts');
         res.send(movies);
-
-        // const uniqueMovieIds = result.map(item => item.movies).flat();
-        // const movies = await Movie.find({ _id: { $in: uniqueMovieIds } });
-        // res.json(movies);
     } catch (err) {
         console.log('get time movies error: ', err.message);
         res.status(500).send({ message: err.message })
