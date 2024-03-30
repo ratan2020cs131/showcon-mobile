@@ -165,24 +165,41 @@ const getDateTimeMovie = async (req, res) => {
             { $match: { "screen.slots.booking.dates": date } }, // Match documents where 'dates' field matches the specified date
             {
                 $group: {
-                    _id: '$screen.slots.booking.movie',
-                    movies: { $addToSet: '$screen.slots.booking.movie' }
+                    _id: {
+                        movie: '$screen.slots.booking.movie',
+                        cinemaId: '$_id',
+                        cinemaTitle: '$title',
+                        screen: '$screen.screen',
+                        seatmap: '$screen.seatmap' // Include the seatmap for each screen
+                    },
+                    slots: {
+                        $addToSet: {
+                            time: '$screen.slots.time',
+                            dates: '$screen.slots.booking.dates'
+                        }
+                    }
                 }
             },
-            // {
-            //     $group: {
-            //         _id: "$_id",
-            //         title: { $first: "$title" },
-            //     }
-            // },
-            // {
-            //     $project: {
-            //         _id: 0,
-            //         title: 1,
-            //         date: "$screen.slots"
-            //     }
-            // }
+            {
+                $group: {
+                    _id: '$_id.movie',
+                    cinema: {
+                        $addToSet: {
+                            id: '$_id.cinemaId',
+                            title: '$_id.cinemaTitle',
+                            screen: {
+                                screen: '$_id.screen',
+                                seatmap: '$_id.seatmap',
+                                slots: '$slots'
+                            }
+                        }
+                    }
+                }
+            }
         ]);
+
+        res.send(result);
+
         const uniqueMovieIds = result.map(item => item.movies).flat();
         const movies = await Movie.find({ _id: { $in: uniqueMovieIds } }).populate('casts');
         res.send(movies);
