@@ -13,20 +13,30 @@ const ShowDates = ({ date }) => {
     const datesArray = useMemo(() => {
         let dateString = date.release;
         let [dd, mm, yyyy] = dateString.split('/').map(Number)
-        let currentdate = new Date(yyyy, mm - 1, dd);
-        let formattedDate = currentdate.toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' });
+        let releaseDate = new Date(yyyy, mm - 1, dd);
+        let presentDate = new Date();
+        let dateToBeTaken = releaseDate > presentDate ? releaseDate : presentDate;
+        let formattedDate = dateToBeTaken.toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' });
         let dateArray = [];
         dateArray.push(formattedDate);
 
         for (let i = 0; i < 6; i++) {
             // Increase the date by one day
-            currentdate.setDate(currentdate.getDate() + 1);
-            let newDate = new Date(currentdate.getFullYear(), currentdate.getMonth(), currentdate.getDate());
+            dateToBeTaken.setDate(dateToBeTaken.getDate() + 1);
+            let newDate = new Date(dateToBeTaken.getFullYear(), dateToBeTaken.getMonth(), dateToBeTaken.getDate());
             formattedDate = newDate.toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' });
             dateArray.push(formattedDate);
         }
         return dateArray;
     }, [date.release])
+
+    // useEffect(() => {
+    //     let dateString = date.release;
+    //     let [dd, mm, yyyy] = dateString.split('/').map(Number)
+    //     let releaseDate = new Date(yyyy, mm - 1, dd);
+    //     let presentDate = new Date();
+    //     console.log("dates: ", releaseDate > presentDate);
+    // }, [])
 
 
     useEffect(() => {

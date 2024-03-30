@@ -20,9 +20,13 @@ const TimeSlots = ({ set }) => {
         }
     };
     useEffect(() => {
+        // const formattedTime = selectedTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+        // console.log("time slot: ", formattedTime);
         const formattedTime = selectedTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
-        console.log("time slot: ", formattedTime);
-        if (!showTime.includes(formattedTime)) setShowTime((prev) => [...prev, { time: formattedTime }]);
+        const [hours, minutes] = formattedTime.split(':');
+        const formattedTimeString = `${hours.padStart(2, '0')}:${minutes}`;
+        console.log("time slot: ", formattedTimeString);
+        if (!showTime.includes(formattedTimeString)) setShowTime((prev) => [...prev, { time: formattedTimeString }]);
     }, [selectedTime])
     useEffect(() => {
         set('slots', showTime.slice(1))
@@ -50,7 +54,7 @@ const TimeSlots = ({ set }) => {
                 />
             }
 
-            <View style={{width:'100%', justifyContent: 'flex-start', gap: 13, paddingHorizontal: 20, paddingVertical: 20, flexDirection: 'row', flexWrap: "wrap" }}>
+            <View style={{ width: '100%', justifyContent: 'flex-start', gap: 13, paddingHorizontal: 20, paddingVertical: 20, flexDirection: 'row', flexWrap: "wrap" }}>
                 {showTime.slice(1).map((item, index) => (
                     <Slots key={index} time={item.time} set={setShowTime} get={showTime} />
                 ))}
