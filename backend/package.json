@@ -15,5 +15,8 @@
     "nodemon": "^3.0.1",
     "web3": "^4.3.0"
   },
-  "type": "module"
+  "type": "module",
+  "scripts": {
+    "start": "nodemon App.js"
+  }
 }

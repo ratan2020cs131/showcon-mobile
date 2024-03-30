@@ -14,7 +14,7 @@ const getCityMovies = async (req, res) => {
             { $project: { _id: 0, movies: 1 } }
         ]);
         const uniqueMovieIds = result.map(item => item.movies).flat();
-        const movies = await Movie.find({ _id: { $in: uniqueMovieIds } }).populate('casts');;
+        const movies = await Movie.find({ _id: { $in: uniqueMovieIds } }).populate('casts');
         res.json(movies);
     } catch (err) {
         console.log('get city movies error: ', err.message);
@@ -24,16 +24,168 @@ const getCityMovies = async (req, res) => {
 
 const getDateTimeMovie = async (req, res) => {
     try {
-        const { date, from, to } = req.query;
+        const { date, from, to, zipcode } = req.query;
         const result = await Cinema.aggregate([
+            { $match: { "address.zipcode": zipcode } },
             { $unwind: "$screen" }, // Deconstruct the 'screen' array
             { $unwind: "$screen.slots" }, // Deconstruct the 'slots' array
+            {
+                $match: {
+                    $expr: {
+                        $and: [
+                            {
+                                $gte: [
+                                    {
+                                        $toDate: {
+                                            $concat: [
+                                                { $dateToString: { format: "%Y-%m-%d", date: "$$NOW" } },
+                                                "T",
+                                                {
+                                                    $cond: {
+                                                        if: { $eq: [{ $substr: ["$screen.slots.time", 6, 2] }, "AM"] },
+                                                        then: { $substr: ["$screen.slots.time", 0, 5] },
+                                                        else: {
+                                                            $concat: [
+                                                                {
+                                                                    $toString: {
+                                                                        $cond: {
+                                                                            if: { $eq: [{ $add: [{ $toInt: { $substr: ["$screen.slots.time", 0, 2] } }, 12] }, 24] },
+                                                                            then: { $substr: ["12", 0, 2] },
+                                                                            else: { $toString: { $add: [{ $toInt: { $substr: ["$screen.slots.time", 0, 2] } }, 12] } },
+                                                                        }
+                                                                    }
+                                                                },
+                                                                { $substr: ["$screen.slots.time", 2, 3] }
+                                                            ]
+                                                        }
+                                                    }
+                                                },
+                                                ":00Z"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        $toDate: {
+                                            $concat: [
+                                                { $dateToString: { format: "%Y-%m-%d", date: "$$NOW" } },
+                                                "T",
+                                                {
+                                                    $cond: {
+                                                        if: { $eq: [{ $substr: [from, 6, 2] }, "AM"] },
+                                                        then: { $substr: [from, 0, 5] },
+                                                        else: {
+                                                            $concat: [
+                                                                {
+                                                                    $toString: {
+                                                                        $cond: {
+                                                                            if: { $eq: [{ $add: [{ $toInt: { $substr: [from, 0, 2] } }, 12] }, 24] },
+                                                                            then: { $substr: ["12", 0, 2] },
+                                                                            else: { $toString: { $add: [{ $toInt: { $substr: [from, 0, 2] } }, 12] } },
+                                                                        }
+                                                                    }
+                                                                },
+                                                                { $substr: [from, 2, 3] }
+                                                            ]
+                                                        }
+                                                    }
+                                                },
+                                                ":00Z"
+                                            ]
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                $lte: [
+                                    {
+                                        $toDate: {
+                                            $concat: [
+                                                { $dateToString: { format: "%Y-%m-%d", date: "$$NOW" } },
+                                                "T",
+                                                {
+                                                    $cond: {
+                                                        if: { $eq: [{ $substr: ["$screen.slots.time", 6, 2] }, "AM"] },
+                                                        then: { $substr: ["$screen.slots.time", 0, 5] },
+                                                        else: {
+                                                            $concat: [
+                                                                {
+                                                                    $toString: {
+                                                                        $cond: {
+                                                                            if: { $eq: [{ $add: [{ $toInt: { $substr: ["$screen.slots.time", 0, 2] } }, 12] }, 24] },
+                                                                            then: { $substr: ["12", 0, 2] },
+                                                                            else: { $toString: { $add: [{ $toInt: { $substr: ["$screen.slots.time", 0, 2] } }, 12] } },
+                                                                        }
+                                                                    }
+                                                                },
+                                                                { $substr: ["$screen.slots.time", 2, 3] }
+                                                            ]
+                                                        }
+                                                    }
+                                                },
+                                                ":00Z"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        $toDate: {
+                                            $concat: [
+                                                { $dateToString: { format: "%Y-%m-%d", date: "$$NOW" } },
+                                                "T",
+                                                {
+                                                    $cond: {
+                                                        if: { $eq: [{ $substr: [to, 6, 2] }, "AM"] },
+                                                        then: { $substr: [to, 0, 5] },
+                                                        else: {
+                                                            $concat: [
+                                                                {
+                                                                    $toString: {
+                                                                        $cond: {
+                                                                            if: { $eq: [{ $add: [{ $toInt: { $substr: [to, 0, 2] } }, 12] }, 24] },
+                                                                            then: { $substr: ["12", 0, 2] },
+                                                                            else: { $toString: { $add: [{ $toInt: { $substr: [to, 0, 2] } }, 12] } },
+                                                                        }
+                                                                    }
+                                                                },
+                                                                { $substr: [to, 2, 3] }
+                                                            ]
+                                                        }
+                                                    }
+                                                },
+                                                ":00Z"
+                                            ]
+                                        }
+                                    }
+                                ]
+                            },
+                        ]
+                    }
+                }
+            },
+            { $unwind: "$screen.slots.booking.dates" },
             { $match: { "screen.slots.booking.dates": date } }, // Match documents where 'dates' field matches the specified date
-            { $match: { "screen.slots.time": { $gte: from, $lte: to } } }, // Match documents where 'dates' field matches the specified date
-            { $group: { _id: '$screen.slots.booking.movie', movies: { $addToSet: '$screen.slots.booking.movie' } } },
-            { $project: { _id: 0, movies: 1 } }
+            {
+                $group: {
+                    _id: '$screen.slots.booking.movie',
+                    movies: { $addToSet: '$screen.slots.booking.movie' }
+                }
+            },
+            // {
+            //     $group: {
+            //         _id: "$_id",
+            //         title: { $first: "$title" },
+            //     }
+            // },
+            // {
+            //     $project: {
+            //         _id: 0,
+            //         title: 1,
+            //         date: "$screen.slots"
+            //     }
+            // }
         ]);
-        res.send(result);
+        const uniqueMovieIds = result.map(item => item.movies).flat();
+        const movies = await Movie.find({ _id: { $in: uniqueMovieIds } }).populate('casts');
+        res.send(movies);
 
         // const uniqueMovieIds = result.map(item => item.movies).flat();
         // const movies = await Movie.find({ _id: { $in: uniqueMovieIds } });
