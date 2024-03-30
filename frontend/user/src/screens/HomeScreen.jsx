@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Dimensions, Modal, Pressable, View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput, FlatList } from 'react-native';
+import { Dimensions, Image, Modal, Pressable, View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput, FlatList } from 'react-native';
+import { WebView } from 'react-native-webview';
 import { FontAwesome5, Feather } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import DateTimePicker from "@react-native-community/datetimepicker"
@@ -9,7 +10,7 @@ import Popular from '../components/Home/Poupular';
 import Result from '../components/Home/Result';
 import { AntDesign } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
-import { getMovieByCity } from '../Redux/Features/Movie/movieSlice';
+import { getMovieByCity, getMovieByTime } from '../Redux/Features/Movie/movieSlice';
 import { getAddress } from '../Redux/Features/Auth/authSlice'
 import { requestForegroundPermissionsAsync, getCurrentPositionAsync } from 'expo-location';
 import Shimmer from '../components/Shimmer';
@@ -66,8 +67,12 @@ const HomeScreen = ({ navigation }) => {
     const formatTime = (time) => {
         const formattedTime = time.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
         const [hours, minutes] = formattedTime.split(':');
-        const formattedTimeString = `${hours.padStart(2, '0')} ${minutes.split(' ')[1]}`;
+        const formattedTimeString = `${hours.padStart(2, '0')}:${minutes}`;
         return formattedTimeString;
+    }
+    const formatDate = (item) => {
+        const dateOptions = { day: '2-digit', month: '2-digit', year: 'numeric' }
+        return item.toLocaleDateString('en-GB', dateOptions);
     }
 
     const getLocation = async () => {
@@ -99,12 +104,12 @@ const HomeScreen = ({ navigation }) => {
 
     useEffect(() => {
         if (movieByTime) {
-            console.log({
-                date,
-                from: initialTime,
-                to: endTime,
+            dispatch(getMovieByTime({
+                date: formatDate(date),
+                from: formatTime(initialTime),
+                to: formatTime(endTime),
                 zipcode: pincode.length === 6 ? pincode : auth.address?.zipcode
-            });
+            }))
         }
     }, [movieByTime])
 
@@ -245,9 +250,9 @@ const HomeScreen = ({ navigation }) => {
                                             return date.join(' ');
                                         })()
                                     }</Text>
-                                    <Text style={[GlobalStyles.semiBoldText, { lineHeight: 35, fontSize: 13, color: GlobalStyles.orange }]}>{formatTime(initialTime)}</Text>
+                                    <Text style={[GlobalStyles.semiBoldText, { lineHeight: 35, fontSize: 13, color: GlobalStyles.orange }]}>{formatTime(initialTime).split(':')[0] + " " + formatTime(initialTime).split(':')[1].split(' ')[1]}</Text>
                                     <Text style={[GlobalStyles.semiBoldText, { lineHeight: 35, fontSize: 13, color: GlobalStyles.orange }]}>-</Text>
-                                    <Text style={[GlobalStyles.semiBoldText, { lineHeight: 35, fontSize: 13, color: GlobalStyles.orange }]}>{formatTime(endTime)}</Text>
+                                    <Text style={[GlobalStyles.semiBoldText, { lineHeight: 35, fontSize: 13, color: GlobalStyles.orange }]}>{formatTime(endTime).split(':')[0] + " " + formatTime(endTime).split(':')[1].split(' ')[1]}</Text>
                                 </> :
                                 <Text style={[GlobalStyles.semiBoldText, { color: '#a0a0a0' }]}>Pick a date & time</Text>
                             }
@@ -290,8 +295,29 @@ const HomeScreen = ({ navigation }) => {
                             style={[GlobalStyles.semiBoldText, { height: 45, borderColor: '#A0A0A0', borderWidth: 2, borderRadius: 7, width: '48%', paddingHorizontal: 15 }]}
                         />
                     </View>
+
+
+                    {movieByTime && movie.gettingTimeMovie &&
+                        <>
+                            <Shimmer style={{ width: 200, height: 20, borderRadius: 15 }} />
+                            <Shimmer style={{ width: '100%', height: 100, borderRadius: 7 }} />
+                        </>
+                    }
+
+                    {movie.timeMovies?.length > 0 &&
+                        <View style={{ gap: 10, marginBottom: 20 }}>
+                            <Text style={[GlobalStyles.boldText, { fontSize: 15 }]}>Shows in your schedule</Text>
+                            {movie.timeMovies?.map((item, index) => <MovieByTime key={item?.movie?._id} data={item} />)}
+                        </View>
+                    }
+
+
+
                     {auth.address === null || movie.gettingCityMovie ?
-                        <Shimmer style={{ width: '100%', height: 60, borderRadius: 7 }} />
+                        <View style={{ marginTop: 20, gap: 10 }}>
+                            <Shimmer style={{ width: 200, height: 20, borderRadius: 15 }} />
+                            <Shimmer style={{ width: 100, height: 140, borderRadius: 7 }} />
+                        </View>
                         :
                         <>
                             {movie.cityMovies?.length > 0 ?
@@ -312,13 +338,72 @@ const HomeScreen = ({ navigation }) => {
                             }
                         </>
                     }
+                    <>
+                        {movie.timeMovies?.length === 0 && !movie.gettingTimeMovie &&
+                            <View style={{ alignItems: 'center' }}>
+                                <MaterialCommunityIcons name="movie-open-off" size={54} color="#909090" />
+                                <Text style={[GlobalStyles.boldText, { color: '#909090', width: 200, textAlign: 'center' }]}>No shows found as per your schedule</Text>
+                            </View>}
+                    </>
+                    <WebView
+                        source={{ uri: 'https://reactnative.dev/' }}
+                        style={{ flex: 1 }}
+                    />
                 </ScrollView>
             </ScreenWrapper>
         </View>
     )
 }
-
 export default HomeScreen;
+
+const MovieByTime = ({ data }) => {
+    const { movie, cinema } = data;
+    console.log("movie poster: ", movie.primaryPoster);
+    return (
+        <TouchableOpacity activeOpacity={0.5} style={{ gap: 10, padding: 10, elevation: 2, backgroundColor: '#fff', borderRadius: 7, flexDirection: 'row', height: 120, alignItems: 'center' }}>
+            <View style={{ width: 75, height: 100, overflow: 'hidden', borderRadius: 5 }}>
+                <Image source={{ uri: movie.primaryPoster }} resizeMode='cover' style={{ height: '100%', width: '100%' }} />
+            </View>
+            <View>
+                <ScrollView
+                    horizontal={true}
+                    contentContainerStyle={{ gap: 20, paddingRight: 80 }}
+                    showsHorizontalScrollIndicator={false}
+                    nestedScrollEnabled={true}
+                >
+                    {cinema.map((item, i) =>
+                        <ScrollView
+                            key={i}
+                            contentContainerStyle={{ gap: 5, alignItems: 'center', gap: 10 }}
+                            showsVerticalScrollIndicator={false}
+                        >
+                            <Text
+                                style={[GlobalStyles.semiBoldText, { fontSize: 11, width: 80, textAlign: 'center' }]}
+                                numberOfLines={2}
+                            >{item?.title}</Text>
+
+                            {item?.screen?.slots?.map((item, index) =>
+                                <View style={[styles.box, { borderColor: '#1E90FF' }]} key={index}>
+                                    <Text style={[GlobalStyles.semiBoldText, styles.month]}>{item?.time}</Text>
+                                </View>
+                            )}
+                        </ScrollView>
+                    )}
+                </ScrollView>
+            </View>
+        </TouchableOpacity>
+    )
+}
+
+const formatDate = (dateString) => {
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const parts = dateString.split('/');
+    const day = parts[0];
+    const monthIndex = parseInt(parts[1]) - 1;
+    const month = months[monthIndex];
+    const year = parts[2];
+    return `${day} ${month}`;
+}
 
 const styles = StyleSheet.create({
     container: {
@@ -418,4 +503,23 @@ const styles = StyleSheet.create({
         fontSize: 20,
         textAlign: 'center',
     },
+    box: {
+        height: 40,
+        width: 75,
+        borderColor: '#1E1F22',
+        borderWidth: 1,
+        borderRadius: 5,
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 5,
+    },
+    date: {
+        fontSize: 10,
+        lineHeight: 12,
+    },
+    month: {
+        lineHeight: 10,
+        fontSize: 10,
+        color: '#707070',
+    }
 });

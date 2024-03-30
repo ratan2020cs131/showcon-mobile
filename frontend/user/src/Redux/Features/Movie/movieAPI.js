@@ -29,6 +29,18 @@ const getMovieByCity = async (zipcode) => {
   }
 };
 
+const getMovieByTime = async (data) => {
+  try {
+    const { zipcode, from, to, date } = data;
+    console.log("get movie by time body: ", data);
+    const response = await axios.get(`${BASE_URL}user/get-time-movies?date=${date}&from=${from}&to=${to}&zipcode=${zipcode}`);
+    console.log("Get movie by time res: ", response.data);
+    return response.data;
+  } catch (err) {
+    console.log("Get movie by time Error: ", err);
+  }
+};
+
 const searchApi = async (param) => {
   try {
     console.log("search api: ", param);
@@ -58,7 +70,8 @@ const movieAPI = {
   getCinema,
   getMovieByCity,
   searchApi,
-  getCinemaBooking
+  getCinemaBooking,
+  getMovieByTime
 };
 
 export default movieAPI;

@@ -58,6 +58,20 @@ export const getMovieByCity = createAsyncThunk(
     }
   });
 
+export const getMovieByTime = createAsyncThunk(
+  "movie/getMovieByTime",
+  async (data, thunkAPI) => {
+    try {
+      const res = await movieAPI.getMovieByTime(data);
+      if (!res) {
+        return thunkAPI.rejectWithValue("");
+      }
+      return res;
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.message);
+    }
+  });
+
 export const getCinemaBooking = createAsyncThunk(
   "movie/getCinemaBooking",
   async (data, thunkAPI) => {
@@ -81,7 +95,9 @@ const state = {
   gettingCityMovie: true,
   searchingMovie: false,
   searchResult: [],
-  cinemaData: null
+  cinemaData: null,
+  gettingTimeMovie: false,
+  timeMovies: null
 };
 
 
@@ -151,6 +167,18 @@ const movieSlice = createSlice({
       .addCase(getCinemaBooking.rejected, (state, action) => {
         state.isLoading = false;
         state.cinemaData = null;
+      })
+      .addCase(getMovieByTime.pending, (state, action) => {
+        state.gettingTimeMovie = true;
+        state.timeMovies = null;
+      })
+      .addCase(getMovieByTime.fulfilled, (state, action) => {
+        state.gettingTimeMovie = false;
+        state.timeMovies = action.payload;
+      })
+      .addCase(getMovieByTime.rejected, (state, action) => {
+        state.gettingTimeMovie = false;
+        state.timeMovies = null;
       })
   },
 });
