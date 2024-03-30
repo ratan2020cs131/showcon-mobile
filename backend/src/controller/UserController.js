@@ -195,8 +195,34 @@ const getDateTimeMovie = async (req, res) => {
                         }
                     }
                 }
+            },
+            {
+                $lookup: {
+                    from: 'movies',
+                    localField: '_id',
+                    foreignField: '_id',
+                    as: 'movie'
+                }
+            },
+            {
+                $unwind: '$movie'
+            },
+            {
+                $lookup: {
+                    from: 'actors',
+                    localField: 'movie.casts',
+                    foreignField: '_id',
+                    as: 'movie.casts' // Replace the existing 'casts' array with actor documents
+                }
+            },
+            {
+                $project: {
+                    _id: 0,
+                    movie: 1,
+                    cinema: 1
+                }
             }
-        ]);
+        ])
 
         res.send(result);
 
