@@ -200,8 +200,8 @@ const getDateTimeMovie = async (req, res) => {
 
         res.send(result);
 
-        const movies = await Movie.result.populate('casts');
-        res.send(movies);
+        // const movies = await Movie.result.populate('casts');
+        // res.send(movies);
     } catch (err) {
         console.log('get time movies error: ', err.message);
         res.status(500).send({ message: err.message })
