@@ -6,6 +6,7 @@ import SeatScreen from '../screens/show/Seat';
 import PaymentScreen from '../screens/PaymentScreen';
 import TicketScreen from '../screens/TicketScreen';
 import SearchScreen from '../screens/SearchScreen';
+import PanoScreen from '../screens/PanoScreen';
 
 const Stack = createStackNavigator();
 
@@ -40,6 +41,11 @@ const StackRoute = () => {
         {
             path: "TicketScreen",
             component: TicketScreen,
+            option: { headerShown: false }
+        },
+        {
+            path: "Pano",
+            component: PanoScreen,
             option: { headerShown: false }
         },
     ];

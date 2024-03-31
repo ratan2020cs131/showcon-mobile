@@ -100,6 +100,15 @@ const SeatScreen = ({ navigation, route }) => {
           {choose.length > 0 &&
             <TouchableOpacity
               style={[GlobalStyles.button, { marginTop: "auto" }]}
+              onPress={() => navigation.navigate("Pano")}
+            >
+              <Text style={[GlobalStyles.boldText]}>Immersive  View</Text>
+            </TouchableOpacity>
+          }
+
+          {choose.length > 0 &&
+            <TouchableOpacity
+              style={[GlobalStyles.button, { marginTop: 20 }]}
               onPress={handleBook}
             >
               <Text style={[GlobalStyles.boldText]}>Proceed</Text>

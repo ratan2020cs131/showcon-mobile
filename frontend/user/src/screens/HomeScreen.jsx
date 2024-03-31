@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Dimensions, Image, Modal, Pressable, View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput, FlatList } from 'react-native';
+import { Dimensions, Image, View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput, FlatList } from 'react-native';
 import { WebView } from 'react-native-webview';
-import { FontAwesome5, Feather } from '@expo/vector-icons';
-import { Ionicons } from '@expo/vector-icons';
 import DateTimePicker from "@react-native-community/datetimepicker"
 import ScreenWrapper from './ScreenWrapper';
 import GlobalStyles from '../GlobalStyles';
-import Popular from '../components/Home/Poupular';
-import Result from '../components/Home/Result';
 import { AntDesign } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMovieByCity, getMovieByTime } from '../Redux/Features/Movie/movieSlice';
@@ -17,6 +13,9 @@ import Shimmer from '../components/Shimmer';
 import MovieCard from '../components/CardA/Card';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import FormatDate from '../utils/formatDate';
+import { useNavigation } from '@react-navigation/native';
+import YoutubePlayer from 'react-native-youtube-iframe';
+
 
 const HomeScreen = ({ navigation }) => {
 
@@ -307,7 +306,7 @@ const HomeScreen = ({ navigation }) => {
                     {movie.timeMovies?.length > 0 &&
                         <View style={{ gap: 10, marginBottom: 20 }}>
                             <Text style={[GlobalStyles.boldText, { fontSize: 15 }]}>Shows in your schedule</Text>
-                            {movie.timeMovies?.map((item, index) => <MovieByTime key={item?.movie?._id} data={item} />)}
+                            {movie.timeMovies?.map((item, index) => <MovieByTime pincode={pincode} key={item?.movie?._id} data={item} />)}
                         </View>
                     }
 
@@ -338,6 +337,16 @@ const HomeScreen = ({ navigation }) => {
                             }
                         </>
                     }
+
+                    <YoutubePlayer
+                        initialPlayerParam={{ controls: false }}
+                        height={300}
+                        play={true}
+                        forceAndroidAutoplay={true}
+                        videoId={'LSYqol7wN-g'}
+                        mute={true}
+                        controls={0}
+                    />
                     <>
                         {movie.timeMovies?.length === 0 && !movie.gettingTimeMovie &&
                             <View style={{ alignItems: 'center' }}>
@@ -356,14 +365,18 @@ const HomeScreen = ({ navigation }) => {
 }
 export default HomeScreen;
 
-const MovieByTime = ({ data }) => {
+const MovieByTime = ({ data, pincode }) => {
+    const navigation = useNavigation();
     const { movie, cinema } = data;
     console.log("movie poster: ", movie.primaryPoster);
     return (
-        <TouchableOpacity activeOpacity={0.5} style={{ gap: 10, padding: 10, elevation: 2, backgroundColor: '#fff', borderRadius: 7, flexDirection: 'row', height: 120, alignItems: 'center' }}>
-            <View style={{ width: 75, height: 100, overflow: 'hidden', borderRadius: 5 }}>
+        <View style={{ gap: 10, padding: 10, elevation: 2, backgroundColor: '#fff', borderRadius: 7, flexDirection: 'row', height: 120, alignItems: 'center' }}
+        >
+            <TouchableOpacity activeOpacity={0.5} style={{ width: 75, height: 100, overflow: 'hidden', borderRadius: 5 }}
+                onPress={() => navigation.navigate("ShowScreen", { data: movie, pincode: pincode && pincode })}
+            >
                 <Image source={{ uri: movie.primaryPoster }} resizeMode='cover' style={{ height: '100%', width: '100%' }} />
-            </View>
+            </TouchableOpacity>
             <View>
                 <ScrollView
                     horizontal={true}
@@ -391,7 +404,7 @@ const MovieByTime = ({ data }) => {
                     )}
                 </ScrollView>
             </View>
-        </TouchableOpacity>
+        </View>
     )
 }
 

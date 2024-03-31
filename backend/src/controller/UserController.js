@@ -27,8 +27,8 @@ const getDateTimeMovie = async (req, res) => {
         const { date, from, to, zipcode } = req.query;
         const result = await Cinema.aggregate([
             { $match: { "address.zipcode": zipcode } },
-            { $unwind: "$screen" }, // Deconstruct the 'screen' array
-            { $unwind: "$screen.slots" }, // Deconstruct the 'slots' array
+            { $unwind: "$screen" },
+            { $unwind: "$screen.slots" },
             {
                 $match: {
                     $expr: {
@@ -162,7 +162,7 @@ const getDateTimeMovie = async (req, res) => {
                 }
             },
             { $unwind: "$screen.slots.booking.dates" },
-            { $match: { "screen.slots.booking.dates": date } }, // Match documents where 'dates' field matches the specified date
+            { $match: { "screen.slots.booking.dates": date } },
             {
                 $group: {
                     _id: {
@@ -170,7 +170,7 @@ const getDateTimeMovie = async (req, res) => {
                         cinemaId: '$_id',
                         cinemaTitle: '$title',
                         screen: '$screen.screen',
-                        seatmap: '$screen.seatmap' // Include the seatmap for each screen
+                        seatmap: '$screen.seatmap'
                     },
                     slots: {
                         $addToSet: {
@@ -212,16 +212,42 @@ const getDateTimeMovie = async (req, res) => {
                     from: 'actors',
                     localField: 'movie.casts',
                     foreignField: '_id',
-                    as: 'movie.casts' // Replace the existing 'casts' array with actor documents
+                    as: 'movie.casts'
                 }
             },
             {
+                $group: {
+                    _id: {
+                        cinemaId: '$cinema.id',
+                        cinemaTitle: '$cinema.title',
+                        movie: '$movie'
+                    },
+                    screens: {
+                        $push: {
+                            screen: '$cinema.screen',
+                        }
+                    }
+                }
+            },
+            // Project to reshape the document
+            {
                 $project: {
                     _id: 0,
-                    movie: 1,
-                    cinema: 1
+                    cinema: {
+                        id: '$_id.cinemaId',
+                        title: '$_id.cinemaTitle',
+                        screens: '$screens.screen'
+                    },
+                    movie: '$_id.movie'
                 }
-            }
+            },
+            // {
+            //     $project: {
+            //         _id: 0,
+            //         movie: 1,
+            //         cinema: 1
+            //     }
+            // }
         ])
 
         res.send(result);
