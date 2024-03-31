@@ -1,6 +1,11 @@
 import mongo from 'mongoose';
 
 const ticket = new mongo.Schema({
+    movieId: {
+        type: mongo.Schema.Types.ObjectId,
+        ref: 'movies',
+        required: true
+    },
     movie: {
         type: String,
         required: true
@@ -13,17 +18,17 @@ const ticket = new mongo.Schema({
         type: String,
         required: true
     },
-    total:{
-        type:Number,
-        required:true
+    total: {
+        type: Number,
+        required: true
     },
     seats: [{
         type: String,
         required: true
     }],
-    price:{
-        type:Number,
-        required:true
+    price: {
+        type: Number,
+        required: true
     }
 });
 

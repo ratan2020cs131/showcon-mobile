@@ -164,7 +164,7 @@ const History = async (req, res) => {
       const ticketIds = result.history;
       // Use Promise.all to fetch all tickets concurrently
       const ticketPromises = ticketIds.map(async (itemId) => {
-        const ticket = await Ticket.findById(itemId);
+        const ticket = await Ticket.findById(itemId).populate('movieId');
         return ticket;
       });
       const tickets = await Promise.all(ticketPromises);
