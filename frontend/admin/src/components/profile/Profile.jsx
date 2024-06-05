@@ -23,7 +23,7 @@ const Profile = ({ navigation }) => {
         <View style={styles.container}>
             {authState.isLoading ?
                 <ActivityIndicator size={"large"} color="#F55139" /> :
-                <>
+                <View style={{ justifyContent: 'space-around', flex: 1, width:'100%' }}>
                     <View style={{ width: '100%', alignItems: 'center' }}>
 
                         {/* Name */}
@@ -55,11 +55,14 @@ const Profile = ({ navigation }) => {
                     </View>
 
                     {/* LOGOUT BUTTON */}
-                    <TouchableOpacity style={[GlobalStyles.button, { flexDirection: 'row', alignItems: 'center', gap: 5 }]} onPress={logoutHandler}>
+                    <TouchableOpacity
+                        style={[GlobalStyles.button, { width: '88%', flexDirection: 'row', alignSelf: 'center', gap: 5 }]}
+                        onPress={logoutHandler}
+                    >
                         <Text style={[GlobalStyles.boldText, { paddingLeft: 10 }]}>LOGOUT</Text>
                         <Ionicons name="log-out-outline" style={{ fontSize: 23 }}></Ionicons>
                     </TouchableOpacity>
-                </>
+                </View>
             }
         </View>
     )
@@ -73,7 +76,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     section: {
-        width: '85%',
+        width: '88%',
         backgroundColor: '#E0E0E0',
         marginBottom: 10,
         justifyContent: 'flex-start',

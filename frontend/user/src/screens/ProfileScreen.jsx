@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     section: {
-        width: '85%',
+        width: '88%',
         backgroundColor: '#E0E0E0',
         marginBottom: 10,
         justifyContent: 'flex-start',
